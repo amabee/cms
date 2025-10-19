@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Tests Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .badge-active { background-color: #28a745; }
+        .badge-inactive { background-color: #6c757d; }
+        .test-card { transition: all 0.3s; }
+        .test-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .price-tag { font-size: 1.2rem; font-weight: bold; color: #0d6efd; }
+    </style>
+</head>
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="bg-dark text-white p-3">
+            <div class="sidebar-header mb-4">
+                <h3>Clinic CMS</h3>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a href="dashboard.html" class="nav-link text-white"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+                <li class="nav-item"><a href="doctors.html" class="nav-link text-white"><i class="bi bi-person-badge"></i> Doctors</a></li>
+                <li class="nav-item"><a href="patients.html" class="nav-link text-white"><i class="bi bi-people"></i> Patients</a></li>
+                <li class="nav-item"><a href="staff.html" class="nav-link text-white"><i class="bi bi-person-workspace"></i> Staff</a></li>
+                <li class="nav-item"><a href="lab-tests.html" class="nav-link text-white active"><i class="bi bi-prescription2"></i> Lab Tests</a></li>
+                <li class="nav-item"><a href="lab-requests.html" class="nav-link text-white"><i class="bi bi-clipboard2-pulse"></i> Lab Requests</a></li>
+                <li class="nav-item"><a href="departments.html" class="nav-link text-white"><i class="bi bi-building"></i> Departments</a></li>
+                <li class="nav-item"><a href="users.html" class="nav-link text-white"><i class="bi bi-person-circle"></i> Users</a></li>
+                <li class="nav-item"><a href="settings.html" class="nav-link text-white"><i class="bi bi-gear"></i> Settings</a></li>
+                <li class="nav-item"><a href="backup.html" class="nav-link text-white"><i class="bi bi-database"></i> Backup</a></li>
+                <li class="nav-item"><a href="audit-logs.html" class="nav-link text-white"><i class="bi bi-clock-history"></i> Audit Logs</a></li>
+                <li class="nav-item mt-3"><a href="#" id="logoutBtn" class="nav-link text-danger"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="flex-grow-1">
+            <!-- Top Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <div class="container-fluid">
+                    <button class="btn btn-outline-secondary" id="sidebarToggle"><i class="bi bi-list"></i></button>
+                    <span class="navbar-brand mb-0 h1">Lab Tests Management</span>
+                    <div class="ms-auto">
+                        <span class="me-3">Welcome, <strong id="userName">Admin</strong></span>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Page Content -->
+            <div class="container-fluid p-4">
+                <!-- Statistics Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card border-primary">
+                            <div class="card-body">
+                                <h6 class="text-muted">Total Tests</h6>
+                                <h3 id="totalTests">0</h3>
+                                <i class="bi bi-clipboard2-data fs-1 text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-success">
+                            <div class="card-body">
+                                <h6 class="text-muted">Active Tests</h6>
+                                <h3 id="activeTests">0</h3>
+                                <i class="bi bi-check-circle fs-1 text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-secondary">
+                            <div class="card-body">
+                                <h6 class="text-muted">Inactive Tests</h6>
+                                <h3 id="inactiveTests">0</h3>
+                                <i class="bi bi-x-circle fs-1 text-secondary"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-info">
+                            <div class="card-body">
+                                <h6 class="text-muted">Sample Types</h6>
+                                <h3 id="sampleTypes">0</h3>
+                                <i class="bi bi-droplet fs-1 text-info"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters and Actions -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row align-items-end">
+                            <div class="col-md-4">
+                                <label class="form-label">Search</label>
+                                <input type="text" class="form-control" id="searchInput" placeholder="Search by code, name...">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Status Filter</label>
+                                <select class="form-select" id="statusFilter">
+                                    <option value="all">All</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Per Page</label>
+                                <select class="form-select" id="limitSelect">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 text-end">
+                                <button class="btn btn-primary" id="addTestBtn"><i class="bi bi-plus-circle"></i> Add Lab Test</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lab Tests Table -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Test Code</th>
+                                        <th>Test Name</th>
+                                        <th>Sample Type</th>
+                                        <th>Normal Range</th>
+                                        <th>Unit</th>
+                                        <th>Price</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="testsTableBody">
+                                    <tr>
+                                        <td colspan="8" class="text-center">
+                                            <div class="spinner-border text-primary" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center" id="pagination"></ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Test Modal -->
+    <div class="modal fade" id="testModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="testModalTitle">Add Lab Test</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="testForm">
+                        <input type="hidden" id="labTestId">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Test Code <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="testCode" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Test Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="testName" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" id="description" rows="2"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Sample Type</label>
+                                <select class="form-select" id="sampleType">
+                                    <option value="">Select Sample Type</option>
+                                    <option value="Blood">Blood</option>
+                                    <option value="Urine">Urine</option>
+                                    <option value="Stool">Stool</option>
+                                    <option value="Sputum">Sputum</option>
+                                    <option value="Swab">Swab</option>
+                                    <option value="Tissue">Tissue</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Price (₱)</label>
+                                <input type="number" class="form-control" id="price" step="0.01" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Normal Range</label>
+                                <input type="text" class="form-control" id="normalRange" placeholder="e.g., 70-100 mg/dL">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Unit</label>
+                                <input type="text" class="form-control" id="unit" placeholder="e.g., mg/dL, mmol/L">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="activeStatus" checked>
+                                <label class="form-check-label" for="activeStatus">Active</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveTestBtn">Save Test</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Confirm Delete</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this lab test?</p>
+                    <p class="text-muted"><strong id="deleteTestName"></strong></p>
+                    <input type="hidden" id="deleteTestId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/js/session-handler.js"></script>
+    <script>
+        const API_URL = 'http://localhost/cms/backend/lab-tests.php';
+        let currentPage = 1;
+        let currentLimit = 10;
+        let user = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            user = SessionHandler.getUser();
+            if (!user) {
+                window.location.href = '../index.html';
+                return;
+            }
+
+            document.getElementById('userName').textContent = user.username;
+            loadLabTests();
+            setupEventListeners();
+        });
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            document.getElementById('searchInput').addEventListener('input', debounce(loadLabTests, 500));
+            document.getElementById('statusFilter').addEventListener('change', loadLabTests);
+            document.getElementById('limitSelect').addEventListener('change', function() {
+                currentLimit = parseInt(this.value);
+                currentPage = 1;
+                loadLabTests();
+            });
+            document.getElementById('addTestBtn').addEventListener('click', showAddModal);
+            document.getElementById('saveTestBtn').addEventListener('click', saveTest);
+            document.getElementById('confirmDeleteBtn').addEventListener('click', deleteTest);
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                SessionHandler.clearSession();
+                window.location.href = '../index.html';
+            });
+        }
+
+        // Load Lab Tests
+        async function loadLabTests() {
+            const search = document.getElementById('searchInput').value;
+            const status = document.getElementById('statusFilter').value;
+
+            try {
+                const response = await axios.get(API_URL, {
+                    params: {
+                        operation: 'getAll',
+                        json: JSON.stringify({
+                            search: search,
+                            status: status,
+                            page: currentPage,
+                            limit: currentLimit
+                        })
+                    }
+                });
+
+                if (response.data.success) {
+                    renderTestsTable(response.data.data);
+                    updateStatistics(response.data);
+                    renderPagination(response.data.total, response.data.page, response.data.limit);
+                } else {
+                    showAlert('Error loading lab tests: ' + (response.data.error || 'Unknown error'), 'danger');
+                }
+            } catch (error) {
+                showAlert('Error loading lab tests: ' + error.message, 'danger');
+            }
+        }
+
+        // Render Tests Table
+        function renderTestsTable(tests) {
+            const tbody = document.getElementById('testsTableBody');
+            
+            if (tests.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center text-muted">
+                            <i class="bi bi-inbox fs-1"></i>
+                            <p class="mt-2">No lab tests found</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = tests.map(test => `
+                <tr>
+                    <td><strong>${escapeHtml(test.test_code)}</strong></td>
+                    <td>${escapeHtml(test.test_name)}</td>
+                    <td>${escapeHtml(test.sample_type || '-')}</td>
+                    <td>${escapeHtml(test.normal_range || '-')}</td>
+                    <td>${escapeHtml(test.unit || '-')}</td>
+                    <td class="price-tag">₱${parseFloat(test.price).toFixed(2)}</td>
+                    <td>
+                        <span class="badge ${test.active == 1 ? 'badge-active' : 'badge-inactive'}">
+                            ${test.active == 1 ? 'Active' : 'Inactive'}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary" onclick="editTest(${test.lab_test_id})" title="Edit">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-${test.active == 1 ? 'warning' : 'success'}" 
+                                onclick="toggleStatus(${test.lab_test_id}, '${escapeHtml(test.test_name)}')" 
+                                title="${test.active == 1 ? 'Deactivate' : 'Activate'}">
+                            <i class="bi bi-${test.active == 1 ? 'eye-slash' : 'eye'}"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="showDeleteModal(${test.lab_test_id}, '${escapeHtml(test.test_name)}')" title="Delete">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Update Statistics
+        function updateStatistics(data) {
+            const total = data.total || 0;
+            let active = 0, inactive = 0;
+            const sampleTypesSet = new Set();
+
+            data.data.forEach(test => {
+                if (test.active == 1) active++;
+                else inactive++;
+                if (test.sample_type) sampleTypesSet.add(test.sample_type);
+            });
+
+            document.getElementById('totalTests').textContent = total;
+            document.getElementById('activeTests').textContent = active;
+            document.getElementById('inactiveTests').textContent = inactive;
+            document.getElementById('sampleTypes').textContent = sampleTypesSet.size;
+        }
+
+        // Show Add Modal
+        function showAddModal() {
+            document.getElementById('testModalTitle').textContent = 'Add Lab Test';
+            document.getElementById('testForm').reset();
+            document.getElementById('labTestId').value = '';
+            document.getElementById('activeStatus').checked = true;
+            new bootstrap.Modal(document.getElementById('testModal')).show();
+        }
+
+        // Edit Test
+        async function editTest(id) {
+            try {
+                const response = await axios.get(API_URL, {
+                    params: {
+                        operation: 'getById',
+                        json: JSON.stringify({ lab_test_id: id })
+                    }
+                });
+
+                if (response.data.success) {
+                    const test = response.data.data;
+                    document.getElementById('testModalTitle').textContent = 'Edit Lab Test';
+                    document.getElementById('labTestId').value = test.lab_test_id;
+                    document.getElementById('testCode').value = test.test_code;
+                    document.getElementById('testName').value = test.test_name;
+                    document.getElementById('description').value = test.description || '';
+                    document.getElementById('sampleType').value = test.sample_type || '';
+                    document.getElementById('normalRange').value = test.normal_range || '';
+                    document.getElementById('unit').value = test.unit || '';
+                    document.getElementById('price').value = test.price;
+                    document.getElementById('activeStatus').checked = test.active == 1;
+                    
+                    new bootstrap.Modal(document.getElementById('testModal')).show();
+                } else {
+                    showAlert('Error loading test: ' + response.data.error, 'danger');
+                }
+            } catch (error) {
+                showAlert('Error loading test: ' + error.message, 'danger');
+            }
+        }
+
+        // Save Test
+        async function saveTest() {
+            const id = document.getElementById('labTestId').value;
+            const operation = id ? 'update' : 'create';
+
+            const data = {
+                admin_user_id: user.user_id,
+                test_code: document.getElementById('testCode').value.trim(),
+                test_name: document.getElementById('testName').value.trim(),
+                description: document.getElementById('description').value.trim(),
+                sample_type: document.getElementById('sampleType').value,
+                normal_range: document.getElementById('normalRange').value.trim(),
+                unit: document.getElementById('unit').value.trim(),
+                price: document.getElementById('price').value,
+                active: document.getElementById('activeStatus').checked ? 1 : 0
+            };
+
+            if (id) data.lab_test_id = id;
+
+            // Validation
+            if (!data.test_code || !data.test_name) {
+                showAlert('Test code and name are required', 'warning');
+                return;
+            }
+
+            try {
+                const response = await axios.post(API_URL, null, {
+                    params: {
+                        operation: operation,
+                        json: JSON.stringify(data)
+                    }
+                });
+
+                if (response.data.success) {
+                    showAlert(response.data.message, 'success');
+                    bootstrap.Modal.getInstance(document.getElementById('testModal')).hide();
+                    loadLabTests();
+                } else {
+                    showAlert(response.data.error, 'danger');
+                }
+            } catch (error) {
+                showAlert('Error saving test: ' + error.message, 'danger');
+            }
+        }
+
+        // Toggle Status
+        async function toggleStatus(id, name) {
+            if (!confirm(`Are you sure you want to toggle the status of "${name}"?`)) return;
+
+            try {
+                const response = await axios.post(API_URL, null, {
+                    params: {
+                        operation: 'toggleStatus',
+                        json: JSON.stringify({
+                            lab_test_id: id,
+                            admin_user_id: user.user_id
+                        })
+                    }
+                });
+
+                if (response.data.success) {
+                    showAlert(response.data.message, 'success');
+                    loadLabTests();
+                } else {
+                    showAlert(response.data.error, 'danger');
+                }
+            } catch (error) {
+                showAlert('Error toggling status: ' + error.message, 'danger');
+            }
+        }
+
+        // Show Delete Modal
+        function showDeleteModal(id, name) {
+            document.getElementById('deleteTestId').value = id;
+            document.getElementById('deleteTestName').textContent = name;
+            new bootstrap.Modal(document.getElementById('deleteModal')).show();
+        }
+
+        // Delete Test
+        async function deleteTest() {
+            const id = document.getElementById('deleteTestId').value;
+
+            try {
+                const response = await axios.post(API_URL, null, {
+                    params: {
+                        operation: 'delete',
+                        json: JSON.stringify({
+                            lab_test_id: id,
+                            admin_user_id: user.user_id
+                        })
+                    }
+                });
+
+                if (response.data.success) {
+                    showAlert(response.data.message, 'success');
+                    bootstrap.Modal.getInstance(document.getElementById('deleteModal')).hide();
+                    loadLabTests();
+                } else {
+                    showAlert(response.data.error, 'danger');
+                }
+            } catch (error) {
+                showAlert('Error deleting test: ' + error.message, 'danger');
+            }
+        }
+
+        // Render Pagination
+        function renderPagination(total, page, limit) {
+            const totalPages = Math.ceil(total / limit);
+            const pagination = document.getElementById('pagination');
+            
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+            
+            // Previous
+            html += `<li class="page-item ${page === 1 ? 'disabled' : ''}">
+                <a class="page-link" href="#" onclick="changePage(${page - 1}); return false;">Previous</a>
+            </li>`;
+
+            // Pages
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= page - 2 && i <= page + 2)) {
+                    html += `<li class="page-item ${i === page ? 'active' : ''}">
+                        <a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a>
+                    </li>`;
+                } else if (i === page - 3 || i === page + 3) {
+                    html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+                }
+            }
+
+            // Next
+            html += `<li class="page-item ${page === totalPages ? 'disabled' : ''}">
+                <a class="page-link" href="#" onclick="changePage(${page + 1}); return false;">Next</a>
+            </li>`;
+
+            pagination.innerHTML = html;
+        }
+
+        // Change Page
+        function changePage(page) {
+            currentPage = page;
+            loadLabTests();
+        }
+
+        // Utility Functions
+        function showAlert(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3`;
+            alertDiv.style.zIndex = '9999';
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.body.appendChild(alertDiv);
+            setTimeout(() => alertDiv.remove(), 5000);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+    </script>
+</body>
+</html>

@@ -23,11 +23,18 @@ class Staff
       $status = $data['status'] ?? null;
       $search = $data['search'] ?? null;
 
-      $sql = "SELECT u.user_id, u.usertype_id, u.username, u.email, u.status, u.created_at,
-                     up.first_name, up.last_name, up.phone, up.address,
+      $sql = "SELECT u.user_id, u.usertype_id, u.username, u.email, u.created_at,
+                     up.first_name, up.last_name, up.gender, up.birth_date, up.phone, up.address,
                      ut.name as usertype_name,
-                     s.secretary_id, s.assigned_doctor_id,
-                     r.receptionist_id,
+                     s.secretary_id, s.assigned_doctor_id, s.office_location, 
+                     s.contact_number as sec_contact, s.email as sec_email,
+                     s.shift_start as sec_shift_start, s.shift_end as sec_shift_end,
+                     s.work_days as sec_work_days, s.status as sec_status, s.notes as sec_notes,
+                     r.receptionist_id, r.frontdesk_location,
+                     r.contact_number as rec_contact, r.email as rec_email,
+                     r.shift_start as rec_shift_start, r.shift_end as rec_shift_end,
+                     r.work_days as rec_work_days, r.status as rec_status, r.notes as rec_notes,
+                     CONCAT(doc.first_name, ' ', doc.last_name) as assigned_doctor_name,
                      dep.name as department_name
               FROM users u
               LEFT JOIN user_profiles up ON u.user_id = up.user_id
@@ -35,6 +42,7 @@ class Staff
               LEFT JOIN secretaries s ON u.user_id = s.user_id
               LEFT JOIN receptionists r ON u.user_id = r.user_id
               LEFT JOIN doctors d ON s.assigned_doctor_id = d.doctor_id
+              LEFT JOIN user_profiles doc ON d.user_id = doc.user_id
               LEFT JOIN departments dep ON d.department_id = dep.department_id
               WHERE u.usertype_id IN (3, 4)";
 
@@ -46,7 +54,7 @@ class Staff
       }
 
       if ($status) {
-        $sql .= " AND u.status = :status";
+        $sql .= " AND (s.status = :status OR r.status = :status)";
         $params[':status'] = $status;
       }
 
@@ -170,16 +178,45 @@ class Staff
       // Create role-specific record
       if ($data['usertype_id'] == 3) {
         // Secretary
-        $stmt = $this->conn->prepare("INSERT INTO secretaries (user_id, assigned_doctor_id)
-                                        VALUES (:user_id, :assigned_doctor_id)");
+        $stmt = $this->conn->prepare("INSERT INTO secretaries (
+                                        user_id, assigned_doctor_id, office_location, contact_number, email,
+                                        shift_start, shift_end, work_days, status, notes
+                                      ) VALUES (
+                                        :user_id, :assigned_doctor_id, :office_location, :contact_number, :email,
+                                        :shift_start, :shift_end, :work_days, :status, :notes
+                                      )");
         $stmt->execute([
           ':user_id' => $user_id,
-          ':assigned_doctor_id' => $data['assigned_doctor_id'] ?? null
+          ':assigned_doctor_id' => $data['assigned_doctor_id'] ?? null,
+          ':office_location' => $data['office_location'] ?? null,
+          ':contact_number' => $data['contact_number'] ?? null,
+          ':email' => $data['staff_email'] ?? $data['email'],
+          ':shift_start' => $data['shift_start'] ?? null,
+          ':shift_end' => $data['shift_end'] ?? null,
+          ':work_days' => $data['work_days'] ?? null,
+          ':status' => $data['status'] ?? 'active',
+          ':notes' => $data['notes'] ?? null
         ]);
       } else {
         // Receptionist
-        $stmt = $this->conn->prepare("INSERT INTO receptionists (user_id) VALUES (:user_id)");
-        $stmt->execute([':user_id' => $user_id]);
+        $stmt = $this->conn->prepare("INSERT INTO receptionists (
+                                        user_id, frontdesk_location, contact_number, email,
+                                        shift_start, shift_end, work_days, status, notes
+                                      ) VALUES (
+                                        :user_id, :frontdesk_location, :contact_number, :email,
+                                        :shift_start, :shift_end, :work_days, :status, :notes
+                                      )");
+        $stmt->execute([
+          ':user_id' => $user_id,
+          ':frontdesk_location' => $data['frontdesk_location'] ?? null,
+          ':contact_number' => $data['contact_number'] ?? null,
+          ':email' => $data['staff_email'] ?? $data['email'],
+          ':shift_start' => $data['shift_start'] ?? null,
+          ':shift_end' => $data['shift_end'] ?? null,
+          ':work_days' => $data['work_days'] ?? null,
+          ':status' => $data['status'] ?? 'active',
+          ':notes' => $data['notes'] ?? null
+        ]);
       }
 
       // Log the action
@@ -206,16 +243,14 @@ class Staff
     $this->conn->beginTransaction();
 
     try {
-      // Update user table
+      // Update user table (removed status from here)
       $stmt = $this->conn->prepare("UPDATE users SET 
-                                      email = :email, 
-                                      status = :status,
+                                      email = :email,
                                       updated_at = CURRENT_TIMESTAMP
                                       WHERE user_id = :user_id");
       $stmt->execute([
         ':user_id' => $data['user_id'],
-        ':email' => $data['email'],
-        ':status' => $data['status'] ?? 'active'
+        ':email' => $data['email']
       ]);
 
       // Update user profile
@@ -237,12 +272,54 @@ class Staff
         ':address' => $data['address'] ?? null
       ]);
 
-      // Update role-specific data if secretary
-      if (isset($data['assigned_doctor_id'])) {
-        $stmt = $this->conn->prepare("UPDATE secretaries SET assigned_doctor_id = :assigned_doctor_id WHERE user_id = :user_id");
+      // Update role-specific data
+      if ($data['usertype_id'] == 3) {
+        // Secretary
+        $stmt = $this->conn->prepare("UPDATE secretaries SET 
+                                        assigned_doctor_id = :assigned_doctor_id,
+                                        office_location = :office_location,
+                                        contact_number = :contact_number,
+                                        email = :staff_email,
+                                        shift_start = :shift_start,
+                                        shift_end = :shift_end,
+                                        work_days = :work_days,
+                                        status = :status,
+                                        notes = :notes
+                                        WHERE user_id = :user_id");
         $stmt->execute([
           ':user_id' => $data['user_id'],
-          ':assigned_doctor_id' => $data['assigned_doctor_id']
+          ':assigned_doctor_id' => $data['assigned_doctor_id'] ?? null,
+          ':office_location' => $data['office_location'] ?? null,
+          ':contact_number' => $data['contact_number'] ?? null,
+          ':staff_email' => $data['staff_email'] ?? $data['email'],
+          ':shift_start' => $data['shift_start'] ?? null,
+          ':shift_end' => $data['shift_end'] ?? null,
+          ':work_days' => $data['work_days'] ?? null,
+          ':status' => $data['status'] ?? 'active',
+          ':notes' => $data['notes'] ?? null
+        ]);
+      } else {
+        // Receptionist
+        $stmt = $this->conn->prepare("UPDATE receptionists SET 
+                                        frontdesk_location = :frontdesk_location,
+                                        contact_number = :contact_number,
+                                        email = :staff_email,
+                                        shift_start = :shift_start,
+                                        shift_end = :shift_end,
+                                        work_days = :work_days,
+                                        status = :status,
+                                        notes = :notes
+                                        WHERE user_id = :user_id");
+        $stmt->execute([
+          ':user_id' => $data['user_id'],
+          ':frontdesk_location' => $data['frontdesk_location'] ?? null,
+          ':contact_number' => $data['contact_number'] ?? null,
+          ':staff_email' => $data['staff_email'] ?? $data['email'],
+          ':shift_start' => $data['shift_start'] ?? null,
+          ':shift_end' => $data['shift_end'] ?? null,
+          ':work_days' => $data['work_days'] ?? null,
+          ':status' => $data['status'] ?? 'active',
+          ':notes' => $data['notes'] ?? null
         ]);
       }
 

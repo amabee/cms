@@ -46,6 +46,12 @@
               </a>
             </li>
             <li class="menu-item">
+              <a href="departments.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-building"></i>
+                <div>Departments</div>
+              </a>
+            </li>
+            <li class="menu-item">
               <a href="staff.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-briefcase"></i>
                 <div>Staff</div>
@@ -322,6 +328,7 @@
           </div>
           <form id="addDoctorForm">
             <div class="modal-body">
+              <h6 class="mb-3">Personal Information</h6>
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label class="form-label">First Name <span class="text-danger">*</span></label>
@@ -333,13 +340,22 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Specialization <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" name="specialization" required>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Gender</label>
+                  <select class="form-select" name="gender">
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
                 </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">License Number</label>
-                  <input type="text" class="form-control" name="license_number">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Birth Date</label>
+                  <input type="date" class="form-control" name="birth_date">
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Phone</label>
+                  <input type="text" class="form-control" name="phone">
                 </div>
               </div>
               <div class="row">
@@ -348,16 +364,87 @@
                   <input type="email" class="form-control" name="email">
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label class="form-label">Phone</label>
-                  <input type="text" class="form-control" name="phone">
+                  <label class="form-label">Contact Number</label>
+                  <input type="text" class="form-control" name="contact_number">
                 </div>
               </div>
               <div class="mb-3">
-                <label class="form-label">Status</label>
-                <select class="form-select" name="status">
-                  <option value="1">Active</option>
-                  <option value="0">Inactive</option>
-                </select>
+                <label class="form-label">Address</label>
+                <textarea class="form-control" name="address" rows="2"></textarea>
+              </div>
+              
+              <hr>
+              <h6 class="mb-3">Professional Information</h6>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Specialization <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" name="specialization" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Department</label>
+                  <select class="form-select" name="department_id" id="departmentSelect">
+                    <option value="">Select Department</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">License Number</label>
+                  <input type="text" class="form-control" name="license_no">
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">PTR Number</label>
+                  <input type="text" class="form-control" name="ptr_no">
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">S2 License</label>
+                  <input type="text" class="form-control" name="s2_license_no">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Years of Experience</label>
+                  <input type="number" class="form-control" name="years_of_experience" value="0" min="0">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Consultation Fee</label>
+                  <input type="number" class="form-control" name="consultation_fee" value="0" min="0" step="0.01">
+                </div>
+              </div>
+              
+              <hr>
+              <h6 class="mb-3">Clinic Details</h6>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Room Number</label>
+                  <input type="text" class="form-control" name="room_number">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Status</label>
+                  <select class="form-select" name="status">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="on leave">On Leave</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Schedule Days</label>
+                  <input type="text" class="form-control" name="schedule_days" placeholder="e.g., Mon, Wed, Fri">
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Schedule Start</label>
+                  <input type="time" class="form-control" name="schedule_start">
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Schedule End</label>
+                  <input type="time" class="form-control" name="schedule_end">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Biography</label>
+                <textarea class="form-control" name="biography" rows="3" placeholder="Brief description about the doctor"></textarea>
               </div>
             </div>
             <div class="modal-footer">
@@ -365,6 +452,277 @@
               <button type="submit" class="btn btn-primary">Add Doctor</button>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Doctor Modal -->
+    <div class="modal fade" id="editDoctorModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Doctor</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="editDoctorForm">
+            <input type="hidden" name="doctor_id" id="edit_doctor_id">
+            <input type="hidden" name="user_id" id="edit_user_id">
+            <div class="modal-body">
+              <h6 class="mb-3">Personal Information</h6>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">First Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" name="first_name" id="edit_first_name" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Last Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" name="last_name" id="edit_last_name" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Gender</label>
+                  <select class="form-select" name="gender" id="edit_gender">
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Birth Date</label>
+                  <input type="date" class="form-control" name="birth_date" id="edit_birth_date">
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Phone</label>
+                  <input type="text" class="form-control" name="phone" id="edit_phone">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Email <span class="text-danger">*</span></label>
+                  <input type="email" class="form-control" name="email" id="edit_email" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Contact Number <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" name="contact_number" id="edit_contact_number" required>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Address</label>
+                <textarea class="form-control" name="address" id="edit_address" rows="2"></textarea>
+              </div>
+              
+              <hr>
+              <h6 class="mb-3">Professional Information</h6>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Specialization <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" name="specialization" id="edit_specialization" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Department</label>
+                  <select class="form-select" name="department_id" id="edit_department_id">
+                    <option value="">Select Department</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">License No. <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" name="license_no" id="edit_license_no" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">PTR No.</label>
+                  <input type="text" class="form-control" name="ptr_no" id="edit_ptr_no">
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">S2 License No.</label>
+                  <input type="text" class="form-control" name="s2_license_no" id="edit_s2_license_no">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Years of Experience</label>
+                  <input type="number" class="form-control" name="years_of_experience" id="edit_years_of_experience" value="0" min="0">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Consultation Fee</label>
+                  <input type="number" class="form-control" name="consultation_fee" id="edit_consultation_fee" value="0" min="0" step="0.01">
+                </div>
+              </div>
+              
+              <hr>
+              <h6 class="mb-3">Clinic Details</h6>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Room Number</label>
+                  <input type="text" class="form-control" name="room_number" id="edit_room_number">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Status</label>
+                  <select class="form-select" name="status" id="edit_status">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="on leave">On Leave</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Schedule Days</label>
+                  <input type="text" class="form-control" name="schedule_days" id="edit_schedule_days" placeholder="e.g., Mon, Wed, Fri">
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Schedule Start</label>
+                  <input type="time" class="form-control" name="schedule_start" id="edit_schedule_start">
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Schedule End</label>
+                  <input type="time" class="form-control" name="schedule_end" id="edit_schedule_end">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Biography</label>
+                <textarea class="form-control" name="biography" id="edit_biography" rows="3" placeholder="Brief description about the doctor"></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Update Doctor</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- View Doctor Modal -->
+    <div class="modal fade" id="viewDoctorModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Doctor Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row mb-4">
+              <div class="col-md-12 text-center">
+                <div class="d-flex justify-content-center mb-3">
+                  <div class="avatar avatar-xl">
+                    <span class="avatar-initial rounded-circle bg-label-primary" id="view_avatar" style="font-size: 2rem;"></span>
+                  </div>
+                </div>
+                <h4 id="view_full_name" class="mb-1"></h4>
+                <p class="text-muted" id="view_specialization"></p>
+                <span id="view_status_badge"></span>
+              </div>
+            </div>
+
+            <h6 class="mb-3">Personal Information</h6>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <small class="text-muted d-block">Email</small>
+                <p id="view_email" class="mb-2"></p>
+              </div>
+              <div class="col-md-6">
+                <small class="text-muted d-block">Contact Number</small>
+                <p id="view_contact_number" class="mb-2"></p>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <small class="text-muted d-block">Gender</small>
+                <p id="view_gender" class="mb-2"></p>
+              </div>
+              <div class="col-md-4">
+                <small class="text-muted d-block">Birth Date</small>
+                <p id="view_birth_date" class="mb-2"></p>
+              </div>
+              <div class="col-md-4">
+                <small class="text-muted d-block">Phone</small>
+                <p id="view_phone" class="mb-2"></p>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <small class="text-muted d-block">Address</small>
+                <p id="view_address" class="mb-2"></p>
+              </div>
+            </div>
+
+            <hr>
+            <h6 class="mb-3">Professional Information</h6>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <small class="text-muted d-block">Department</small>
+                <p id="view_department" class="mb-2"></p>
+              </div>
+              <div class="col-md-6">
+                <small class="text-muted d-block">License No.</small>
+                <p id="view_license_no" class="mb-2"></p>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <small class="text-muted d-block">PTR No.</small>
+                <p id="view_ptr_no" class="mb-2"></p>
+              </div>
+              <div class="col-md-4">
+                <small class="text-muted d-block">S2 License No.</small>
+                <p id="view_s2_license_no" class="mb-2"></p>
+              </div>
+              <div class="col-md-4">
+                <small class="text-muted d-block">Years of Experience</small>
+                <p id="view_years_of_experience" class="mb-2"></p>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <small class="text-muted d-block">Consultation Fee</small>
+                <p id="view_consultation_fee" class="mb-2"></p>
+              </div>
+              <div class="col-md-6">
+                <small class="text-muted d-block">Room Number</small>
+                <p id="view_room_number" class="mb-2"></p>
+              </div>
+            </div>
+
+            <hr>
+            <h6 class="mb-3">Schedule & Availability</h6>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <small class="text-muted d-block">Schedule Days</small>
+                <p id="view_schedule_days" class="mb-2"></p>
+              </div>
+              <div class="col-md-4">
+                <small class="text-muted d-block">Schedule Start</small>
+                <p id="view_schedule_start" class="mb-2"></p>
+              </div>
+              <div class="col-md-4">
+                <small class="text-muted d-block">Schedule End</small>
+                <p id="view_schedule_end" class="mb-2"></p>
+              </div>
+            </div>
+
+            <hr>
+            <h6 class="mb-3">Biography</h6>
+            <p id="view_biography" class="text-muted"></p>
+
+            <hr>
+            <div class="row">
+              <div class="col-md-6">
+                <small class="text-muted d-block">Created At</small>
+                <p id="view_created_at" class="mb-2"></p>
+              </div>
+              <div class="col-md-6">
+                <small class="text-muted d-block">Last Updated</small>
+                <p id="view_updated_at" class="mb-2"></p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </div>
@@ -405,6 +763,43 @@
 
         loadDoctors();
         loadStatistics();
+        loadDepartments();
+
+        async function loadDepartments() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getAll');
+            params.append('json', JSON.stringify({}));
+
+            const response = await axios.post('../../backend/departments.php', params);
+            
+            if (response.data.success) {
+              // Populate Add Doctor modal
+              const addSelect = document.getElementById('departmentSelect');
+              addSelect.innerHTML = '<option value="">Select Department</option>';
+              
+              // Populate Edit Doctor modal
+              const editSelect = document.getElementById('edit_department_id');
+              editSelect.innerHTML = '<option value="">Select Department</option>';
+              
+              response.data.data.forEach(dept => {
+                // Add option
+                const addOption = document.createElement('option');
+                addOption.value = dept.department_id;
+                addOption.textContent = dept.name;
+                addSelect.appendChild(addOption);
+                
+                // Edit option
+                const editOption = document.createElement('option');
+                editOption.value = dept.department_id;
+                editOption.textContent = dept.name;
+                editSelect.appendChild(editOption);
+              });
+            }
+          } catch (error) {
+            console.error('Error loading departments:', error);
+          }
+        }
 
         async function loadDoctors() {
           try {
@@ -470,7 +865,7 @@
           }
 
           tbody.innerHTML = doctors.map(doctor => {
-            var statusBadge = doctor.status == 1 
+            var statusBadge = doctor.status === 'active' || doctor.status == 1 
               ? '<span class="badge bg-label-success">Active</span>' 
               : '<span class="badge bg-label-danger">Inactive</span>';
             
@@ -491,8 +886,8 @@
                   </div>
                 </td>
                 <td><span class="badge bg-label-info">${doctor.specialization}</span></td>
-                <td>${doctor.license_number || 'N/A'}</td>
-                <td>${doctor.phone || 'N/A'}</td>
+                <td>${doctor.license_no || 'N/A'}</td>
+                <td>${doctor.contact_number || 'N/A'}</td>
                 <td>${statusBadge}</td>
                 <td>
                   <div class="dropdown">
@@ -500,13 +895,13 @@
                       <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" href="javascript:void(0);">
+                      <a class="dropdown-item view-doctor" href="javascript:void(0);" data-doctor='${JSON.stringify(doctor)}'>
+                        <i class="bx bx-show me-1"></i> View
+                      </a>
+                      <a class="dropdown-item edit-doctor" href="javascript:void(0);" data-doctor='${JSON.stringify(doctor)}'>
                         <i class="bx bx-edit-alt me-1"></i> Edit
                       </a>
-                      <a class="dropdown-item" href="javascript:void(0);">
-                        <i class="bx bx-calendar me-1"></i> View Schedule
-                      </a>
-                      <a class="dropdown-item" href="javascript:void(0);">
+                      <a class="dropdown-item delete-doctor" href="javascript:void(0);" data-id="${doctor.doctor_id}" data-name="${fullName}">
                         <i class="bx bx-trash me-1"></i> Delete
                       </a>
                     </div>
@@ -525,12 +920,25 @@
             const jsonData = {
               first_name: formData.get('first_name'),
               last_name: formData.get('last_name'),
+              gender: formData.get('gender') || null,
+              birth_date: formData.get('birth_date') || null,
+              phone: formData.get('phone') || null,
+              address: formData.get('address') || null,
               email: formData.get('email'),
-              phone: formData.get('phone'),
+              contact_number: formData.get('contact_number'),
               specialization: formData.get('specialization'),
-              license_no: formData.get('license_no'),
               department_id: formData.get('department_id') || null,
-              address: formData.get('address'),
+              license_no: formData.get('license_no'),
+              ptr_no: formData.get('ptr_no') || null,
+              s2_license_no: formData.get('s2_license_no') || null,
+              years_of_experience: formData.get('years_of_experience') || 0,
+              consultation_fee: formData.get('consultation_fee') || 0,
+              room_number: formData.get('room_number') || null,
+              status: formData.get('status') || 'active',
+              schedule_days: formData.get('schedule_days') || null,
+              schedule_start: formData.get('schedule_start') || null,
+              schedule_end: formData.get('schedule_end') || null,
+              biography: formData.get('biography') || null,
               admin_user_id: user.user_id
             };
 
@@ -566,6 +974,181 @@
         document.getElementById("searchDoctor").addEventListener("input", loadDoctors);
         document.getElementById("filterSpecialization").addEventListener("change", loadDoctors);
         document.getElementById("filterStatus").addEventListener("change", loadDoctors);
+
+        // View Doctor
+        document.addEventListener("click", function(e) {
+          if (e.target.closest(".view-doctor")) {
+            const doctorData = JSON.parse(e.target.closest(".view-doctor").getAttribute("data-doctor"));
+            
+            // Avatar and Header
+            const initials = ((doctorData.first_name?.[0] || '') + (doctorData.last_name?.[0] || '')).toUpperCase();
+            document.getElementById("view_avatar").textContent = initials;
+            document.getElementById("view_full_name").textContent = `Dr. ${doctorData.first_name} ${doctorData.last_name}`;
+            document.getElementById("view_specialization").textContent = doctorData.specialization || 'N/A';
+            
+            // Status Badge
+            let statusBadge = '<span class="badge bg-label-secondary">N/A</span>';
+            if (doctorData.status === 'active') {
+              statusBadge = '<span class="badge bg-label-success">Active</span>';
+            } else if (doctorData.status === 'inactive') {
+              statusBadge = '<span class="badge bg-label-danger">Inactive</span>';
+            } else if (doctorData.status === 'on leave') {
+              statusBadge = '<span class="badge bg-label-warning">On Leave</span>';
+            }
+            document.getElementById("view_status_badge").innerHTML = statusBadge;
+            
+            // Personal Information
+            document.getElementById("view_email").textContent = doctorData.email || 'N/A';
+            document.getElementById("view_contact_number").textContent = doctorData.contact_number || 'N/A';
+            document.getElementById("view_gender").textContent = doctorData.gender ? doctorData.gender.charAt(0).toUpperCase() + doctorData.gender.slice(1) : 'N/A';
+            document.getElementById("view_birth_date").textContent = doctorData.birth_date || 'N/A';
+            document.getElementById("view_phone").textContent = doctorData.phone || 'N/A';
+            document.getElementById("view_address").textContent = doctorData.address || 'N/A';
+            
+            // Professional Information
+            document.getElementById("view_department").textContent = doctorData.department_name || 'N/A';
+            document.getElementById("view_license_no").textContent = doctorData.license_no || 'N/A';
+            document.getElementById("view_ptr_no").textContent = doctorData.ptr_no || 'N/A';
+            document.getElementById("view_s2_license_no").textContent = doctorData.s2_license_no || 'N/A';
+            document.getElementById("view_years_of_experience").textContent = doctorData.years_of_experience ? `${doctorData.years_of_experience} years` : 'N/A';
+            document.getElementById("view_consultation_fee").textContent = doctorData.consultation_fee ? `₱${parseFloat(doctorData.consultation_fee).toFixed(2)}` : 'N/A';
+            document.getElementById("view_room_number").textContent = doctorData.room_number || 'N/A';
+            
+            // Schedule
+            document.getElementById("view_schedule_days").textContent = doctorData.schedule_days || 'N/A';
+            document.getElementById("view_schedule_start").textContent = doctorData.schedule_start || 'N/A';
+            document.getElementById("view_schedule_end").textContent = doctorData.schedule_end || 'N/A';
+            
+            // Biography
+            document.getElementById("view_biography").textContent = doctorData.biography || 'No biography available.';
+            
+            // Timestamps
+            document.getElementById("view_created_at").textContent = doctorData.created_at ? new Date(doctorData.created_at).toLocaleString() : 'N/A';
+            document.getElementById("view_updated_at").textContent = doctorData.updated_at ? new Date(doctorData.updated_at).toLocaleString() : 'N/A';
+            
+            new bootstrap.Modal(document.getElementById("viewDoctorModal")).show();
+          }
+        });
+
+        // Edit Doctor
+        document.addEventListener("click", function(e) {
+          if (e.target.closest(".edit-doctor")) {
+            const doctorData = JSON.parse(e.target.closest(".edit-doctor").getAttribute("data-doctor"));
+            
+            document.getElementById("edit_doctor_id").value = doctorData.doctor_id;
+            document.getElementById("edit_user_id").value = doctorData.user_id;
+            document.getElementById("edit_first_name").value = doctorData.first_name || '';
+            document.getElementById("edit_last_name").value = doctorData.last_name || '';
+            document.getElementById("edit_gender").value = doctorData.gender || '';
+            document.getElementById("edit_birth_date").value = doctorData.birth_date || '';
+            document.getElementById("edit_phone").value = doctorData.phone || '';
+            document.getElementById("edit_address").value = doctorData.address || '';
+            document.getElementById("edit_email").value = doctorData.email || '';
+            document.getElementById("edit_contact_number").value = doctorData.contact_number || '';
+            document.getElementById("edit_specialization").value = doctorData.specialization || '';
+            document.getElementById("edit_department_id").value = doctorData.department_id || '';
+            document.getElementById("edit_license_no").value = doctorData.license_no || '';
+            document.getElementById("edit_ptr_no").value = doctorData.ptr_no || '';
+            document.getElementById("edit_s2_license_no").value = doctorData.s2_license_no || '';
+            document.getElementById("edit_years_of_experience").value = doctorData.years_of_experience || 0;
+            document.getElementById("edit_consultation_fee").value = doctorData.consultation_fee || 0;
+            document.getElementById("edit_room_number").value = doctorData.room_number || '';
+            document.getElementById("edit_status").value = doctorData.status || 'active';
+            document.getElementById("edit_schedule_days").value = doctorData.schedule_days || '';
+            document.getElementById("edit_schedule_start").value = doctorData.schedule_start || '';
+            document.getElementById("edit_schedule_end").value = doctorData.schedule_end || '';
+            document.getElementById("edit_biography").value = doctorData.biography || '';
+            
+            new bootstrap.Modal(document.getElementById("editDoctorModal")).show();
+          }
+        });
+
+        // Edit Doctor Form Submit
+        document.getElementById("editDoctorForm").addEventListener("submit", async function(e) {
+          e.preventDefault();
+          
+          try {
+            const formData = new FormData(this);
+            const jsonData = {
+              doctor_id: formData.get('doctor_id'),
+              user_id: formData.get('user_id'),
+              first_name: formData.get('first_name'),
+              last_name: formData.get('last_name'),
+              gender: formData.get('gender') || null,
+              birth_date: formData.get('birth_date') || null,
+              phone: formData.get('phone') || null,
+              address: formData.get('address') || null,
+              email: formData.get('email'),
+              contact_number: formData.get('contact_number'),
+              specialization: formData.get('specialization'),
+              department_id: formData.get('department_id') || null,
+              license_no: formData.get('license_no'),
+              ptr_no: formData.get('ptr_no') || null,
+              s2_license_no: formData.get('s2_license_no') || null,
+              years_of_experience: formData.get('years_of_experience') || 0,
+              consultation_fee: formData.get('consultation_fee') || 0,
+              room_number: formData.get('room_number') || null,
+              status: formData.get('status'),
+              schedule_days: formData.get('schedule_days') || null,
+              schedule_start: formData.get('schedule_start') || null,
+              schedule_end: formData.get('schedule_end') || null,
+              biography: formData.get('biography') || null,
+              admin_user_id: user.user_id
+            };
+
+            const params = new URLSearchParams();
+            params.append('operation', 'update');
+            params.append('json', JSON.stringify(jsonData));
+
+            const response = await axios.post('../../backend/doctors.php', params);
+            
+            if (response.data.success) {
+              alert('Doctor updated successfully!');
+              bootstrap.Modal.getInstance(document.getElementById("editDoctorModal")).hide();
+              loadDoctors();
+              loadStatistics();
+            } else {
+              alert('Error: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error updating doctor:', error);
+            alert('Error updating doctor. Please try again.');
+          }
+        });
+
+        // Delete Doctor
+        document.addEventListener("click", async function(e) {
+          if (e.target.closest(".delete-doctor")) {
+            const doctorId = e.target.closest(".delete-doctor").getAttribute("data-id");
+            const doctorName = e.target.closest(".delete-doctor").getAttribute("data-name");
+            
+            if (!confirm(`Are you sure you want to delete Dr. ${doctorName}? This will also delete their user account.`)) {
+              return;
+            }
+
+            try {
+              const params = new URLSearchParams();
+              params.append('operation', 'delete');
+              params.append('json', JSON.stringify({
+                doctor_id: doctorId,
+                admin_user_id: user.user_id
+              }));
+
+              const response = await axios.post('../../backend/doctors.php', params);
+              
+              if (response.data.success) {
+                alert('Doctor deleted successfully!');
+                loadDoctors();
+                loadStatistics();
+              } else {
+                alert('Error: ' + response.data.error);
+              }
+            } catch (error) {
+              console.error('Error deleting doctor:', error);
+              alert('Error deleting doctor. Please try again.');
+            }
+          }
+        });
 
         console.log("Doctors page loaded");
       })();

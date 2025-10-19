@@ -23,9 +23,13 @@ class Doctors
       $status = $data['status'] ?? null;
       $search = $data['search'] ?? null;
 
-      $sql = "SELECT d.doctor_id, d.user_id, d.specialization, d.license_no, d.department_id,
-                     u.username, u.email, u.status, u.created_at,
-                     up.first_name, up.last_name, up.phone, up.address,
+      $sql = "SELECT d.doctor_id, d.user_id, d.department_id, d.specialization, d.license_no, 
+                     d.ptr_no, d.s2_license_no, d.years_of_experience, d.room_number, 
+                     d.consultation_fee, d.schedule_days, d.schedule_start, d.schedule_end,
+                     d.contact_number, d.email, d.status, d.profile_photo, d.biography,
+                     d.created_at, d.updated_at,
+                     u.username,
+                     up.first_name, up.last_name, up.gender, up.birth_date, up.phone, up.address,
                      dep.name as department_name
               FROM doctors d
               INNER JOIN users u ON d.user_id = u.user_id
@@ -41,12 +45,12 @@ class Doctors
       }
 
       if ($status) {
-        $sql .= " AND u.status = :status";
+        $sql .= " AND d.status = :status";
         $params[':status'] = $status;
       }
 
       if ($search) {
-        $sql .= " AND (up.first_name LIKE :search OR up.last_name LIKE :search OR d.license_no LIKE :search OR u.email LIKE :search)";
+        $sql .= " AND (up.first_name LIKE :search OR up.last_name LIKE :search OR d.license_no LIKE :search OR d.email LIKE :search OR d.contact_number LIKE :search)";
         $params[':search'] = "%$search%";
       }
 
@@ -155,14 +159,33 @@ class Doctors
         ':address' => $data['address'] ?? null
       ]);
 
-      // Create doctor record
-      $stmt = $this->conn->prepare("INSERT INTO doctors (user_id, specialization, license_no, department_id)
-                                      VALUES (:user_id, :specialization, :license_no, :department_id)");
+      // Create doctor record with all new fields
+      $stmt = $this->conn->prepare("INSERT INTO doctors (
+                                      user_id, department_id, specialization, license_no, ptr_no, s2_license_no,
+                                      years_of_experience, room_number, consultation_fee, schedule_days,
+                                      schedule_start, schedule_end, contact_number, email, status, biography
+                                    ) VALUES (
+                                      :user_id, :department_id, :specialization, :license_no, :ptr_no, :s2_license_no,
+                                      :years_of_experience, :room_number, :consultation_fee, :schedule_days,
+                                      :schedule_start, :schedule_end, :contact_number, :email, :status, :biography
+                                    )");
       $stmt->execute([
         ':user_id' => $user_id,
+        ':department_id' => $data['department_id'] ?? null,
         ':specialization' => $data['specialization'] ?? null,
         ':license_no' => $data['license_no'] ?? null,
-        ':department_id' => $data['department_id'] ?? null
+        ':ptr_no' => $data['ptr_no'] ?? null,
+        ':s2_license_no' => $data['s2_license_no'] ?? null,
+        ':years_of_experience' => $data['years_of_experience'] ?? 0,
+        ':room_number' => $data['room_number'] ?? null,
+        ':consultation_fee' => $data['consultation_fee'] ?? 0.00,
+        ':schedule_days' => $data['schedule_days'] ?? null,
+        ':schedule_start' => $data['schedule_start'] ?? null,
+        ':schedule_end' => $data['schedule_end'] ?? null,
+        ':contact_number' => $data['contact_number'] ?? null,
+        ':email' => $data['email'] ?? null,
+        ':status' => $data['status'] ?? 'active',
+        ':biography' => $data['biography'] ?? null
       ]);
 
       $doctor_id = $this->conn->lastInsertId();
@@ -201,16 +224,14 @@ class Doctors
 
       $user_id = $result['user_id'];
 
-      // Update user table
-      $stmt = $this->conn->prepare("UPDATE users SET 
-                                      email = :email, 
-                                      status = :status,
+      // Update user account
+      $stmt = $this->conn->prepare("UPDATE users SET
+                                      email = :email,
                                       updated_at = CURRENT_TIMESTAMP
                                       WHERE user_id = :user_id");
       $stmt->execute([
         ':user_id' => $user_id,
-        ':email' => $data['email'],
-        ':status' => $data['status'] ?? 'active'
+        ':email' => $data['email']
       ]);
 
       // Update user profile
@@ -232,17 +253,41 @@ class Doctors
         ':address' => $data['address'] ?? null
       ]);
 
-      // Update doctor record
+      // Update doctor record with all new fields
       $stmt = $this->conn->prepare("UPDATE doctors SET
+                                      department_id = :department_id,
                                       specialization = :specialization,
                                       license_no = :license_no,
-                                      department_id = :department_id
+                                      ptr_no = :ptr_no,
+                                      s2_license_no = :s2_license_no,
+                                      years_of_experience = :years_of_experience,
+                                      room_number = :room_number,
+                                      consultation_fee = :consultation_fee,
+                                      schedule_days = :schedule_days,
+                                      schedule_start = :schedule_start,
+                                      schedule_end = :schedule_end,
+                                      contact_number = :contact_number,
+                                      email = :email,
+                                      status = :status,
+                                      biography = :biography
                                       WHERE doctor_id = :doctor_id");
       $stmt->execute([
         ':doctor_id' => $data['doctor_id'],
+        ':department_id' => $data['department_id'] ?? null,
         ':specialization' => $data['specialization'] ?? null,
         ':license_no' => $data['license_no'] ?? null,
-        ':department_id' => $data['department_id'] ?? null
+        ':ptr_no' => $data['ptr_no'] ?? null,
+        ':s2_license_no' => $data['s2_license_no'] ?? null,
+        ':years_of_experience' => $data['years_of_experience'] ?? 0,
+        ':room_number' => $data['room_number'] ?? null,
+        ':consultation_fee' => $data['consultation_fee'] ?? 0.00,
+        ':schedule_days' => $data['schedule_days'] ?? null,
+        ':schedule_start' => $data['schedule_start'] ?? null,
+        ':schedule_end' => $data['schedule_end'] ?? null,
+        ':contact_number' => $data['contact_number'] ?? null,
+        ':email' => $data['email'] ?? null,
+        ':status' => $data['status'] ?? 'active',
+        ':biography' => $data['biography'] ?? null
       ]);
 
       // Log the action

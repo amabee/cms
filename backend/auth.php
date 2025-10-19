@@ -35,6 +35,8 @@ class AUTH
   $stmt->execute();
 
       if ($stmt->rowCount() === 0) {
+        // Log failed login attempt (user not found)
+        $this->logAction(0, 'login_failed', "Failed login attempt for username: $username - User not found");
         return json_encode(['error' => 'Invalid Credentials']);
       }
 
@@ -43,11 +45,15 @@ class AUTH
       // detect status column (defaults to 'status' in schema)
       $status = $row['status'] ?? null;
       if ($status !== null && $status !== 'active') {
+        $uid = $row['user_id'] ?? $row['id'] ?? 0;
+        $this->logAction($uid, 'login_failed', "Failed login attempt for username: $username - Account not active");
         return json_encode(['error' => 'Account is not active']);
       }
       // detect password column (password_hash per schema, fallback to password)
       $hashCol = isset($row['password_hash']) ? 'password_hash' : (isset($row['password']) ? 'password' : null);
       if ($hashCol === null || !password_verify($password, $row[$hashCol])) {
+        $uid = $row['user_id'] ?? $row['id'] ?? 0;
+        $this->logAction($uid, 'login_failed', "Failed login attempt for username: $username - Invalid password");
         return json_encode(['error' => 'Invalid Credentials']);
       }
 
@@ -117,6 +123,9 @@ class AUTH
   $notifStmt->execute([':uid' => $uid]);
       $notifications = $notifStmt->fetchAll(PDO::FETCH_ASSOC);
 
+      // Log successful login
+      $this->logAction($uid, 'login_success', "User logged in: " . ($row['username'] ?? 'Unknown'));
+
       $response = [
         'success' => true,
         'user' => $user,
@@ -133,6 +142,41 @@ class AUTH
   {
     return json_encode(['error' => 'Signup not implemented']);
   }
+
+  public function logout($json)
+  {
+    $data = json_decode($json, true);
+    $user_id = $data['user_id'] ?? null;
+    $username = $data['username'] ?? 'Unknown';
+
+    if ($user_id) {
+      $this->logAction($user_id, 'logout', "User logged out: $username");
+    }
+
+    return json_encode([
+      'success' => true,
+      'message' => 'Logged out successfully'
+    ]);
+  }
+
+  private function logAction($user_id, $action, $description)
+  {
+    try {
+      $ip_address = $_SERVER['REMOTE_ADDR'] ?? 'Unknown';
+      
+      $stmt = $this->conn->prepare("INSERT INTO system_logs (user_id, action, description, ip_address) 
+                                     VALUES (:user_id, :action, :description, :ip_address)");
+      $stmt->execute([
+        ':user_id' => $user_id,
+        ':action' => $action,
+        ':description' => $description,
+        ':ip_address' => $ip_address
+      ]);
+    } catch (PDOException $e) {
+      // Silent fail - don't break auth flow
+      error_log("Login logging failed: " . $e->getMessage());
+    }
+  }
 }
 
 $auth = new AUTH();
@@ -144,6 +188,9 @@ if (in_array($_SERVER['REQUEST_METHOD'], ['GET', 'POST'])) {
   switch ($operation) {
     case 'login':
       echo $auth->login($json);
+      break;
+    case 'logout':
+      echo $auth->logout($json);
       break;
     case 'signup':
       echo $auth->signup($json);

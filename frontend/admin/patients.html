@@ -45,6 +45,12 @@
               </a>
             </li>
             <li class="menu-item">
+              <a href="departments.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-building"></i>
+                <div>Departments</div>
+              </a>
+            </li>
+            <li class="menu-item">
               <a href="staff.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-briefcase"></i>
                 <div>Staff</div>
@@ -367,11 +373,14 @@
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label class="form-label">Insurance Provider</label>
-                  <input type="text" class="form-control" name="insurance_provider">
+                  <select class="form-select" name="insurance_id" id="insurance_id">
+                    <option value="">No Insurance</option>
+                  </select>
                 </div>
                 <div class="col-md-6 mb-3">
                   <label class="form-label">Policy Number</label>
-                  <input type="text" class="form-control" name="insurance_policy_number">
+                  <input type="text" class="form-control" name="insurance_policy_number" id="insurance_policy_number" readonly>
+                  <div class="form-text">Auto-filled based on selected insurance provider</div>
                 </div>
               </div>
               <div class="mb-3">
@@ -434,6 +443,7 @@
 
         loadPatients();
         loadStatistics();
+        loadInsurance();
 
         async function loadPatients() {
           try {
@@ -480,6 +490,45 @@
             console.error('Error loading statistics:', error);
           }
         }
+
+        // Store insurance data globally for easy access
+        let insuranceData = [];
+
+        async function loadInsurance() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getAll');
+
+            const response = await axios.post('../../backend/insurance.php', params);
+            
+            if (response.data.success) {
+              insuranceData = response.data.data;
+              const select = document.getElementById("insurance_id");
+              
+              // Keep the "No Insurance" option and add insurance providers
+              select.innerHTML = '<option value="">No Insurance</option>';
+              
+              insuranceData.forEach(insurance => {
+                const option = document.createElement('option');
+                option.value = insurance.insurance_id;
+                option.textContent = insurance.company_name;
+                option.setAttribute('data-policy-no', insurance.policy_no || '');
+                select.appendChild(option);
+              });
+            }
+          } catch (error) {
+            console.error('Error loading insurance providers:', error);
+          }
+        }
+
+        // Auto-fill policy number when insurance is selected
+        document.addEventListener('DOMContentLoaded', function() {
+          document.getElementById('insurance_id').addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const policyNo = selectedOption.getAttribute('data-policy-no') || '';
+            document.getElementById('insurance_policy_number').value = policyNo;
+          });
+        });
 
         function renderPatientsTable(patients) {
           var tbody = document.getElementById("patientsTableBody");
@@ -592,7 +641,7 @@
               emergency_contact_phone: formData.get('emergency_contact_phone'),
               allergies: formData.get('allergies'),
               existing_conditions: formData.get('existing_conditions'),
-              insurance_provider: formData.get('insurance_provider'),
+              insurance_id: formData.get('insurance_id') || null,
               insurance_policy_number: formData.get('insurance_policy_number'),
               notes: formData.get('notes'),
               create_account: createAccount ? 1 : 0,

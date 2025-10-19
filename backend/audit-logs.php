@@ -43,8 +43,8 @@ class AuditLogs
       }
 
       if ($action) {
-        $sql .= " AND sl.action = :action";
-        $params[':action'] = $action;
+        $sql .= " AND sl.action LIKE :action";
+        $params[':action'] = "%$action%";
       }
 
       if ($from_date) {
@@ -83,7 +83,7 @@ class AuditLogs
                    WHERE 1=1";
       
       if ($user_id) $countSql .= " AND sl.user_id = :user_id";
-      if ($action) $countSql .= " AND sl.action = :action";
+      if ($action) $countSql .= " AND sl.action LIKE :action";
       if ($from_date) $countSql .= " AND DATE(sl.created_at) >= :from_date";
       if ($to_date) $countSql .= " AND DATE(sl.created_at) <= :to_date";
       if ($search) $countSql .= " AND (sl.description LIKE :search OR sl.action LIKE :search OR u.username LIKE :search OR up.first_name LIKE :search OR up.last_name LIKE :search)";
@@ -146,7 +146,9 @@ class AuditLogs
   {
     try {
       // Get distinct users who have logged actions
-      $stmt = $this->conn->query("SELECT DISTINCT u.user_id, u.username, up.first_name, up.last_name
+      $stmt = $this->conn->query("SELECT DISTINCT u.user_id, u.username, 
+                                   CONCAT(COALESCE(up.first_name, ''), ' ', COALESCE(up.last_name, '')) as full_name,
+                                   up.last_name, up.first_name
                                    FROM system_logs sl
                                    INNER JOIN users u ON sl.user_id = u.user_id
                                    LEFT JOIN user_profiles up ON u.user_id = up.user_id
@@ -188,7 +190,7 @@ class AuditLogs
       
       if (isset($logs['success']) && $logs['success']) {
         // Log the export action
-        $this->logAction($data['admin_user_id'] ?? 1, 'export', "Exported audit logs (${logs['total']} records)", $_SERVER['REMOTE_ADDR'] ?? 'unknown');
+        $this->logAction($data['admin_user_id'] ?? 1, 'export', "Exported audit logs ({$logs['total']} records)", $_SERVER['REMOTE_ADDR'] ?? 'unknown');
         
         return json_encode([
           'success' => true,

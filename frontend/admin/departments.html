@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Departments Management - My Clinic</title>
+    <meta name="description" content="Manage Departments" />
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+  </head>
+
+  <body>
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        
+        <!-- Menu (Sidebar) - Same as users.html -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="dashboard.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <img src="../assets/img/favicon/logo.png" alt="Logo" width="32" />
+              </span>
+              <span class="app-brand-text demo menu-text fw-bold ms-2">My Clinic</span>
+            </a>
+          </div>
+          <div class="menu-inner-shadow"></div>
+          <ul class="menu-inner py-1">
+            <li class="menu-item">
+              <a href="dashboard.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div>Dashboard</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Management</span></li>
+            <li class="menu-item">
+              <a href="users.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div>Users</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="doctors.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-plus-medical"></i>
+                <div>Doctors</div>
+              </a>
+            </li>
+            <li class="menu-item active">
+              <a href="departments.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-building"></i>
+                <div>Departments</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="staff.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-briefcase"></i>
+                <div>Staff</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="patients.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-group"></i>
+                <div>Patients</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">System</span></li>
+            <li class="menu-item">
+              <a href="settings.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-cog"></i>
+                <div>Settings</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="audit-logs.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                <div>Audit Logs</div>
+              </a>
+            </li>
+          </ul>
+        </aside>
+
+        <div class="layout-page">
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input type="text" class="form-control border-0 shadow-none" placeholder="Search..." />
+                </div>
+              </div>
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <li class="nav-item navbar-dropdown dropdown-notifications dropdown me-3 me-xl-2">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);">
+                    <i class="bx bx-bell bx-sm"></i>
+                    <span class="badge bg-danger rounded-pill badge-notifications" id="notificationBadge">0</span>
+                  </a>
+                </li>
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatar">A</span>
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatarDropdown">A</span>
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block" id="userFullName">Admin User</span>
+                            <small class="text-muted" id="userRole">Administrator</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="settings.html">
+                        <i class="bx bx-cog me-2"></i>
+                        <span class="align-middle">Settings</span>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);" id="logoutBtn">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              
+              <h4 class="fw-bold py-3 mb-4">
+                <span class="text-muted fw-light">Management /</span> Departments
+              </h4>
+
+              <!-- Statistics Row -->
+              <div class="row mb-4">
+                <div class="col-lg-4 col-md-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">Total Departments</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="totalDepartments">0</h4>
+                          </div>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-primary rounded p-2">
+                            <i class="bx bx-building bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">Active Doctors</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2 text-success" id="activeDoctors">0</h4>
+                          </div>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-success rounded p-2">
+                            <i class="bx bx-user-check bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">Total Specialties</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="totalSpecialties">0</h4>
+                          </div>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-info rounded p-2">
+                            <i class="bx bx-category bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Departments List -->
+              <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0">Department Management</h5>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDepartmentModal">
+                    <i class="bx bx-plus me-1"></i> Add New Department
+                  </button>
+                </div>
+                
+                <div class="card-body">
+                  <!-- Search -->
+                  <div class="row mb-3">
+                    <div class="col-md-10">
+                      <input type="text" class="form-control" id="searchDepartment" placeholder="Search by department name or description...">
+                    </div>
+                    <div class="col-md-2">
+                      <button type="button" class="btn btn-outline-secondary w-100" id="resetSearch">
+                        <i class="bx bx-refresh"></i> Reset
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Departments Table -->
+                  <div class="table-responsive text-nowrap">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Department</th>
+                          <th>Description</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table-border-bottom-0" id="departmentsTableBody">
+                        <tr>
+                          <td colspan="3" class="text-center">
+                            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2 mb-0">Loading departments...</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  © <script>document.write(new Date().getFullYear());</script> My Clinic CMS
+                </div>
+              </div>
+            </footer>
+            <div class="content-backdrop fade"></div>
+          </div>
+        </div>
+      </div>
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+    <!-- Add Department Modal -->
+    <div class="modal fade" id="addDepartmentModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add New Department</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="addDepartmentForm">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Department Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="name" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" name="description" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Add Department</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Department Modal -->
+    <div class="modal fade" id="editDepartmentModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Department</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="editDepartmentForm">
+            <input type="hidden" name="department_id" id="edit_department_id">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Department Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="name" id="edit_name" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" name="description" id="edit_description" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Update Department</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- View Department Modal -->
+    <div class="modal fade" id="viewDepartmentModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Department Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <h6 class="text-muted mb-2">Department Name</h6>
+              <p id="view_name" class="mb-0"></p>
+            </div>
+            <div class="mb-3">
+              <h6 class="text-muted mb-2">Description</h6>
+              <p id="view_description" class="mb-0"></p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/js/session-handler.js"></script>
+    
+    <script>
+      (function () {
+        "use strict";
+        if (!SessionHandler.requireUserType(1)) return;
+
+        var user = SessionHandler.getUser();
+        var fullName = SessionHandler.getUserFullName();
+        var initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        
+        document.getElementById("userFullName").textContent = fullName;
+        document.getElementById("userRole").textContent = SessionHandler.getUserRole();
+        document.getElementById("userAvatar").textContent = initials;
+        document.getElementById("userAvatarDropdown").textContent = initials;
+
+        var notifCount = SessionHandler.getUnreadNotificationsCount();
+        document.getElementById("notificationBadge").textContent = notifCount;
+        if (notifCount === 0) document.getElementById("notificationBadge").style.display = "none";
+
+        document.getElementById("logoutBtn").addEventListener("click", function(e) {
+          e.preventDefault();
+          if (confirm("Are you sure you want to logout?")) SessionHandler.logout();
+        });
+
+        var menuToggle = document.querySelector('.layout-menu-toggle');
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function() {
+            document.querySelector('.layout-wrapper').classList.toggle('layout-menu-expanded');
+          });
+        }
+
+        loadDepartments();
+        loadStatistics();
+
+        async function loadDepartments() {
+          try {
+            const searchTerm = document.getElementById("searchDepartment")?.value || "";
+
+            const params = new URLSearchParams();
+            params.append('operation', 'getAll');
+            params.append('json', JSON.stringify({}));
+
+            const response = await axios.post('../../backend/departments.php', params);
+            
+            if (response.data.success) {
+              let departments = response.data.data;
+
+              // Filter by search term
+              if (searchTerm) {
+                departments = departments.filter(dept => 
+                  dept.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  (dept.description && dept.description.toLowerCase().includes(searchTerm.toLowerCase()))
+                );
+              }
+
+              renderDepartmentsTable(departments);
+            } else {
+              console.error('Error loading departments:', response.data.error);
+              alert('Error loading departments: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error loading departments:', error);
+            alert('Error loading departments. Please check your connection.');
+          }
+        }
+
+        async function loadStatistics() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getAll');
+            params.append('json', JSON.stringify({}));
+
+            const response = await axios.post('../../backend/departments.php', params);
+            
+            if (response.data.success) {
+              document.getElementById("totalDepartments").textContent = response.data.data.length;
+              document.getElementById("activeDoctors").textContent = "N/A";
+              document.getElementById("totalSpecialties").textContent = "N/A";
+            }
+          } catch (error) {
+            console.error('Error loading statistics:', error);
+          }
+        }
+
+        function renderDepartmentsTable(departments) {
+          var tbody = document.getElementById("departmentsTableBody");
+          
+          if (departments.length === 0) {
+            tbody.innerHTML = `
+              <tr>
+                <td colspan="3" class="text-center py-4">
+                  <i class="bx bx-building bx-lg text-muted"></i>
+                  <p class="mt-2 mb-0">No departments found</p>
+                </td>
+              </tr>
+            `;
+            return;
+          }
+
+          tbody.innerHTML = departments.map(dept => {
+            var initials = dept.name.substring(0, 2).toUpperCase();
+            var description = dept.description || 'No description';
+            if (description.length > 100) description = description.substring(0, 100) + '...';
+
+            return `
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="avatar avatar-sm me-2">
+                      <span class="avatar-initial rounded-circle bg-label-primary">${initials}</span>
+                    </div>
+                    <strong>${dept.name}</strong>
+                  </div>
+                </td>
+                <td>${description}</td>
+                <td>
+                  <div class="dropdown">
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item view-department" href="javascript:void(0);" data-department='${JSON.stringify(dept)}'>
+                        <i class="bx bx-show me-1"></i> View
+                      </a>
+                      <a class="dropdown-item edit-department" href="javascript:void(0);" data-department='${JSON.stringify(dept)}'>
+                        <i class="bx bx-edit-alt me-1"></i> Edit
+                      </a>
+                      <a class="dropdown-item delete-department" href="javascript:void(0);" data-id="${dept.department_id}" data-name="${dept.name}">
+                        <i class="bx bx-trash me-1"></i> Delete
+                      </a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        }
+
+        document.getElementById("addDepartmentForm").addEventListener("submit", async function(e) {
+          e.preventDefault();
+          
+          try {
+            const formData = new FormData(this);
+            const jsonData = {
+              name: formData.get('name'),
+              description: formData.get('description') || null,
+              admin_user_id: user.user_id
+            };
+
+            const params = new URLSearchParams();
+            params.append('operation', 'create');
+            params.append('json', JSON.stringify(jsonData));
+
+            const response = await axios.post('../../backend/departments.php', params);
+            
+            if (response.data.success) {
+              alert('Department added successfully!');
+              bootstrap.Modal.getInstance(document.getElementById("addDepartmentModal")).hide();
+              this.reset();
+              loadDepartments();
+              loadStatistics();
+            } else {
+              alert('Error: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error adding department:', error);
+            alert('Error adding department. Please try again.');
+          }
+        });
+
+        document.getElementById("resetSearch").addEventListener("click", function() {
+          document.getElementById("searchDepartment").value = "";
+          loadDepartments();
+        });
+
+        document.getElementById("searchDepartment").addEventListener("input", loadDepartments);
+
+        // View Department
+        document.addEventListener("click", function(e) {
+          if (e.target.closest(".view-department")) {
+            const deptData = JSON.parse(e.target.closest(".view-department").getAttribute("data-department"));
+            
+            document.getElementById("view_name").textContent = deptData.name || 'N/A';
+            document.getElementById("view_description").textContent = deptData.description || 'No description available';
+            
+            new bootstrap.Modal(document.getElementById("viewDepartmentModal")).show();
+          }
+        });
+
+        // Edit Department
+        document.addEventListener("click", function(e) {
+          if (e.target.closest(".edit-department")) {
+            const deptData = JSON.parse(e.target.closest(".edit-department").getAttribute("data-department"));
+            
+            document.getElementById("edit_department_id").value = deptData.department_id;
+            document.getElementById("edit_name").value = deptData.name || '';
+            document.getElementById("edit_description").value = deptData.description || '';
+            
+            new bootstrap.Modal(document.getElementById("editDepartmentModal")).show();
+          }
+        });
+
+        // Edit Department Form Submit
+        document.getElementById("editDepartmentForm").addEventListener("submit", async function(e) {
+          e.preventDefault();
+          
+          try {
+            const formData = new FormData(this);
+            const jsonData = {
+              department_id: formData.get('department_id'),
+              name: formData.get('name'),
+              description: formData.get('description') || null,
+              admin_user_id: user.user_id
+            };
+
+            const params = new URLSearchParams();
+            params.append('operation', 'update');
+            params.append('json', JSON.stringify(jsonData));
+
+            const response = await axios.post('../../backend/departments.php', params);
+            
+            if (response.data.success) {
+              alert('Department updated successfully!');
+              bootstrap.Modal.getInstance(document.getElementById("editDepartmentModal")).hide();
+              loadDepartments();
+              loadStatistics();
+            } else {
+              alert('Error: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error updating department:', error);
+            alert('Error updating department. Please try again.');
+          }
+        });
+
+        // Delete Department
+        document.addEventListener("click", async function(e) {
+          if (e.target.closest(".delete-department")) {
+            const deptId = e.target.closest(".delete-department").getAttribute("data-id");
+            const deptName = e.target.closest(".delete-department").getAttribute("data-name");
+            
+            if (!confirm(`Are you sure you want to delete ${deptName}? This action cannot be undone.`)) {
+              return;
+            }
+
+            try {
+              const params = new URLSearchParams();
+              params.append('operation', 'delete');
+              params.append('json', JSON.stringify({
+                department_id: deptId,
+                admin_user_id: user.user_id
+              }));
+
+              const response = await axios.post('../../backend/departments.php', params);
+              
+              if (response.data.success) {
+                alert('Department deleted successfully!');
+                loadDepartments();
+                loadStatistics();
+              } else {
+                alert('Error: ' + response.data.error);
+              }
+            } catch (error) {
+              console.error('Error deleting department:', error);
+              alert('Error deleting department. Please try again.');
+            }
+          }
+        });
+
+        console.log("Departments page loaded");
+      })();
+    </script>
+  </body>
+</html>

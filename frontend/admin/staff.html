@@ -44,6 +44,12 @@
                 <div>Doctors</div>
               </a>
             </li>
+            <li class="menu-item">
+              <a href="departments.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-building"></i>
+                <div>Departments</div>
+              </a>
+            </li>
             <li class="menu-item active">
               <a href="staff.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-briefcase"></i>
@@ -206,8 +212,9 @@
                     <div class="col-md-2">
                       <select class="form-select" id="filterStatus">
                         <option value="">All Status</option>
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="on leave">On Leave</option>
                       </select>
                     </div>
                     <div class="col-md-2">
@@ -224,7 +231,7 @@
                           <th>Staff Member</th>
                           <th>Role</th>
                           <th>Contact</th>
-                          <th>Department</th>
+                          <th>Frontdesk Location</th>
                           <th>Status</th>
                           <th>Actions</th>
                         </tr>
@@ -267,6 +274,7 @@
           </div>
           <form id="addStaffForm">
             <div class="modal-body">
+              <h6 class="mb-3">Personal Information</h6>
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label class="form-label">First Name <span class="text-danger">*</span></label>
@@ -278,35 +286,109 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Gender</label>
+                  <select class="form-select" name="gender">
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Birth Date</label>
+                  <input type="date" class="form-control" name="birth_date">
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Phone</label>
+                  <input type="text" class="form-control" name="phone">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Address</label>
+                <textarea class="form-control" name="address" rows="2"></textarea>
+              </div>
+              
+              <hr>
+              <h6 class="mb-3">Work Information</h6>
+              <div class="row">
                 <div class="col-md-6 mb-3">
                   <label class="form-label">Role <span class="text-danger">*</span></label>
-                  <select class="form-select" name="usertype_id" required>
+                  <select class="form-select" name="usertype_id" id="add_usertype_id" required>
                     <option value="">Select Role</option>
                     <option value="3">Secretary</option>
                     <option value="4">Receptionist</option>
                   </select>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label class="form-label">Department</label>
-                  <input type="text" class="form-control" name="department">
+                  <label class="form-label">Email <span class="text-danger">*</span></label>
+                  <input type="email" class="form-control" name="email" required>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <label class="form-label">Email</label>
-                  <input type="email" class="form-control" name="email">
+                  <label class="form-label">Contact Number</label>
+                  <input type="text" class="form-control" name="contact_number">
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label class="form-label">Phone</label>
-                  <input type="text" class="form-control" name="phone">
+                  <label class="form-label">Staff Email</label>
+                  <input type="email" class="form-control" name="staff_email" placeholder="Work email (optional)">
+                </div>
+              </div>
+              
+              <!-- Secretary-specific fields -->
+              <div id="secretaryFields" style="display: none;">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Assigned Doctor</label>
+                    <select class="form-select" name="assigned_doctor_id" id="add_assigned_doctor">
+                      <option value="">Select Doctor</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Office Location</label>
+                    <input type="text" class="form-control" name="office_location" placeholder="e.g., Building A, Room 201">
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Receptionist-specific fields -->
+              <div id="receptionistFields" style="display: none;">
+                <div class="mb-3">
+                  <label class="form-label">Frontdesk Location</label>
+                  <input type="text" class="form-control" name="frontdesk_location" placeholder="e.g., Main Lobby, 2nd Floor">
+                </div>
+              </div>
+              
+              <hr>
+              <h6 class="mb-3">Schedule & Status</h6>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Work Days</label>
+                  <input type="text" class="form-control" name="work_days" placeholder="e.g., Mon-Fri">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Status</label>
+                  <select class="form-select" name="status">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="on leave">On Leave</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Shift Start</label>
+                  <input type="time" class="form-control" name="shift_start">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Shift End</label>
+                  <input type="time" class="form-control" name="shift_end">
                 </div>
               </div>
               <div class="mb-3">
-                <label class="form-label">Status</label>
-                <select class="form-select" name="status">
-                  <option value="1">Active</option>
-                  <option value="0">Inactive</option>
-                </select>
+                <label class="form-label">Notes</label>
+                <textarea class="form-control" name="notes" rows="3" placeholder="Additional remarks or responsibilities"></textarea>
               </div>
             </div>
             <div class="modal-footer">
@@ -314,6 +396,247 @@
               <button type="submit" class="btn btn-primary">Add Staff</button>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Staff Modal -->
+    <div class="modal fade" id="editStaffModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Staff Member</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <form id="editStaffForm">
+            <input type="hidden" name="user_id" id="edit_user_id">
+            <input type="hidden" name="usertype_id" id="edit_usertype_id">
+            <div class="modal-body">
+              <h6 class="mb-3">Personal Information</h6>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">First Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" name="first_name" id="edit_first_name" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Last Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" name="last_name" id="edit_last_name" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Gender</label>
+                  <select class="form-select" name="gender" id="edit_gender">
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Birth Date</label>
+                  <input type="date" class="form-control" name="birth_date" id="edit_birth_date">
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Phone</label>
+                  <input type="text" class="form-control" name="phone" id="edit_phone">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Address</label>
+                <textarea class="form-control" name="address" id="edit_address" rows="2"></textarea>
+              </div>
+              
+              <hr>
+              <h6 class="mb-3">Work Information</h6>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Role</label>
+                  <input type="text" class="form-control" id="edit_role_display" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Email <span class="text-danger">*</span></label>
+                  <input type="email" class="form-control" name="email" id="edit_email" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Contact Number</label>
+                  <input type="text" class="form-control" name="contact_number" id="edit_contact_number">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Staff Email</label>
+                  <input type="email" class="form-control" name="staff_email" id="edit_staff_email" placeholder="Work email (optional)">
+                </div>
+              </div>
+              
+              <!-- Secretary-specific fields -->
+              <div id="editSecretaryFields" style="display: none;">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Assigned Doctor</label>
+                    <select class="form-select" name="assigned_doctor_id" id="edit_assigned_doctor">
+                      <option value="">Select Doctor</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Office Location</label>
+                    <input type="text" class="form-control" name="office_location" id="edit_office_location">
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Receptionist-specific fields -->
+              <div id="editReceptionistFields" style="display: none;">
+                <div class="mb-3">
+                  <label class="form-label">Frontdesk Location</label>
+                  <input type="text" class="form-control" name="frontdesk_location" id="edit_frontdesk_location">
+                </div>
+              </div>
+              
+              <hr>
+              <h6 class="mb-3">Schedule & Status</h6>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Work Days</label>
+                  <input type="text" class="form-control" name="work_days" id="edit_work_days">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Status</label>
+                  <select class="form-select" name="status" id="edit_status">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="on leave">On Leave</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Shift Start</label>
+                  <input type="time" class="form-control" name="shift_start" id="edit_shift_start">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Shift End</label>
+                  <input type="time" class="form-control" name="shift_end" id="edit_shift_end">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Notes</label>
+                <textarea class="form-control" name="notes" id="edit_notes" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Update Staff</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- View Staff Modal -->
+    <div class="modal fade" id="viewStaffModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Staff Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row mb-4">
+              <div class="col-md-12 text-center">
+                <div class="d-flex justify-content-center mb-3">
+                  <div class="avatar avatar-xl">
+                    <span class="avatar-initial rounded-circle bg-label-primary" id="view_avatar" style="font-size: 2rem;"></span>
+                  </div>
+                </div>
+                <h4 id="view_full_name" class="mb-1"></h4>
+                <p class="text-muted" id="view_role"></p>
+                <span id="view_status_badge"></span>
+              </div>
+            </div>
+
+            <h6 class="mb-3">Personal Information</h6>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <small class="text-muted d-block">Email</small>
+                <p id="view_email" class="mb-2"></p>
+              </div>
+              <div class="col-md-6">
+                <small class="text-muted d-block">Contact Number</small>
+                <p id="view_contact_number" class="mb-2"></p>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <small class="text-muted d-block">Gender</small>
+                <p id="view_gender" class="mb-2"></p>
+              </div>
+              <div class="col-md-4">
+                <small class="text-muted d-block">Birth Date</small>
+                <p id="view_birth_date" class="mb-2"></p>
+              </div>
+              <div class="col-md-4">
+                <small class="text-muted d-block">Phone</small>
+                <p id="view_phone" class="mb-2"></p>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <small class="text-muted d-block">Address</small>
+                <p id="view_address" class="mb-2"></p>
+              </div>
+            </div>
+
+            <hr>
+            <h6 class="mb-3">Work Information</h6>
+            <div class="row mb-3" id="view_secretary_info" style="display: none;">
+              <div class="col-md-6">
+                <small class="text-muted d-block">Assigned Doctor</small>
+                <p id="view_assigned_doctor" class="mb-2"></p>
+              </div>
+              <div class="col-md-6">
+                <small class="text-muted d-block">Office Location</small>
+                <p id="view_office_location" class="mb-2"></p>
+              </div>
+            </div>
+            <div class="row mb-3" id="view_receptionist_info" style="display: none;">
+              <div class="col-md-12">
+                <small class="text-muted d-block">Frontdesk Location</small>
+                <p id="view_frontdesk_location" class="mb-2"></p>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <small class="text-muted d-block">Staff Email</small>
+                <p id="view_staff_email" class="mb-2"></p>
+              </div>
+              <div class="col-md-6">
+                <small class="text-muted d-block">Work Days</small>
+                <p id="view_work_days" class="mb-2"></p>
+              </div>
+            </div>
+
+            <hr>
+            <h6 class="mb-3">Schedule</h6>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <small class="text-muted d-block">Shift Start</small>
+                <p id="view_shift_start" class="mb-2"></p>
+              </div>
+              <div class="col-md-6">
+                <small class="text-muted d-block">Shift End</small>
+                <p id="view_shift_end" class="mb-2"></p>
+              </div>
+            </div>
+
+            <hr>
+            <h6 class="mb-3">Notes</h6>
+            <p id="view_notes" class="text-muted"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </div>
@@ -354,6 +677,56 @@
 
         loadStaff();
         loadStatistics();
+        loadDoctors();
+
+        // Show/hide role-specific fields in Add modal
+        document.getElementById('add_usertype_id').addEventListener('change', function() {
+          const secretaryFields = document.getElementById('secretaryFields');
+          const receptionistFields = document.getElementById('receptionistFields');
+          
+          if (this.value === '3') {
+            secretaryFields.style.display = 'block';
+            receptionistFields.style.display = 'none';
+          } else if (this.value === '4') {
+            secretaryFields.style.display = 'none';
+            receptionistFields.style.display = 'block';
+          } else {
+            secretaryFields.style.display = 'none';
+            receptionistFields.style.display = 'none';
+          }
+        });
+
+        async function loadDoctors() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getAll');
+            params.append('json', JSON.stringify({}));
+
+            const response = await axios.post('../../backend/doctors.php', params);
+            
+            if (response.data.success) {
+              const addSelect = document.getElementById('add_assigned_doctor');
+              const editSelect = document.getElementById('edit_assigned_doctor');
+              
+              addSelect.innerHTML = '<option value="">Select Doctor</option>';
+              editSelect.innerHTML = '<option value="">Select Doctor</option>';
+              
+              response.data.data.forEach(doctor => {
+                const addOption = document.createElement('option');
+                addOption.value = doctor.doctor_id;
+                addOption.textContent = `Dr. ${doctor.first_name} ${doctor.last_name} - ${doctor.specialization}`;
+                addSelect.appendChild(addOption);
+                
+                const editOption = document.createElement('option');
+                editOption.value = doctor.doctor_id;
+                editOption.textContent = `Dr. ${doctor.first_name} ${doctor.last_name} - ${doctor.specialization}`;
+                editSelect.appendChild(editOption);
+              });
+            }
+          } catch (error) {
+            console.error('Error loading doctors:', error);
+          }
+        }
 
         async function loadStaff() {
           try {
@@ -418,9 +791,16 @@
           }
 
           tbody.innerHTML = staff.map(member => {
-            var statusBadge = member.status == 1 
-              ? '<span class="badge bg-label-success">Active</span>' 
-              : '<span class="badge bg-label-danger">Inactive</span>';
+            // Get the correct status from staff table
+            var staffStatus = member.usertype_id == 3 ? member.sec_status : member.rec_status;
+            var statusBadge = '<span class="badge bg-label-secondary">N/A</span>';
+            if (staffStatus === 'active') {
+              statusBadge = '<span class="badge bg-label-success">Active</span>';
+            } else if (staffStatus === 'inactive') {
+              statusBadge = '<span class="badge bg-label-danger">Inactive</span>';
+            } else if (staffStatus === 'on leave') {
+              statusBadge = '<span class="badge bg-label-warning">On Leave</span>';
+            }
             
             var roleBadge = member.usertype_id == 3
               ? '<span class="badge bg-label-info">Secretary</span>'
@@ -428,6 +808,12 @@
 
             var fullName = member.first_name + ' ' + member.last_name;
             var initials = (member.first_name[0] + member.last_name[0]).toUpperCase();
+            
+            // Get contact number from staff table
+            var contactNumber = member.usertype_id == 3 ? (member.sec_contact || member.phone) : (member.rec_contact || member.phone);
+            
+            // Get location info
+            var location = member.usertype_id == 3 ? (member.office_location || 'N/A') : (member.frontdesk_location || 'N/A');
 
             return `
               <tr>
@@ -443,8 +829,8 @@
                   </div>
                 </td>
                 <td>${roleBadge}</td>
-                <td>${member.phone || 'N/A'}</td>
-                <td>${member.department || 'N/A'}</td>
+                <td>${contactNumber || 'N/A'}</td>
+                <td>${location}</td>
                 <td>${statusBadge}</td>
                 <td>
                   <div class="dropdown">
@@ -452,8 +838,15 @@
                       <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                      <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                      <a class="dropdown-item view-staff" href="javascript:void(0);" data-staff='${JSON.stringify(member)}'>
+                        <i class="bx bx-show me-1"></i> View
+                      </a>
+                      <a class="dropdown-item edit-staff" href="javascript:void(0);" data-staff='${JSON.stringify(member)}'>
+                        <i class="bx bx-edit-alt me-1"></i> Edit
+                      </a>
+                      <a class="dropdown-item delete-staff" href="javascript:void(0);" data-id="${member.user_id}" data-name="${fullName}">
+                        <i class="bx bx-trash me-1"></i> Delete
+                      </a>
                     </div>
                   </div>
                 </td>
@@ -470,12 +863,22 @@
             const jsonData = {
               first_name: formData.get('first_name'),
               last_name: formData.get('last_name'),
+              gender: formData.get('gender') || null,
+              birth_date: formData.get('birth_date') || null,
+              phone: formData.get('phone') || null,
+              address: formData.get('address') || null,
               email: formData.get('email'),
-              phone: formData.get('phone'),
               usertype_id: formData.get('usertype_id'),
-              department_id: formData.get('department_id') || null,
+              contact_number: formData.get('contact_number') || null,
+              staff_email: formData.get('staff_email') || null,
               assigned_doctor_id: formData.get('assigned_doctor_id') || null,
-              address: formData.get('address'),
+              office_location: formData.get('office_location') || null,
+              frontdesk_location: formData.get('frontdesk_location') || null,
+              work_days: formData.get('work_days') || null,
+              shift_start: formData.get('shift_start') || null,
+              shift_end: formData.get('shift_end') || null,
+              status: formData.get('status') || 'active',
+              notes: formData.get('notes') || null,
               admin_user_id: user.user_id
             };
 
@@ -497,6 +900,198 @@
           } catch (error) {
             console.error('Error adding staff:', error);
             alert('Error adding staff member. Please try again.');
+          }
+        });
+
+        // View Staff
+        document.addEventListener("click", function(e) {
+          if (e.target.closest(".view-staff")) {
+            const staffData = JSON.parse(e.target.closest(".view-staff").getAttribute("data-staff"));
+            
+            const initials = ((staffData.first_name?.[0] || '') + (staffData.last_name?.[0] || '')).toUpperCase();
+            document.getElementById("view_avatar").textContent = initials;
+            document.getElementById("view_full_name").textContent = `${staffData.first_name} ${staffData.last_name}`;
+            document.getElementById("view_role").textContent = staffData.usertype_id == 3 ? 'Secretary' : 'Receptionist';
+            
+            // Status Badge
+            const staffStatus = staffData.usertype_id == 3 ? staffData.sec_status : staffData.rec_status;
+            let statusBadge = '<span class="badge bg-label-secondary">N/A</span>';
+            if (staffStatus === 'active') {
+              statusBadge = '<span class="badge bg-label-success">Active</span>';
+            } else if (staffStatus === 'inactive') {
+              statusBadge = '<span class="badge bg-label-danger">Inactive</span>';
+            } else if (staffStatus === 'on leave') {
+              statusBadge = '<span class="badge bg-label-warning">On Leave</span>';
+            }
+            document.getElementById("view_status_badge").innerHTML = statusBadge;
+            
+            // Personal Information
+            document.getElementById("view_email").textContent = staffData.email || 'N/A';
+            const contactNumber = staffData.usertype_id == 3 ? (staffData.sec_contact || staffData.phone) : (staffData.rec_contact || staffData.phone);
+            document.getElementById("view_contact_number").textContent = contactNumber || 'N/A';
+            document.getElementById("view_gender").textContent = staffData.gender ? staffData.gender.charAt(0).toUpperCase() + staffData.gender.slice(1) : 'N/A';
+            document.getElementById("view_birth_date").textContent = staffData.birth_date || 'N/A';
+            document.getElementById("view_phone").textContent = staffData.phone || 'N/A';
+            document.getElementById("view_address").textContent = staffData.address || 'N/A';
+            
+            // Work Information
+            const staffEmail = staffData.usertype_id == 3 ? staffData.sec_email : staffData.rec_email;
+            const workDays = staffData.usertype_id == 3 ? staffData.sec_work_days : staffData.rec_work_days;
+            document.getElementById("view_staff_email").textContent = staffEmail || 'N/A';
+            document.getElementById("view_work_days").textContent = workDays || 'N/A';
+            
+            if (staffData.usertype_id == 3) {
+              document.getElementById("view_secretary_info").style.display = 'flex';
+              document.getElementById("view_receptionist_info").style.display = 'none';
+              document.getElementById("view_assigned_doctor").textContent = staffData.assigned_doctor_name || 'N/A';
+              document.getElementById("view_office_location").textContent = staffData.office_location || 'N/A';
+            } else {
+              document.getElementById("view_secretary_info").style.display = 'none';
+              document.getElementById("view_receptionist_info").style.display = 'block';
+              document.getElementById("view_frontdesk_location").textContent = staffData.frontdesk_location || 'N/A';
+            }
+            
+            // Schedule
+            const shiftStart = staffData.usertype_id == 3 ? staffData.sec_shift_start : staffData.rec_shift_start;
+            const shiftEnd = staffData.usertype_id == 3 ? staffData.sec_shift_end : staffData.rec_shift_end;
+            document.getElementById("view_shift_start").textContent = shiftStart || 'N/A';
+            document.getElementById("view_shift_end").textContent = shiftEnd || 'N/A';
+            
+            // Notes
+            const notes = staffData.usertype_id == 3 ? staffData.sec_notes : staffData.rec_notes;
+            document.getElementById("view_notes").textContent = notes || 'No notes available.';
+            
+            new bootstrap.Modal(document.getElementById("viewStaffModal")).show();
+          }
+        });
+
+        // Edit Staff
+        document.addEventListener("click", function(e) {
+          if (e.target.closest(".edit-staff")) {
+            const staffData = JSON.parse(e.target.closest(".edit-staff").getAttribute("data-staff"));
+            
+            document.getElementById("edit_user_id").value = staffData.user_id;
+            document.getElementById("edit_usertype_id").value = staffData.usertype_id;
+            document.getElementById("edit_first_name").value = staffData.first_name || '';
+            document.getElementById("edit_last_name").value = staffData.last_name || '';
+            document.getElementById("edit_gender").value = staffData.gender || '';
+            document.getElementById("edit_birth_date").value = staffData.birth_date || '';
+            document.getElementById("edit_phone").value = staffData.phone || '';
+            document.getElementById("edit_address").value = staffData.address || '';
+            document.getElementById("edit_email").value = staffData.email || '';
+            document.getElementById("edit_role_display").value = staffData.usertype_id == 3 ? 'Secretary' : 'Receptionist';
+            
+            const contactNumber = staffData.usertype_id == 3 ? staffData.sec_contact : staffData.rec_contact;
+            const staffEmail = staffData.usertype_id == 3 ? staffData.sec_email : staffData.rec_email;
+            const workDays = staffData.usertype_id == 3 ? staffData.sec_work_days : staffData.rec_work_days;
+            const shiftStart = staffData.usertype_id == 3 ? staffData.sec_shift_start : staffData.rec_shift_start;
+            const shiftEnd = staffData.usertype_id == 3 ? staffData.sec_shift_end : staffData.rec_shift_end;
+            const staffStatus = staffData.usertype_id == 3 ? staffData.sec_status : staffData.rec_status;
+            const notes = staffData.usertype_id == 3 ? staffData.sec_notes : staffData.rec_notes;
+            
+            document.getElementById("edit_contact_number").value = contactNumber || '';
+            document.getElementById("edit_staff_email").value = staffEmail || '';
+            document.getElementById("edit_work_days").value = workDays || '';
+            document.getElementById("edit_shift_start").value = shiftStart || '';
+            document.getElementById("edit_shift_end").value = shiftEnd || '';
+            document.getElementById("edit_status").value = staffStatus || 'active';
+            document.getElementById("edit_notes").value = notes || '';
+            
+            if (staffData.usertype_id == 3) {
+              document.getElementById("editSecretaryFields").style.display = 'block';
+              document.getElementById("editReceptionistFields").style.display = 'none';
+              document.getElementById("edit_assigned_doctor").value = staffData.assigned_doctor_id || '';
+              document.getElementById("edit_office_location").value = staffData.office_location || '';
+            } else {
+              document.getElementById("editSecretaryFields").style.display = 'none';
+              document.getElementById("editReceptionistFields").style.display = 'block';
+              document.getElementById("edit_frontdesk_location").value = staffData.frontdesk_location || '';
+            }
+            
+            new bootstrap.Modal(document.getElementById("editStaffModal")).show();
+          }
+        });
+
+        // Edit Staff Form Submit
+        document.getElementById("editStaffForm").addEventListener("submit", async function(e) {
+          e.preventDefault();
+          
+          try {
+            const formData = new FormData(this);
+            const jsonData = {
+              user_id: formData.get('user_id'),
+              usertype_id: formData.get('usertype_id'),
+              first_name: formData.get('first_name'),
+              last_name: formData.get('last_name'),
+              gender: formData.get('gender') || null,
+              birth_date: formData.get('birth_date') || null,
+              phone: formData.get('phone') || null,
+              address: formData.get('address') || null,
+              email: formData.get('email'),
+              contact_number: formData.get('contact_number') || null,
+              staff_email: formData.get('staff_email') || null,
+              assigned_doctor_id: formData.get('assigned_doctor_id') || null,
+              office_location: formData.get('office_location') || null,
+              frontdesk_location: formData.get('frontdesk_location') || null,
+              work_days: formData.get('work_days') || null,
+              shift_start: formData.get('shift_start') || null,
+              shift_end: formData.get('shift_end') || null,
+              status: formData.get('status') || 'active',
+              notes: formData.get('notes') || null,
+              admin_user_id: user.user_id
+            };
+
+            const params = new URLSearchParams();
+            params.append('operation', 'update');
+            params.append('json', JSON.stringify(jsonData));
+
+            const response = await axios.post('../../backend/staff.php', params);
+            
+            if (response.data.success) {
+              alert('Staff member updated successfully!');
+              bootstrap.Modal.getInstance(document.getElementById("editStaffModal")).hide();
+              loadStaff();
+              loadStatistics();
+            } else {
+              alert('Error: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error updating staff:', error);
+            alert('Error updating staff member. Please try again.');
+          }
+        });
+
+        // Delete Staff
+        document.addEventListener("click", async function(e) {
+          if (e.target.closest(".delete-staff")) {
+            const staffId = e.target.closest(".delete-staff").getAttribute("data-id");
+            const staffName = e.target.closest(".delete-staff").getAttribute("data-name");
+            
+            if (!confirm(`Are you sure you want to delete ${staffName}? This will also delete their user account.`)) {
+              return;
+            }
+
+            try {
+              const params = new URLSearchParams();
+              params.append('operation', 'delete');
+              params.append('json', JSON.stringify({
+                user_id: staffId,
+                admin_user_id: user.user_id
+              }));
+
+              const response = await axios.post('../../backend/staff.php', params);
+              
+              if (response.data.success) {
+                alert('Staff member deleted successfully!');
+                loadStaff();
+                loadStatistics();
+              } else {
+                alert('Error: ' + response.data.error);
+              }
+            } catch (error) {
+              console.error('Error deleting staff:', error);
+              alert('Error deleting staff member. Please try again.');
+            }
           }
         });
 

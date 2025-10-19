@@ -38,6 +38,9 @@
               <a href="doctors.html" class="menu-link"><i class="menu-icon tf-icons bx bx-plus-medical"></i><div>Doctors</div></a>
             </li>
             <li class="menu-item">
+              <a href="departments.html" class="menu-link"><i class="menu-icon tf-icons bx bx-building"></i><div>Departments</div></a>
+            </li>
+            <li class="menu-item">
               <a href="staff.html" class="menu-link"><i class="menu-icon tf-icons bx bx-briefcase"></i><div>Staff</div></a>
             </li>
             <li class="menu-item">
@@ -416,7 +419,7 @@
 
         async function loadAuditLogs() {
           try {
-            const searchTerm = document.getElementById("searchLogs")?.value || "";
+            const searchTerm = document.getElementById("searchInput")?.value || "";
             const userId = document.getElementById("filterUser")?.value || "";
             const action = document.getElementById("filterAction")?.value || "";
             const fromDate = document.getElementById("filterFromDate")?.value || "";
@@ -440,9 +443,11 @@
               renderLogsTable(response.data.data);
             } else {
               console.error('Error loading logs:', response.data.error);
+              renderLogsTable([]);
             }
           } catch (error) {
             console.error('Error loading audit logs:', error);
+            renderLogsTable([]);
           }
         }
 
@@ -494,7 +499,7 @@
           tbody.innerHTML = "";
 
           if (logs.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" class="text-center">No logs found</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4"><i class="bx bx-info-circle bx-lg text-muted"></i><p class="mt-2 mb-0">No logs found</p></td></tr>';
             return;
           }
 
@@ -502,19 +507,61 @@
             var row = document.createElement("tr");
             
             var actionBadge = getActionBadge(log.action);
+            var fullName = log.first_name && log.last_name 
+              ? log.first_name + ' ' + log.last_name 
+              : (log.username || 'Unknown');
+            
+            // Extract resource from description if available
+            var resource = extractResource(log.description);
+            var details = log.description || 'N/A';
 
             row.innerHTML = `
-              <td><small>${log.created_at || log.timestamp}</small></td>
-              <td>${log.full_name || log.user || 'Unknown'}</td>
+              <td><small>${formatDate(log.created_at)}</small></td>
+              <td>${fullName}</td>
               <td>${actionBadge}</td>
-              <td><small class="text-muted">${log.description || log.details || 'N/A'}</small></td>
+              <td><small>${resource}</small></td>
+              <td><small class="text-muted">${details}</small></td>
               <td><small>${log.ip_address || 'N/A'}</small></td>
+              <td><span class="badge bg-label-success">Success</span></td>
             `;
             
             tbody.appendChild(row);
           });
 
           document.getElementById("logsCount").textContent = logs.length + " logs";
+        }
+
+        function extractResource(description) {
+          if (!description) return 'N/A';
+          
+          // Try to extract resource from common patterns
+          if (description.includes('doctor')) return 'Doctor';
+          if (description.includes('patient')) return 'Patient';
+          if (description.includes('staff') || description.includes('secretary') || description.includes('receptionist')) return 'Staff';
+          if (description.includes('department')) return 'Department';
+          if (description.includes('user')) return 'User';
+          if (description.includes('appointment')) return 'Appointment';
+          if (description.includes('settings')) return 'Settings';
+          if (description.includes('backup')) return 'Backup';
+          
+          return 'System';
+        }
+
+        function formatDate(dateString) {
+          if (!dateString) return 'N/A';
+          const date = new Date(dateString);
+          const now = new Date();
+          const diffMs = now - date;
+          const diffMins = Math.floor(diffMs / 60000);
+          const diffHours = Math.floor(diffMs / 3600000);
+          const diffDays = Math.floor(diffMs / 86400000);
+
+          if (diffMins < 1) return 'Just now';
+          if (diffMins < 60) return diffMins + ' min ago';
+          if (diffHours < 24) return diffHours + ' hour' + (diffHours > 1 ? 's' : '') + ' ago';
+          if (diffDays < 7) return diffDays + ' day' + (diffDays > 1 ? 's' : '') + ' ago';
+          
+          return date.toLocaleString();
         }
 
         function getActionBadge(action) {
@@ -555,11 +602,11 @@
           document.getElementById("filterAction").value = "";
           document.getElementById("filterFromDate").value = "";
           document.getElementById("filterToDate").value = "";
-          document.getElementById("searchLogs").value = "";
+          document.getElementById("searchInput").value = "";
           loadAuditLogs();
         });
 
-        document.getElementById("searchLogs").addEventListener("keyup", function(e) {
+        document.getElementById("searchInput").addEventListener("keyup", function(e) {
           if (e.key === "Enter") loadAuditLogs();
         });
 
@@ -615,6 +662,8 @@
           window.URL.revokeObjectURL(url);
         }
 
+        var user = SessionHandler.getUser();
+        
         document.getElementById("clearOldLogsBtn").addEventListener("click", async function() {
           if (confirm("Clear logs older than 90 days?")) {
             try {
@@ -641,7 +690,7 @@
           }
         });
 
-        loadAuditLogs();
+        console.log("Audit Logs page loaded");
       })();
     </script>
   </body>
