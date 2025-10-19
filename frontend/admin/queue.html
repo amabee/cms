@@ -158,6 +158,20 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="../assets/js/session-handler.js"></script>
   <script>
+    // Sidebar toggle for mobile
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleBtn = document.querySelector('.layout-menu-toggle');
+      const layout = document.querySelector('.layout-wrapper');
+      
+      if (toggleBtn && layout) {
+        toggleBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          layout.classList.toggle('layout-menu-expanded');
+        });
+      }
+    });
+  </script>
+  <script>
     (function () {
       "use strict";
       if (!SessionHandler.requireUserType(1)) return;
@@ -246,8 +260,11 @@
 
       async function loadPatients() {
         try {
-          const response = await axios.post(API_BASE + 'patients.php', { action: 'getAll', limit: 1000 });
-          if (response.data.success) { allPatients = response.data.patients; populatePatientDropdown(); }
+          const params = new URLSearchParams();
+          params.append('operation', 'getAll');
+          params.append('json', JSON.stringify({ limit: 1000 }));
+          const response = await axios.post(API_BASE + 'patients.php', params);
+          if (response.data.success) { allPatients = response.data.data; populatePatientDropdown(); }
         } catch (error) { console.error('Error:', error); }
       }
 
@@ -259,8 +276,11 @@
 
       async function loadDoctors() {
         try {
-          const response = await axios.post(API_BASE + 'doctors.php', { action: 'getAll', limit: 1000 });
-          if (response.data.success) { allDoctors = response.data.doctors; populateDoctorDropdown(); }
+          const params = new URLSearchParams();
+          params.append('operation', 'getAll');
+          params.append('json', JSON.stringify({ limit: 1000 }));
+          const response = await axios.post(API_BASE + 'doctors.php', params);
+          if (response.data.success) { allDoctors = response.data.data; populateDoctorDropdown(); }
         } catch (error) { console.error('Error:', error); }
       }
 
@@ -317,6 +337,15 @@
       }
 
       function searchQueue() { loadQueue(); }
+      
+      // Expose functions to global scope for onclick handlers
+      window.openAddModal = openAddModal;
+      window.saveQueue = saveQueue;
+      window.callNext = callNext;
+      window.updateStatus = updateStatus;
+      window.deleteQueue = deleteQueue;
+      window.searchQueue = searchQueue;
+      
       console.log("Queue page loaded");
     })();
   </script>

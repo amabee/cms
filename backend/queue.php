@@ -54,15 +54,19 @@ class QueueAPI {
             $date_filter = isset($data['date_filter']) ? $data['date_filter'] : '';
 
             $sql = "SELECT q.*, 
-                           CONCAT(p.first_name, ' ', p.last_name) as patient_name,
-                           p.phone as patient_phone,
-                           CONCAT(d.first_name, ' ', d.last_name) as doctor_name,
-                           a.appointment_time
-                    FROM queue q
-                    LEFT JOIN patients p ON q.patient_id = p.patient_id
-                    LEFT JOIN doctors d ON q.doctor_id = d.doctor_id
-                    LEFT JOIN appointments a ON q.appointment_id = a.appointment_id
-                    WHERE 1=1";
+                      CONCAT(up.first_name, ' ', up.last_name) as patient_name,
+                      up.phone as patient_phone,
+                      CONCAT(dup.first_name, ' ', dup.last_name) as doctor_name,
+                      a.appointment_time
+                  FROM queue q
+                  LEFT JOIN patients p ON q.patient_id = p.patient_id
+                  LEFT JOIN users u ON p.user_id = u.user_id
+                  LEFT JOIN user_profiles up ON u.user_id = up.user_id
+                  LEFT JOIN doctors d ON q.doctor_id = d.doctor_id
+                  LEFT JOIN users du ON d.user_id = du.user_id
+                  LEFT JOIN user_profiles dup ON du.user_id = dup.user_id
+                  LEFT JOIN appointments a ON q.appointment_id = a.appointment_id
+                  WHERE 1=1";
 
             $params = [];
 
@@ -122,18 +126,22 @@ class QueueAPI {
             }
 
             $sql = "SELECT q.*, 
-                           CONCAT(p.first_name, ' ', p.last_name) as patient_name,
-                           p.phone as patient_phone,
-                           p.email as patient_email,
-                           CONCAT(d.first_name, ' ', d.last_name) as doctor_name,
-                           d.specialization,
-                           a.appointment_time,
-                           a.reason as appointment_reason
-                    FROM queue q
-                    LEFT JOIN patients p ON q.patient_id = p.patient_id
-                    LEFT JOIN doctors d ON q.doctor_id = d.doctor_id
-                    LEFT JOIN appointments a ON q.appointment_id = a.appointment_id
-                    WHERE q.queue_id = :queue_id";
+                  CONCAT(up.first_name, ' ', up.last_name) as patient_name,
+                  up.phone as patient_phone,
+                  u.email as patient_email,
+                  CONCAT(dup.first_name, ' ', dup.last_name) as doctor_name,
+                  d.specialization,
+                  a.appointment_time,
+                  a.reason as appointment_reason
+              FROM queue q
+              LEFT JOIN patients p ON q.patient_id = p.patient_id
+              LEFT JOIN users u ON p.user_id = u.user_id
+              LEFT JOIN user_profiles up ON u.user_id = up.user_id
+              LEFT JOIN doctors d ON q.doctor_id = d.doctor_id
+              LEFT JOIN users du ON d.user_id = du.user_id
+              LEFT JOIN user_profiles dup ON du.user_id = dup.user_id
+              LEFT JOIN appointments a ON q.appointment_id = a.appointment_id
+              WHERE q.queue_id = :queue_id";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':queue_id', $data['queue_id'], PDO::PARAM_INT);
@@ -156,10 +164,12 @@ class QueueAPI {
         try {
             $sql = "SELECT q.*, 
                            CONCAT(p.first_name, ' ', p.last_name) as patient_name,
-                           CONCAT(d.first_name, ' ', d.last_name) as doctor_name
+                           CONCAT(dup.first_name, ' ', dup.last_name) as doctor_name
                     FROM queue q
                     LEFT JOIN patients p ON q.patient_id = p.patient_id
                     LEFT JOIN doctors d ON q.doctor_id = d.doctor_id
+                    LEFT JOIN users du ON d.user_id = du.user_id
+                    LEFT JOIN user_profiles dup ON du.user_id = dup.user_id
                     WHERE q.status IN ('waiting', 'called') 
                     AND DATE(q.queue_date) = CURDATE()
                     ORDER BY q.queue_number ASC";
@@ -182,10 +192,12 @@ class QueueAPI {
 
             $sql = "SELECT q.*, 
                            CONCAT(p.first_name, ' ', p.last_name) as patient_name,
-                           CONCAT(d.first_name, ' ', d.last_name) as doctor_name
+                           CONCAT(dup.first_name, ' ', dup.last_name) as doctor_name
                     FROM queue q
                     LEFT JOIN patients p ON q.patient_id = p.patient_id
                     LEFT JOIN doctors d ON q.doctor_id = d.doctor_id
+                    LEFT JOIN users du ON d.user_id = du.user_id
+                    LEFT JOIN user_profiles dup ON du.user_id = dup.user_id
                     WHERE DATE(q.queue_date) = :queue_date
                     ORDER BY q.queue_number ASC";
 

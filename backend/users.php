@@ -248,12 +248,12 @@ class Users
       $stmt->execute([':user_id' => $data['user_id']]);
       $username = $stmt->fetchColumn();
 
-      // Delete user (cascade will handle related records if properly configured)
-      $stmt = $this->conn->prepare("DELETE FROM users WHERE user_id = :user_id");
+      // Soft delete: Set status to 'inactive' instead of deleting the record
+      $stmt = $this->conn->prepare("UPDATE users SET status = 'inactive' WHERE user_id = :user_id");
       $stmt->execute([':user_id' => $data['user_id']]);
 
       // Log the action
-      $this->logAction($data['admin_user_id'] ?? 1, 'delete', "Deleted user: $username", $_SERVER['REMOTE_ADDR'] ?? 'unknown');
+      $this->logAction($data['admin_user_id'] ?? 1, 'delete', "Deactivated user: $username", $_SERVER['REMOTE_ADDR'] ?? 'unknown');
 
       $this->conn->commit();
 
