@@ -130,14 +130,16 @@ class AppointmentsAPI {
             }
 
             $sql = "SELECT a.*, 
-                           CONCAT(p.first_name, ' ', p.last_name) as patient_name,
-                           p.phone as patient_phone,
-                           p.email as patient_email,
+                           CONCAT(pup.first_name, ' ', pup.last_name) as patient_name,
+                           pup.phone as patient_phone,
+                           pu.email as patient_email,
                            CONCAT(up.first_name, ' ', up.last_name) as doctor_name,
                            doc.specialization,
                            doc.contact_number as doctor_phone
                     FROM appointments a
                     LEFT JOIN patients p ON a.patient_id = p.patient_id
+                    LEFT JOIN users pu ON p.user_id = pu.user_id
+                    LEFT JOIN user_profiles pup ON pu.user_id = pup.user_id
                     LEFT JOIN doctors doc ON a.doctor_id = doc.doctor_id
                     LEFT JOIN users u ON doc.user_id = u.user_id
                     LEFT JOIN user_profiles up ON u.user_id = up.user_id
@@ -196,10 +198,12 @@ class AppointmentsAPI {
             }
 
             $sql = "SELECT a.*, 
-                           CONCAT(p.first_name, ' ', p.last_name) as patient_name,
-                           p.phone as patient_phone
+                           CONCAT(pup.first_name, ' ', pup.last_name) as patient_name,
+                           pup.phone as patient_phone
                     FROM appointments a
                     LEFT JOIN patients p ON a.patient_id = p.patient_id
+                    LEFT JOIN users pu ON p.user_id = pu.user_id
+                    LEFT JOIN user_profiles pup ON pu.user_id = pup.user_id
                     WHERE a.doctor_id = :doctor_id
                     ORDER BY a.appointment_date DESC, a.appointment_time DESC";
 
