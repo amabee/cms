@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Clinic - Management System</title>
+  <meta name="description" content="My Clinic - modern clinic management system. Book appointments, manage patients, and more." />
+
+  <!-- Sneat core CSS -->
+  <link rel="stylesheet" href="frontend/assets/vendor/css/core.css">
+  <link rel="stylesheet" href="frontend/assets/css/demo.css">
+  <link rel="stylesheet" href="frontend/assets/css/index_style.css">
+
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-3">
+    <div class="container container--narrow">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+        <img src="frontend/assets/img/favicon/logo.png" alt="Logo" width="36" height="36" style="border-radius:8px;object-fit:cover;">
+        <span class="fw-semibold">My Clinic</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#team">Doctors</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          <li class="nav-item ms-3"><a class="btn btn-primary" href="#">Get Started</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container container--narrow">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <h1 class="display-4 fw-bold mb-3">Quality care you can trust</h1>
+          <p class="lead text-muted mb-4">Modern clinic management with easy appointment booking, secure records, and friendly care. We put patients first — always.</p>
+
+          <div class="d-flex gap-3">
+            <a class="btn btn-lg btn-primary" href="patient-register.html">Book Appointment</a>
+            <a class="btn btn-lg btn-outline-secondary" href="#about">Learn More</a>
+          </div>
+
+          <ul class="list-unstyled mt-4 text-muted small">
+            <li>• Open Mon - Sat • Same-day appointments available</li>
+            <li>• Experienced licensed doctors and warm staff</li>
+          </ul>
+        </div>
+
+        <div class="col-lg-6 d-none d-lg-block">
+          <div class="card-soft p-4">
+            <img src="frontend/assets/img/illustrations/clinic.jpg" alt="Clinic illustration" class="img-fluid rounded" style="max-height:360px; object-fit:cover;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Services -->
+    <section id="services" class="py-5">
+      <div class="container container--narrow">
+        <div class="text-center mb-5">
+          <h2 class="h3 fw-bold">Our Services</h2>
+          <p class="text-muted">Comprehensive, patient-centered services to support your health.</p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4">
+            <div class="p-4 card-soft h-100">
+              <div class="d-flex align-items-start gap-3">
+                <div class="service-icon"><i class="ti ti-stethoscope"></i></div>
+                <div>
+                  <h5 class="mb-1">General Consultation</h5>
+                  <p class="small text-muted mb-0">Personalized care and diagnosis from our experienced physicians.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <div class="p-4 card-soft h-100">
+              <div class="d-flex align-items-start gap-3">
+                <div class="service-icon"><i class="ti ti-clipboard-list"></i></div>
+                <div>
+                  <h5 class="mb-1">Laboratory Services</h5>
+                  <p class="small text-muted mb-0">Accurate and timely lab tests to support diagnosis and treatment.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <div class="p-4 card-soft h-100">
+              <div class="d-flex align-items-start gap-3">
+                <div class="service-icon"><i class="ti ti-pill"></i></div>
+                <div>
+                  <h5 class="mb-1">Pharmacy & Prescriptions</h5>
+                  <p class="small text-muted mb-0">On-site pharmacy and prescription management for convenience.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <div class="p-4 card-soft h-100">
+              <div class="d-flex align-items-start gap-3">
+                <div class="service-icon"><i class="ti ti-calendar-event"></i></div>
+                <div>
+                  <h5 class="mb-1">Appointment Scheduling</h5>
+                  <p class="small text-muted mb-0">Easy online scheduling and reminders to keep you on track.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <div class="p-4 card-soft h-100">
+              <div class="d-flex align-items-start gap-3">
+                <div class="service-icon"><i class="ti ti-heart-pulse"></i></div>
+                <div>
+                  <h5 class="mb-1">Preventive Care</h5>
+                  <p class="small text-muted mb-0">Health checks, immunizations, and wellness programs.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <div class="p-4 card-soft h-100">
+              <div class="d-flex align-items-start gap-3">
+                <div class="service-icon"><i class="ti ti-bed"></i></div>
+                <div>
+                  <h5 class="mb-1">Emergency Care</h5>
+                  <p class="small text-muted mb-0">Immediate support for urgent health concerns.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="py-5 bg-white">
+      <div class="container container--narrow">
+        <div class="row align-items-center">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <img src="frontend/assets/img/illustrations/clinic_interior.jpg" alt="Clinic interior" class="img-fluid rounded card-soft">
+          </div>
+          <div class="col-lg-6">
+            <h3 class="fw-bold">About Our Clinic</h3>
+            <p class="text-muted">We are dedicated to delivering compassionate and evidence-based care for the whole family. Our team leverages modern technology to keep your records secure and your care coordinated.</p>
+
+            <ul class="list-unstyled">
+              <li class="d-flex align-items-start mb-2"><i class="ti ti-check me-2 text-success"></i><span>Licensed and experienced medical staff</span></li>
+              <li class="d-flex align-items-start mb-2"><i class="ti ti-check me-2 text-success"></i><span>Patient-first approach and transparent billing</span></li>
+              <li class="d-flex align-items-start"><i class="ti ti-check me-2 text-success"></i><span>Accessible location with convenient hours</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team / Doctors -->
+    <section id="team" class="py-5">
+      <div class="container container--narrow">
+        <div class="text-center mb-5">
+          <h2 class="h3 fw-bold">Meet Our Doctors</h2>
+          <p class="text-muted">Experienced specialists who put your health first.</p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-sm-6 col-md-4">
+            <div class="p-3 card-soft h-100 text-center">
+              <img src="frontend/assets/img/avatars/doctor-1.jpg" alt="Dr. Maria Gomez" class="doctor-avatar mb-3 mx-auto d-block">
+              <h5 class="mb-0">Dr. Maria Gomez</h5>
+              <p class="small text-muted mb-2">Family Physician</p>
+              <p class="small text-muted">Dr. Maria provides comprehensive primary care for all ages with an emphasis on preventive medicine.</p>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-md-4">
+            <div class="p-3 card-soft h-100 text-center">
+              <img src="frontend/assets/img/avatars/doctor-2.jpg" alt="Dr. John Lee" class="doctor-avatar mb-3 mx-auto d-block">
+              <h5 class="mb-0">Dr. John Lee</h5>
+              <p class="small text-muted mb-2">Pediatrician</p>
+              <p class="small text-muted">Specialized in child health, immunizations, and developmental care.</p>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-md-4">
+            <div class="p-3 card-soft h-100 text-center">
+              <img src="frontend/assets/img/avatars/doctor-3.jpg" alt="Dr. Aisha Khan" class="doctor-avatar mb-3 mx-auto d-block">
+              <h5 class="mb-0">Dr. Aisha Khan</h5>
+              <p class="small text-muted mb-2">Cardiologist</p>
+              <p class="small text-muted">Expert in cardiac care and preventive cardiology.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-5 bg-white">
+      <div class="container container--narrow">
+        <div class="text-center mb-5">
+          <h2 class="h3 fw-bold">What Patients Say</h2>
+          <p class="text-muted">Real feedback from people we've helped.</p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="p-4 card-soft testimonial">
+              <p class="mb-2">"The staff was so caring and the appointment was easy to schedule. The doctor explained everything clearly."</p>
+              <div class="d-flex align-items-center gap-3">
+                <img src="frontend/assets/img/avatars/patient-1.jpg" alt="" class="rounded-circle" width="44" height="44">
+                <div>
+                  <strong>Anna P.</strong>
+                  <div class="small text-muted">Verified patient</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="p-4 card-soft testimonial">
+              <p class="mb-2">"Excellent care and friendly staff. My child's vaccinations were handled professionally and quickly."</p>
+              <div class="d-flex align-items-center gap-3">
+                <img src="frontend/assets/img/avatars/patient-2.jpg" alt="" class="rounded-circle" width="44" height="44">
+                <div>
+                  <strong>Mark T.</strong>
+                  <div class="small text-muted">Parent</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-5">
+      <div class="container container--narrow">
+        <div class="text-center mb-5">
+          <h2 class="h3 fw-bold">Get in touch</h2>
+          <p class="text-muted">Have questions or need to book an appointment? Send us a message and we will get back to you shortly.</p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <form class="card-soft p-4" novalidate>
+              <div class="mb-3">
+                <label for="name" class="form-label">Full name</label>
+                <input type="text" id="name" class="form-control" required aria-required="true">
+              </div>
+
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" class="form-control" required aria-required="true">
+              </div>
+
+              <div class="mb-3">
+                <label for="message" class="form-label">Message</label>
+                <textarea id="message" class="form-control" rows="5" required aria-required="true"></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card-soft p-4">
+              <h5 class="mb-3">Contact information</h5>
+              <p class="mb-1"><strong>Address:</strong> 123 Main St, City</p>
+              <p class="mb-1"><strong>Phone:</strong> +63 900 000 0000</p>
+              <p class="mb-1"><strong>Email:</strong> contact@clinic.local</p>
+
+              <hr>
+
+              <h6 class="mb-2">Opening hours</h6>
+              <p class="mb-0 small text-muted">Mon - Fri: 8:00 AM - 5:00 PM<br>Sat: 8:00 AM - 12:00 PM</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-white">
+    <div class="container container--narrow d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+      <div class="d-flex align-items-center gap-3">
+        <img src="frontend/assets/img/favicon/logo.png" alt="logo" width="36" height="36" style="border-radius:8px;">
+        <div>
+          <div class="fw-semibold">My Clinic</div>
+          <div class="small text-muted">Clinical Management System</div>
+        </div>
+      </div>
+
+      <div class="text-muted small">© <span id="year"></span> My Clinic. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="frontend/assets/vendor/js/bootstrap.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Basic client-side contact form handler (no backend)
+    document.querySelector('#contact form')?.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const btn = this.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      setTimeout(() => { btn.textContent = 'Sent'; btn.classList.add('btn-success'); }, 800);
+    });
+  </script>
+
+</body>
+
+</html>

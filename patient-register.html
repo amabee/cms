@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Register - My Clinic</title>
+  <meta name="description" content="Patient registration for My Clinic." />
+
+  <link rel="stylesheet" href="frontend/assets/vendor/css/core.css">
+  <link rel="stylesheet" href="frontend/assets/css/demo.css">
+
+  <style>
+    body { background: #f8fafb; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; }
+    .card-soft { background: #fff; border-radius: 12px; box-shadow: 0 8px 24px rgba(16,24,40,0.06); border:1px solid rgba(15,23,42,0.04); }
+    .container--narrow { max-width: 960px; }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-light bg-transparent py-3">
+    <div class="container container--narrow d-flex justify-content-between align-items-center">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+        <img src="frontend/assets/img/favicon/logo.png" alt="Logo" width="36" height="36" style="border-radius:8px;">
+        <span class="fw-semibold">My Clinic</span>
+      </a>
+      <a class="btn btn-outline-secondary" href="index.html">Back</a>
+    </div>
+  </nav>
+
+  <main class="py-5">
+    <div class="container container--narrow">
+      <div class="card-soft p-4 p-md-5">
+        <div class="row">
+          <div class="col-md-6 mb-4 mb-md-0">
+            <h2 class="h4 fw-bold">Patient Registration</h2>
+            <p class="text-muted">Create your account to book appointments and manage your records. Fields marked * are required.</p>
+
+            <ul class="small text-muted">
+              <li>We keep your data secure and never share without consent.</li>
+              <li>Use a valid email — you'll receive confirmation messages.</li>
+            </ul>
+          </div>
+
+          <div class="col-md-6">
+            <form id="registerForm" class="needs-validation" novalidate method="post" action="backend/register.php">
+              <input type="hidden" name="usertype_id" value="5">
+
+              <div class="row g-2">
+                <div class="col-6 mb-3">
+                  <label for="first_name" class="form-label">First name *</label>
+                  <input type="text" id="first_name" name="first_name" class="form-control" required>
+                  <div class="invalid-feedback">First name required.</div>
+                </div>
+                <div class="col-6 mb-3">
+                  <label for="last_name" class="form-label">Last name *</label>
+                  <input type="text" id="last_name" name="last_name" class="form-control" required>
+                  <div class="invalid-feedback">Last name required.</div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="email" class="form-label">Email *</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+                <div class="invalid-feedback">A valid email is required.</div>
+              </div>
+
+              <div class="row g-2">
+                <div class="col-6 mb-3">
+                  <label for="password" class="form-label">Password *</label>
+                  <input type="password" id="password" name="password" class="form-control" minlength="8" required>
+                  <div class="invalid-feedback">Password must be at least 8 characters.</div>
+                </div>
+                <div class="col-6 mb-3">
+                  <label for="phone" class="form-label">Phone</label>
+                  <input type="tel" id="phone" name="phone" class="form-control">
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="birth_date" class="form-label">Birthdate</label>
+                <input type="date" id="birth_date" name="birth_date" class="form-control">
+              </div>
+
+              <div class="mb-3">
+                <label for="gender" class="form-label">Gender</label>
+                <select id="gender" name="gender" class="form-select">
+                  <option value="">Select</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" id="address" name="address" class="form-control">
+              </div>
+
+              <div class="row g-2">
+                <div class="col-6 mb-3">
+                  <label for="blood_type" class="form-label">Blood type</label>
+                  <select id="blood_type" name="blood_type" class="form-select">
+                    <option value="">Select</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                  </select>
+                </div>
+                <div class="col-6 mb-3">
+                  <label for="emergency_contact" class="form-label">Emergency contact</label>
+                  <input type="text" id="emergency_contact" name="emergency_contact" class="form-control">
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="insurance_id" class="form-label">Insurance (optional)</label>
+                <select id="insurance_id" name="insurance_id" class="form-select">
+                  <option value="">None</option>
+                </select>
+              </div>
+
+              <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Create account & Book</button>
+                <a href="index.html" class="btn btn-outline-secondary">Cancel</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="frontend/assets/vendor/js/bootstrap.js"></script>
+  <!-- Axios CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    // Bootstrap validation + Axios submit
+    (function () {
+      'use strict'
+      var form = document.getElementById('registerForm')
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (!form.checkValidity()) {
+          form.classList.add('was-validated')
+          return;
+        }
+
+        form.classList.add('was-validated')
+
+        var payload = {
+          usertype_id: form.usertype_id.value,
+          // username autogenerated server-side from email when omitted
+          password: form.password.value,
+          first_name: form.first_name.value.trim(),
+          last_name: form.last_name.value.trim(),
+          email: form.email.value.trim(),
+          phone: form.phone.value.trim(),
+          birth_date: form.birth_date.value || null,
+          gender: form.gender.value || null,
+          address: form.address.value.trim(),
+          blood_type: form.blood_type.value || null,
+          emergency_contact: form.emergency_contact.value.trim(),
+          insurance_id: form.insurance_id.value || null
+        };
+
+        var submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        var origText = submitBtn.textContent;
+        submitBtn.textContent = 'Creating...';
+
+
+        var params = new URLSearchParams();
+        params.append('json', JSON.stringify(payload));
+
+        axios.post('backend/patients/patients.php?operation=register', params)
+          .then(function (res) {
+            var data = res.data;
+            if (data.success) {
+              var alert = document.createElement('div');
+              alert.className = 'alert alert-success mt-3';
+              alert.role = 'alert';
+              alert.textContent = 'Registration successful. Your patient code: ' + (data.patient_code || data.patient_code || '') ;
+              form.parentElement.insertBefore(alert, form.nextSibling);
+              submitBtn.textContent = 'Done';
+              setTimeout(function () { window.location.href = 'index.html'; }, 2200);
+            } else if (data.error) {
+              var alert = document.createElement('div');
+              alert.className = 'alert alert-danger mt-3';
+              alert.role = 'alert';
+              alert.textContent = data.error;
+              form.parentElement.insertBefore(alert, form.nextSibling);
+              submitBtn.disabled = false;
+              submitBtn.textContent = origText;
+            } else {
+              submitBtn.disabled = false;
+              submitBtn.textContent = origText;
+            }
+          })
+          .catch(function (err) {
+            var alert = document.createElement('div');
+            alert.className = 'alert alert-danger mt-3';
+            alert.role = 'alert';
+            var msg = 'An error occurred while registering. Please try again.';
+            if (err && err.response && err.response.data && err.response.data.error) msg = err.response.data.error;
+            alert.textContent = msg;
+            form.parentElement.insertBefore(alert, form.nextSibling);
+            submitBtn.disabled = false;
+            submitBtn.textContent = origText;
+          });
+
+      }, false)
+    })()
+  </script>
+  <script>
+    // Load insurances on page load
+    (function () {
+      axios.get('backend/patients/insurances.php')
+        .then(function (res) {
+          var data = res.data;
+          if (data && data.success && Array.isArray(data.data)) {
+            var sel = document.getElementById('insurance_id');
+            data.data.forEach(function (row) {
+              var opt = document.createElement('option');
+              opt.value = row.insurance_id;
+              opt.textContent = row.company_name + (row.policy_no ? ' — ' + row.policy_no : '');
+              sel.appendChild(opt);
+            });
+          }
+        })
+        .catch(function (err) {
+          // silently ignore; insurance select will show 'None'
+          console.warn('Failed to load insurances', err);
+        });
+    })();
+  </script>
+</body>
+
+</html>
