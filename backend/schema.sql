@@ -81,11 +81,26 @@ CREATE TABLE insurance (
 
 CREATE TABLE patients (
     patient_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NULL,
-    patient_code VARCHAR(50) UNIQUE,
-    emergency_contact VARCHAR(100),
-    blood_type VARCHAR(5),
-    insurance_id INT NULL,
+    user_id INT NULL,                           -- links to users table (optional)
+    patient_code VARCHAR(50) UNIQUE,           -- unique patient identifier
+    first_name VARCHAR(100) NOT NULL,          -- patient's first name
+    last_name VARCHAR(100) NOT NULL,           -- patient's last name
+    middle_name VARCHAR(100),                   -- optional middle name
+    date_of_birth DATE NOT NULL,               -- birthdate for age calculations
+    gender ENUM('Male', 'Female', 'Other') DEFAULT 'Other', -- gender
+    phone_number VARCHAR(20),                  -- primary contact number
+    email VARCHAR(150),                        -- email address
+    address TEXT,                              -- full residential address
+    emergency_contact_name VARCHAR(100),       -- emergency contact name
+    emergency_contact_phone VARCHAR(20),       -- emergency contact phone
+    blood_type VARCHAR(5),                     -- blood type
+    allergies TEXT,                            -- any known allergies
+    existing_conditions TEXT,                  -- pre-existing medical conditions
+    insurance_id INT NULL,                     -- link to insurance table
+    date_registered DATETIME DEFAULT CURRENT_TIMESTAMP, -- when patient was added
+    last_visit DATETIME,                       -- last appointment date
+    notes TEXT,                                -- any additional remarks
+    is_active TINYINT(1) DEFAULT 1,           -- active status (1 = active, 0 = inactive)
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (insurance_id) REFERENCES insurance(insurance_id)
 );

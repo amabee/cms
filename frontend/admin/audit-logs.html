@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Audit Logs - My Clinic</title>
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+  </head>
+
+  <body>
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="dashboard.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <img src="../assets/img/favicon/logo.png" alt="Logo" width="32" />
+              </span>
+              <span class="app-brand-text demo menu-text fw-bold ms-2">My Clinic</span>
+            </a>
+          </div>
+          <div class="menu-inner-shadow"></div>
+          <ul class="menu-inner py-1">
+            <li class="menu-item">
+              <a href="dashboard.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div>Dashboard</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Management</span></li>
+            <li class="menu-item">
+              <a href="users.html" class="menu-link"><i class="menu-icon tf-icons bx bx-user"></i><div>Users</div></a>
+            </li>
+            <li class="menu-item">
+              <a href="doctors.html" class="menu-link"><i class="menu-icon tf-icons bx bx-plus-medical"></i><div>Doctors</div></a>
+            </li>
+            <li class="menu-item">
+              <a href="staff.html" class="menu-link"><i class="menu-icon tf-icons bx bx-briefcase"></i><div>Staff</div></a>
+            </li>
+            <li class="menu-item">
+              <a href="patients.html" class="menu-link"><i class="menu-icon tf-icons bx bx-group"></i><div>Patients</div></a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">System</span></li>
+            <li class="menu-item">
+              <a href="settings.html" class="menu-link"><i class="menu-icon tf-icons bx bx-cog"></i><div>Settings</div></a>
+            </li>
+            <li class="menu-item active">
+              <a href="audit-logs.html" class="menu-link"><i class="menu-icon tf-icons bx bx-list-ul"></i><div>Audit Logs</div></a>
+            </li>
+          </ul>
+        </aside>
+
+        <div class="layout-page">
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+            <div class="navbar-nav-right d-flex align-items-center">
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <li class="nav-item navbar-dropdown dropdown-notifications dropdown me-3 me-xl-2">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);">
+                    <i class="bx bx-bell bx-sm"></i>
+                    <span class="badge bg-danger rounded-pill badge-notifications" id="notificationBadge">0</span>
+                  </a>
+                </li>
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatar">A</span>
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatarDropdown">A</span>
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block" id="userFullName">Admin User</span>
+                            <small class="text-muted" id="userRole">Administrator</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li><a class="dropdown-item" href="profile.html"><i class="bx bx-user me-2"></i><span>My Profile</span></a></li>
+                    <li><a class="dropdown-item" href="settings.html"><i class="bx bx-cog me-2"></i><span>Settings</span></a></li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li><a class="dropdown-item" href="javascript:void(0);" id="logoutBtn"><i class="bx bx-power-off me-2"></i><span>Log Out</span></a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold py-3 mb-0">Audit Logs</h4>
+                <div>
+                  <button class="btn btn-outline-primary" id="exportBtn">
+                    <i class="bx bx-export me-1"></i>Export Logs
+                  </button>
+                  <button class="btn btn-outline-danger" id="clearOldLogsBtn">
+                    <i class="bx bx-trash me-1"></i>Clear Old Logs
+                  </button>
+                </div>
+              </div>
+
+              <!-- Statistics Cards -->
+              <div class="row mb-4">
+                <div class="col-md-3 col-sm-6 mb-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center">
+                        <div class="badge rounded-pill bg-label-primary me-3 p-2">
+                          <i class="bx bx-list-ul bx-sm"></i>
+                        </div>
+                        <div class="card-info">
+                          <h5 class="mb-0" id="totalLogs">0</h5>
+                          <small>Total Logs</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center">
+                        <div class="badge rounded-pill bg-label-success me-3 p-2">
+                          <i class="bx bx-check-circle bx-sm"></i>
+                        </div>
+                        <div class="card-info">
+                          <h5 class="mb-0" id="todayLogs">0</h5>
+                          <small>Today</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center">
+                        <div class="badge rounded-pill bg-label-info me-3 p-2">
+                          <i class="bx bx-user bx-sm"></i>
+                        </div>
+                        <div class="card-info">
+                          <h5 class="mb-0" id="activeUsers">0</h5>
+                          <small>Active Users</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center">
+                        <div class="badge rounded-pill bg-label-danger me-3 p-2">
+                          <i class="bx bx-error bx-sm"></i>
+                        </div>
+                        <div class="card-info">
+                          <h5 class="mb-0" id="failedActions">0</h5>
+                          <small>Failed Actions</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Filters -->
+              <div class="card mb-4">
+                <div class="card-body">
+                  <div class="row g-3">
+                    <div class="col-md-3">
+                      <label class="form-label">User</label>
+                      <select class="form-select" id="filterUser">
+                        <option value="">All Users</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Action Type</label>
+                      <select class="form-select" id="filterAction">
+                        <option value="">All Actions</option>
+                        <option value="login">Login</option>
+                        <option value="logout">Logout</option>
+                        <option value="create">Create</option>
+                        <option value="update">Update</option>
+                        <option value="delete">Delete</option>
+                        <option value="view">View</option>
+                        <option value="export">Export</option>
+                        <option value="settings">Settings</option>
+                      </select>
+                    </div>
+                    <div class="col-md-2">
+                      <label class="form-label">Status</label>
+                      <select class="form-select" id="filterStatus">
+                        <option value="">All Status</option>
+                        <option value="success">Success</option>
+                        <option value="failed">Failed</option>
+                      </select>
+                    </div>
+                    <div class="col-md-2">
+                      <label class="form-label">From Date</label>
+                      <input type="date" class="form-control" id="filterFromDate">
+                    </div>
+                    <div class="col-md-2">
+                      <label class="form-label">To Date</label>
+                      <input type="date" class="form-control" id="filterToDate">
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-6">
+                      <input type="text" class="form-control" id="searchInput" placeholder="Search logs...">
+                    </div>
+                    <div class="col-md-6 text-end">
+                      <button class="btn btn-primary" id="applyFiltersBtn">
+                        <i class="bx bx-filter me-1"></i>Apply Filters
+                      </button>
+                      <button class="btn btn-outline-secondary" id="resetFiltersBtn">
+                        <i class="bx bx-reset me-1"></i>Reset
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Audit Logs Table -->
+              <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0">Activity Logs</h5>
+                  <span class="badge bg-primary" id="logsCount">0 logs</span>
+                </div>
+                <div class="table-responsive text-nowrap">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Timestamp</th>
+                        <th>User</th>
+                        <th>Action</th>
+                        <th>Resource</th>
+                        <th>Details</th>
+                        <th>IP Address</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="logsTable">
+                      <!-- Logs will be populated here -->
+                    </tbody>
+                  </table>
+                </div>
+                <div class="card-footer">
+                  <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center mb-0">
+                      <li class="page-item disabled">
+                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
+                      </li>
+                      <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
+                      <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                      <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+
+            </div>
+
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  © <script>document.write(new Date().getFullYear());</script> My Clinic CMS
+                </div>
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/js/session-handler.js"></script>
+    
+    <script>
+      (function () {
+        "use strict";
+        if (!SessionHandler.requireUserType(1)) return;
+
+        var fullName = SessionHandler.getUserFullName();
+        var initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        
+        document.getElementById("userFullName").textContent = fullName;
+        document.getElementById("userRole").textContent = SessionHandler.getUserRole();
+        document.getElementById("userAvatar").textContent = initials;
+        document.getElementById("userAvatarDropdown").textContent = initials;
+
+        var notifCount = SessionHandler.getUnreadNotificationsCount();
+        document.getElementById("notificationBadge").textContent = notifCount;
+        if (notifCount === 0) document.getElementById("notificationBadge").style.display = "none";
+
+        document.getElementById("logoutBtn").addEventListener("click", function(e) {
+          e.preventDefault();
+          if (confirm("Are you sure you want to logout?")) SessionHandler.logout();
+        });
+
+        var menuToggle = document.querySelector('.layout-menu-toggle');
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function() {
+            document.querySelector('.layout-wrapper').classList.toggle('layout-menu-expanded');
+          });
+        }
+
+        // Placeholder audit logs data
+        var auditLogs = [
+          {
+            log_id: 1,
+            timestamp: "2024-01-15 14:35:22",
+            user: "John Admin",
+            action: "login",
+            resource: "Authentication",
+            details: "Successful login from dashboard",
+            ip_address: "192.168.1.100",
+            status: "success"
+          },
+          {
+            log_id: 2,
+            timestamp: "2024-01-15 14:30:15",
+            user: "Dr. Sarah Smith",
+            action: "update",
+            resource: "Patient Record #1234",
+            details: "Updated medical history",
+            ip_address: "192.168.1.105",
+            status: "success"
+          },
+          {
+            log_id: 3,
+            timestamp: "2024-01-15 14:25:10",
+            user: "John Admin",
+            action: "create",
+            resource: "User Account",
+            details: "Created new user: jane.doe@clinic.com",
+            ip_address: "192.168.1.100",
+            status: "success"
+          },
+          {
+            log_id: 4,
+            timestamp: "2024-01-15 14:20:45",
+            user: "Admin User",
+            action: "delete",
+            resource: "Appointment #5678",
+            details: "Deleted cancelled appointment",
+            ip_address: "192.168.1.100",
+            status: "success"
+          },
+          {
+            log_id: 5,
+            timestamp: "2024-01-15 14:15:30",
+            user: "Unknown",
+            action: "login",
+            resource: "Authentication",
+            details: "Failed login attempt - invalid credentials",
+            ip_address: "203.0.113.45",
+            status: "failed"
+          },
+          {
+            log_id: 6,
+            timestamp: "2024-01-15 14:10:20",
+            user: "Secretary Jane",
+            action: "create",
+            resource: "Appointment",
+            details: "Scheduled appointment for patient #1234",
+            ip_address: "192.168.1.110",
+            status: "success"
+          },
+          {
+            log_id: 7,
+            timestamp: "2024-01-15 14:05:15",
+            user: "John Admin",
+            action: "settings",
+            resource: "System Settings",
+            details: "Updated email configuration",
+            ip_address: "192.168.1.100",
+            status: "success"
+          },
+          {
+            log_id: 8,
+            timestamp: "2024-01-15 14:00:10",
+            user: "Dr. Michael Brown",
+            action: "view",
+            resource: "Patient Record #5678",
+            details: "Viewed patient medical history",
+            ip_address: "192.168.1.108",
+            status: "success"
+          }
+        ];
+
+        loadAuditLogs();
+        loadStatistics();
+        loadUserFilter();
+
+        async function loadAuditLogs() {
+          try {
+            const searchTerm = document.getElementById("searchLogs")?.value || "";
+            const userId = document.getElementById("filterUser")?.value || "";
+            const action = document.getElementById("filterAction")?.value || "";
+            const fromDate = document.getElementById("filterFromDate")?.value || "";
+            const toDate = document.getElementById("filterToDate")?.value || "";
+
+            const params = new URLSearchParams();
+            params.append('operation', 'getAll');
+            params.append('json', JSON.stringify({
+              search: searchTerm,
+              user_id: userId,
+              action: action,
+              from_date: fromDate,
+              to_date: toDate,
+              limit: 100,
+              offset: 0
+            }));
+
+            const response = await axios.post('../../backend/audit-logs.php', params);
+            
+            if (response.data.success) {
+              renderLogsTable(response.data.data);
+            } else {
+              console.error('Error loading logs:', response.data.error);
+            }
+          } catch (error) {
+            console.error('Error loading audit logs:', error);
+          }
+        }
+
+        async function loadStatistics() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getStatistics');
+            params.append('json', JSON.stringify({}));
+
+            const response = await axios.post('../../backend/audit-logs.php', params);
+            
+            if (response.data.success) {
+              const stats = response.data.data;
+              document.getElementById("totalLogs").textContent = stats.total || 0;
+              document.getElementById("todayLogs").textContent = stats.today || 0;
+              document.getElementById("activeUsers").textContent = stats.active_users || 0;
+              document.getElementById("failedActions").textContent = stats.failed || 0;
+            }
+          } catch (error) {
+            console.error('Error loading statistics:', error);
+          }
+        }
+
+        async function loadUserFilter() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getUsers');
+            params.append('json', JSON.stringify({}));
+
+            const response = await axios.post('../../backend/audit-logs.php', params);
+            
+            if (response.data.success) {
+              const select = document.getElementById("filterUser");
+              select.innerHTML = '<option value="">All Users</option>';
+              response.data.data.forEach(user => {
+                const option = document.createElement('option');
+                option.value = user.user_id;
+                option.textContent = user.full_name;
+                select.appendChild(option);
+              });
+            }
+          } catch (error) {
+            console.error('Error loading users:', error);
+          }
+        }
+
+        function renderLogsTable(logs) {
+          var tbody = document.getElementById("logsTable");
+          tbody.innerHTML = "";
+
+          if (logs.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="text-center">No logs found</td></tr>';
+            return;
+          }
+
+          logs.forEach(function(log) {
+            var row = document.createElement("tr");
+            
+            var actionBadge = getActionBadge(log.action);
+
+            row.innerHTML = `
+              <td><small>${log.created_at || log.timestamp}</small></td>
+              <td>${log.full_name || log.user || 'Unknown'}</td>
+              <td>${actionBadge}</td>
+              <td><small class="text-muted">${log.description || log.details || 'N/A'}</small></td>
+              <td><small>${log.ip_address || 'N/A'}</small></td>
+            `;
+            
+            tbody.appendChild(row);
+          });
+
+          document.getElementById("logsCount").textContent = logs.length + " logs";
+        }
+
+        function getActionBadge(action) {
+          var badges = {
+            'login': '<span class="badge bg-info">Login</span>',
+            'logout': '<span class="badge bg-secondary">Logout</span>',
+            'create': '<span class="badge bg-success">Create</span>',
+            'update': '<span class="badge bg-warning">Update</span>',
+            'delete': '<span class="badge bg-danger">Delete</span>',
+            'view': '<span class="badge bg-primary">View</span>',
+            'export': '<span class="badge bg-dark">Export</span>',
+            'settings': '<span class="badge bg-purple">Settings</span>'
+          };
+          return badges[action] || '<span class="badge bg-secondary">' + action + '</span>';
+        }
+
+        function getStatusBadge(status) {
+          return status === 'success' 
+            ? '<span class="badge bg-label-success">Success</span>'
+            : '<span class="badge bg-label-danger">Failed</span>';
+        }
+
+        function populateUserFilter() {
+          var userFilter = document.getElementById("filterUser");
+          var uniqueUsers = [...new Set(auditLogs.map(log => log.user))];
+          
+          uniqueUsers.forEach(function(user) {
+            var option = document.createElement("option");
+            option.value = user;
+            option.textContent = user;
+            userFilter.appendChild(option);
+          });
+        }
+
+        document.getElementById("applyFiltersBtn").addEventListener("click", loadAuditLogs);
+        document.getElementById("resetFiltersBtn").addEventListener("click", function() {
+          document.getElementById("filterUser").value = "";
+          document.getElementById("filterAction").value = "";
+          document.getElementById("filterFromDate").value = "";
+          document.getElementById("filterToDate").value = "";
+          document.getElementById("searchLogs").value = "";
+          loadAuditLogs();
+        });
+
+        document.getElementById("searchLogs").addEventListener("keyup", function(e) {
+          if (e.key === "Enter") loadAuditLogs();
+        });
+
+        document.getElementById("exportBtn").addEventListener("click", async function() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'export');
+            params.append('json', JSON.stringify({
+              user_id: document.getElementById("filterUser")?.value || "",
+              action: document.getElementById("filterAction")?.value || "",
+              from_date: document.getElementById("filterFromDate")?.value || "",
+              to_date: document.getElementById("filterToDate")?.value || ""
+            }));
+
+            const response = await axios.post('../../backend/audit-logs.php', params);
+            
+            if (response.data.success) {
+              // Convert to CSV and download
+              const logs = response.data.data;
+              const csv = convertToCSV(logs);
+              downloadCSV(csv, 'audit-logs-' + new Date().toISOString().split('T')[0] + '.csv');
+            } else {
+              alert('Error exporting logs: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error exporting logs:', error);
+            alert('Error exporting logs.');
+          }
+        });
+
+        function convertToCSV(data) {
+          if (data.length === 0) return '';
+          const headers = ['Timestamp', 'User', 'Action', 'Description', 'IP Address'];
+          const rows = data.map(log => [
+            log.created_at,
+            log.full_name || 'Unknown',
+            log.action,
+            log.description || '',
+            log.ip_address || ''
+          ]);
+          return [headers, ...rows].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+        }
+
+        function downloadCSV(csv, filename) {
+          const blob = new Blob([csv], { type: 'text/csv' });
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        }
+
+        document.getElementById("clearOldLogsBtn").addEventListener("click", async function() {
+          if (confirm("Clear logs older than 90 days?")) {
+            try {
+              const params = new URLSearchParams();
+              params.append('operation', 'clearOldLogs');
+              params.append('json', JSON.stringify({
+                days: 90,
+                admin_user_id: user.user_id
+              }));
+
+              const response = await axios.post('../../backend/audit-logs.php', params);
+              
+              if (response.data.success) {
+                alert('Old logs cleared successfully!');
+                loadAuditLogs();
+                loadStatistics();
+              } else {
+                alert('Error: ' + response.data.error);
+              }
+            } catch (error) {
+              console.error('Error clearing logs:', error);
+              alert('Error clearing logs.');
+            }
+          }
+        });
+
+        loadAuditLogs();
+      })();
+    </script>
+  </body>
+</html>

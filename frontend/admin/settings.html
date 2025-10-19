@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>System Settings - My Clinic</title>
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+  </head>
+
+  <body>
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="dashboard.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <img src="../assets/img/favicon/logo.png" alt="Logo" width="32" />
+              </span>
+              <span class="app-brand-text demo menu-text fw-bold ms-2">My Clinic</span>
+            </a>
+          </div>
+          <div class="menu-inner-shadow"></div>
+          <ul class="menu-inner py-1">
+            <li class="menu-item">
+              <a href="dashboard.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div>Dashboard</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Management</span></li>
+            <li class="menu-item">
+              <a href="users.html" class="menu-link"><i class="menu-icon tf-icons bx bx-user"></i><div>Users</div></a>
+            </li>
+            <li class="menu-item">
+              <a href="doctors.html" class="menu-link"><i class="menu-icon tf-icons bx bx-plus-medical"></i><div>Doctors</div></a>
+            </li>
+            <li class="menu-item">
+              <a href="staff.html" class="menu-link"><i class="menu-icon tf-icons bx bx-briefcase"></i><div>Staff</div></a>
+            </li>
+            <li class="menu-item">
+              <a href="patients.html" class="menu-link"><i class="menu-icon tf-icons bx bx-group"></i><div>Patients</div></a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">System</span></li>
+            <li class="menu-item active">
+              <a href="settings.html" class="menu-link"><i class="menu-icon tf-icons bx bx-cog"></i><div>Settings</div></a>
+            </li>
+            <li class="menu-item">
+              <a href="audit-logs.html" class="menu-link"><i class="menu-icon tf-icons bx bx-list-ul"></i><div>Audit Logs</div></a>
+            </li>
+          </ul>
+        </aside>
+
+        <div class="layout-page">
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+            <div class="navbar-nav-right d-flex align-items-center">
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <li class="nav-item navbar-dropdown dropdown-notifications dropdown me-3 me-xl-2">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);">
+                    <i class="bx bx-bell bx-sm"></i>
+                    <span class="badge bg-danger rounded-pill badge-notifications" id="notificationBadge">0</span>
+                  </a>
+                </li>
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatar">A</span>
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatarDropdown">A</span>
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block" id="userFullName">Admin User</span>
+                            <small class="text-muted" id="userRole">Administrator</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li><a class="dropdown-item" href="profile.html"><i class="bx bx-user me-2"></i><span>My Profile</span></a></li>
+                    <li><a class="dropdown-item" href="settings.html"><i class="bx bx-cog me-2"></i><span>Settings</span></a></li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li><a class="dropdown-item" href="javascript:void(0);" id="logoutBtn"><i class="bx bx-power-off me-2"></i><span>Log Out</span></a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              
+              <h4 class="fw-bold py-3 mb-4">System Settings</h4>
+
+              <div class="row">
+                <div class="col-md-3 mb-4">
+                  <div class="nav flex-column nav-pills" role="tablist">
+                    <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#general" type="button">
+                      <i class="bx bx-cog me-2"></i>General
+                    </button>
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#clinic" type="button">
+                      <i class="bx bx-clinic me-2"></i>Clinic Info
+                    </button>
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#appointments" type="button">
+                      <i class="bx bx-calendar me-2"></i>Appointments
+                    </button>
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#notifications" type="button">
+                      <i class="bx bx-bell me-2"></i>Notifications
+                    </button>
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#email" type="button">
+                      <i class="bx bx-envelope me-2"></i>Email
+                    </button>
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#security" type="button">
+                      <i class="bx bx-lock me-2"></i>Security
+                    </button>
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#backup" type="button">
+                      <i class="bx bx-data me-2"></i>Backup
+                    </button>
+                  </div>
+                </div>
+
+                <div class="col-md-9 mb-4">
+                  <div class="tab-content">
+                    
+                    <!-- General Settings -->
+                    <div class="tab-pane fade show active" id="general">
+                      <div class="card">
+                        <div class="card-header">
+                          <h5 class="mb-0">General Settings</h5>
+                        </div>
+                        <div class="card-body">
+                          <form id="generalForm">
+                            <div class="mb-3">
+                              <label class="form-label">System Name</label>
+                              <input type="text" class="form-control" name="system_name" value="My Clinic CMS">
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Timezone</label>
+                              <select class="form-select" name="timezone">
+                                <option value="Asia/Manila">Asia/Manila (GMT+8)</option>
+                                <option value="America/New_York">America/New York (GMT-5)</option>
+                                <option value="Europe/London">Europe/London (GMT+0)</option>
+                                <option value="Asia/Tokyo">Asia/Tokyo (GMT+9)</option>
+                              </select>
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Date Format</label>
+                              <select class="form-select" name="date_format">
+                                <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                                <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                              </select>
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Time Format</label>
+                              <select class="form-select" name="time_format">
+                                <option value="12">12-hour</option>
+                                <option value="24">24-hour</option>
+                              </select>
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Language</label>
+                              <select class="form-select" name="language">
+                                <option value="en">English</option>
+                                <option value="es">Spanish</option>
+                                <option value="fr">French</option>
+                              </select>
+                            </div>
+                            <div class="form-check mb-3">
+                              <input class="form-check-input" type="checkbox" name="maintenance_mode" id="maintenanceMode">
+                              <label class="form-check-label" for="maintenanceMode">Enable Maintenance Mode</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Clinic Info -->
+                    <div class="tab-pane fade" id="clinic">
+                      <div class="card">
+                        <div class="card-header">
+                          <h5 class="mb-0">Clinic Information</h5>
+                        </div>
+                        <div class="card-body">
+                          <form id="clinicForm">
+                            <div class="mb-3">
+                              <label class="form-label">Clinic Name</label>
+                              <input type="text" class="form-control" name="clinic_name" value="My Clinic">
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Address</label>
+                              <textarea class="form-control" name="address" rows="3"></textarea>
+                            </div>
+                            <div class="row mb-3">
+                              <div class="col-md-6">
+                                <label class="form-label">Phone</label>
+                                <input type="text" class="form-control" name="phone">
+                              </div>
+                              <div class="col-md-6">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" name="email">
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <div class="col-md-6">
+                                <label class="form-label">Opening Time</label>
+                                <input type="time" class="form-control" name="opening_time" value="08:00">
+                              </div>
+                              <div class="col-md-6">
+                                <label class="form-label">Closing Time</label>
+                                <input type="time" class="form-control" name="closing_time" value="17:00">
+                              </div>
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Working Days</label>
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="working_days[]" value="1" id="monday" checked>
+                                <label class="form-check-label" for="monday">Monday</label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="working_days[]" value="2" id="tuesday" checked>
+                                <label class="form-check-label" for="tuesday">Tuesday</label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="working_days[]" value="3" id="wednesday" checked>
+                                <label class="form-check-label" for="wednesday">Wednesday</label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="working_days[]" value="4" id="thursday" checked>
+                                <label class="form-check-label" for="thursday">Thursday</label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="working_days[]" value="5" id="friday" checked>
+                                <label class="form-check-label" for="friday">Friday</label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="working_days[]" value="6" id="saturday">
+                                <label class="form-check-label" for="saturday">Saturday</label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="working_days[]" value="0" id="sunday">
+                                <label class="form-check-label" for="sunday">Sunday</label>
+                              </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Appointments Settings -->
+                    <div class="tab-pane fade" id="appointments">
+                      <div class="card">
+                        <div class="card-header">
+                          <h5 class="mb-0">Appointment Settings</h5>
+                        </div>
+                        <div class="card-body">
+                          <form id="appointmentsForm">
+                            <div class="mb-3">
+                              <label class="form-label">Appointment Duration (minutes)</label>
+                              <input type="number" class="form-control" name="appointment_duration" value="30" min="15" max="120" step="15">
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Max Appointments Per Day</label>
+                              <input type="number" class="form-control" name="max_appointments" value="20" min="1">
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Booking Advance Days</label>
+                              <input type="number" class="form-control" name="booking_advance_days" value="30" min="1">
+                              <small class="text-muted">How many days in advance patients can book</small>
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Cancellation Notice (hours)</label>
+                              <input type="number" class="form-control" name="cancellation_notice" value="24" min="1">
+                              <small class="text-muted">Minimum notice required for cancellations</small>
+                            </div>
+                            <div class="form-check mb-3">
+                              <input class="form-check-input" type="checkbox" name="require_approval" id="requireApproval" checked>
+                              <label class="form-check-label" for="requireApproval">Require admin approval for appointments</label>
+                            </div>
+                            <div class="form-check mb-3">
+                              <input class="form-check-input" type="checkbox" name="send_reminders" id="sendReminders" checked>
+                              <label class="form-check-label" for="sendReminders">Send appointment reminders</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Notifications Settings -->
+                    <div class="tab-pane fade" id="notifications">
+                      <div class="card">
+                        <div class="card-header">
+                          <h5 class="mb-0">Notification Settings</h5>
+                        </div>
+                        <div class="card-body">
+                          <form id="notificationsForm">
+                            <h6 class="mb-3">Email Notifications</h6>
+                            <div class="form-check mb-2">
+                              <input class="form-check-input" type="checkbox" name="email_new_user" id="emailNewUser" checked>
+                              <label class="form-check-label" for="emailNewUser">New user registration</label>
+                            </div>
+                            <div class="form-check mb-2">
+                              <input class="form-check-input" type="checkbox" name="email_new_appointment" id="emailNewAppointment" checked>
+                              <label class="form-check-label" for="emailNewAppointment">New appointment</label>
+                            </div>
+                            <div class="form-check mb-2">
+                              <input class="form-check-input" type="checkbox" name="email_appointment_cancelled" id="emailCancelled" checked>
+                              <label class="form-check-label" for="emailCancelled">Appointment cancelled</label>
+                            </div>
+                            <div class="form-check mb-3">
+                              <input class="form-check-input" type="checkbox" name="email_system_updates" id="emailUpdates">
+                              <label class="form-check-label" for="emailUpdates">System updates</label>
+                            </div>
+
+                            <h6 class="mb-3 mt-4">SMS Notifications</h6>
+                            <div class="form-check mb-2">
+                              <input class="form-check-input" type="checkbox" name="sms_appointment_reminder" id="smsReminder" checked>
+                              <label class="form-check-label" for="smsReminder">Appointment reminders</label>
+                            </div>
+                            <div class="form-check mb-3">
+                              <input class="form-check-input" type="checkbox" name="sms_appointment_confirmed" id="smsConfirmed" checked>
+                              <label class="form-check-label" for="smsConfirmed">Appointment confirmed</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Email Settings -->
+                    <div class="tab-pane fade" id="email">
+                      <div class="card">
+                        <div class="card-header">
+                          <h5 class="mb-0">Email Configuration</h5>
+                        </div>
+                        <div class="card-body">
+                          <form id="emailForm">
+                            <div class="mb-3">
+                              <label class="form-label">SMTP Host</label>
+                              <input type="text" class="form-control" name="smtp_host" placeholder="smtp.gmail.com">
+                            </div>
+                            <div class="row mb-3">
+                              <div class="col-md-6">
+                                <label class="form-label">SMTP Port</label>
+                                <input type="number" class="form-control" name="smtp_port" value="587">
+                              </div>
+                              <div class="col-md-6">
+                                <label class="form-label">Encryption</label>
+                                <select class="form-select" name="smtp_encryption">
+                                  <option value="tls">TLS</option>
+                                  <option value="ssl">SSL</option>
+                                  <option value="none">None</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Username</label>
+                              <input type="text" class="form-control" name="smtp_username">
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Password</label>
+                              <input type="password" class="form-control" name="smtp_password">
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">From Email</label>
+                              <input type="email" class="form-control" name="from_email" placeholder="noreply@clinic.com">
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">From Name</label>
+                              <input type="text" class="form-control" name="from_name" value="My Clinic">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="button" class="btn btn-outline-secondary" id="testEmailBtn">Send Test Email</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Security Settings -->
+                    <div class="tab-pane fade" id="security">
+                      <div class="card">
+                        <div class="card-header">
+                          <h5 class="mb-0">Security Settings</h5>
+                        </div>
+                        <div class="card-body">
+                          <form id="securityForm">
+                            <div class="mb-3">
+                              <label class="form-label">Session Timeout (minutes)</label>
+                              <input type="number" class="form-control" name="session_timeout" value="30" min="5">
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Password Minimum Length</label>
+                              <input type="number" class="form-control" name="password_min_length" value="8" min="6">
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Max Login Attempts</label>
+                              <input type="number" class="form-control" name="max_login_attempts" value="5" min="3">
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Lockout Duration (minutes)</label>
+                              <input type="number" class="form-control" name="lockout_duration" value="30" min="5">
+                            </div>
+                            <div class="form-check mb-2">
+                              <input class="form-check-input" type="checkbox" name="require_uppercase" id="requireUppercase" checked>
+                              <label class="form-check-label" for="requireUppercase">Require uppercase in password</label>
+                            </div>
+                            <div class="form-check mb-2">
+                              <input class="form-check-input" type="checkbox" name="require_number" id="requireNumber" checked>
+                              <label class="form-check-label" for="requireNumber">Require number in password</label>
+                            </div>
+                            <div class="form-check mb-2">
+                              <input class="form-check-input" type="checkbox" name="require_special" id="requireSpecial">
+                              <label class="form-check-label" for="requireSpecial">Require special character in password</label>
+                            </div>
+                            <div class="form-check mb-3">
+                              <input class="form-check-input" type="checkbox" name="two_factor_auth" id="twoFactorAuth">
+                              <label class="form-check-label" for="twoFactorAuth">Enable two-factor authentication</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Backup Settings -->
+                    <div class="tab-pane fade" id="backup">
+                      <div class="card">
+                        <div class="card-header">
+                          <h5 class="mb-0">Backup & Restore</h5>
+                        </div>
+                        <div class="card-body">
+                          <form id="backupForm">
+                            <div class="mb-3">
+                              <label class="form-label">Automatic Backup</label>
+                              <select class="form-select" name="auto_backup">
+                                <option value="none">Disabled</option>
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                              </select>
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Backup Time</label>
+                              <input type="time" class="form-control" name="backup_time" value="02:00">
+                            </div>
+                            <div class="mb-3">
+                              <label class="form-label">Retention Period (days)</label>
+                              <input type="number" class="form-control" name="retention_days" value="30" min="7">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                          </form>
+
+                          <hr class="my-4">
+
+                          <h6 class="mb-3">Manual Backup</h6>
+                          <button type="button" class="btn btn-success" id="createBackupBtn">
+                            <i class="bx bx-download me-1"></i>Create Backup Now
+                          </button>
+
+                          <hr class="my-4">
+
+                          <h6 class="mb-3">Recent Backups</h6>
+                          <div class="table-responsive">
+                            <table class="table table-sm">
+                              <thead>
+                                <tr>
+                                  <th>Date</th>
+                                  <th>Size</th>
+                                  <th>Type</th>
+                                  <th>Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody id="backupsTable">
+                                <tr>
+                                  <td>Jan 15, 2024 02:00 AM</td>
+                                  <td>15.2 MB</td>
+                                  <td><span class="badge bg-primary">Automatic</span></td>
+                                  <td>
+                                    <button class="btn btn-sm btn-outline-primary"><i class="bx bx-download"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="bx bx-trash"></i></button>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>Jan 08, 2024 02:00 AM</td>
+                                  <td>14.8 MB</td>
+                                  <td><span class="badge bg-primary">Automatic</span></td>
+                                  <td>
+                                    <button class="btn btn-sm btn-outline-primary"><i class="bx bx-download"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="bx bx-trash"></i></button>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  © <script>document.write(new Date().getFullYear());</script> My Clinic CMS
+                </div>
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/js/session-handler.js"></script>
+    
+    <script>
+      (function () {
+        "use strict";
+        if (!SessionHandler.requireUserType(1)) return;
+
+        var fullName = SessionHandler.getUserFullName();
+        var initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        
+        document.getElementById("userFullName").textContent = fullName;
+        document.getElementById("userRole").textContent = SessionHandler.getUserRole();
+        document.getElementById("userAvatar").textContent = initials;
+        document.getElementById("userAvatarDropdown").textContent = initials;
+
+        var notifCount = SessionHandler.getUnreadNotificationsCount();
+        document.getElementById("notificationBadge").textContent = notifCount;
+        if (notifCount === 0) document.getElementById("notificationBadge").style.display = "none";
+
+        document.getElementById("logoutBtn").addEventListener("click", function(e) {
+          e.preventDefault();
+          if (confirm("Are you sure you want to logout?")) SessionHandler.logout();
+        });
+
+        var menuToggle = document.querySelector('.layout-menu-toggle');
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function() {
+            document.querySelector('.layout-wrapper').classList.toggle('layout-menu-expanded');
+          });
+        }
+
+        // Load settings on page load
+        loadSettings();
+
+        async function loadSettings() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'all');
+            params.append('json', JSON.stringify({}));
+
+            const response = await axios.post('../../backend/system_settings.php', params);
+            
+            if (response.data.success) {
+              const settings = response.data.data;
+              // Populate forms with settings
+              Object.keys(settings).forEach(key => {
+                const input = document.querySelector(`[name="${key}"]`);
+                if (input) {
+                  if (input.type === 'checkbox') {
+                    input.checked = settings[key] == '1' || settings[key] === 'true';
+                  } else {
+                    input.value = settings[key];
+                  }
+                }
+              });
+            }
+          } catch (error) {
+            console.error('Error loading settings:', error);
+          }
+        }
+
+        async function saveSettings(formId, successMessage) {
+          const form = document.getElementById(formId);
+          const formData = new FormData(form);
+          const settings = {};
+          
+          formData.forEach((value, key) => {
+            const input = form.querySelector(`[name="${key}"]`);
+            if (input && input.type === 'checkbox') {
+              settings[key] = input.checked ? '1' : '0';
+            } else {
+              settings[key] = value;
+            }
+          });
+
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'update');
+            params.append('json', JSON.stringify({
+              settings: settings,
+              admin_user_id: user.user_id
+            }));
+
+            const response = await axios.post('../../backend/system_settings.php', params);
+            
+            if (response.data.success) {
+              alert(successMessage);
+            } else {
+              alert('Error: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error saving settings:', error);
+            alert('Error saving settings. Please try again.');
+          }
+        }
+
+        // Form submit handlers
+        document.getElementById("generalForm").addEventListener("submit", function(e) {
+          e.preventDefault();
+          saveSettings('generalForm', 'General settings saved successfully!');
+        });
+
+        document.getElementById("clinicForm").addEventListener("submit", function(e) {
+          e.preventDefault();
+          saveSettings('clinicForm', 'Clinic information saved successfully!');
+        });
+
+        document.getElementById("appointmentsForm").addEventListener("submit", function(e) {
+          e.preventDefault();
+          saveSettings('appointmentsForm', 'Appointment settings saved successfully!');
+        });
+
+        document.getElementById("notificationsForm").addEventListener("submit", function(e) {
+          e.preventDefault();
+          saveSettings('notificationsForm', 'Notification settings saved successfully!');
+        });
+
+        document.getElementById("emailForm").addEventListener("submit", function(e) {
+          e.preventDefault();
+          saveSettings('emailForm', 'Email configuration saved successfully!');
+        });
+
+        document.getElementById("testEmailBtn").addEventListener("click", function() {
+          console.log("Sending test email...");
+          alert("Test email feature coming soon!");
+        });
+
+        document.getElementById("securityForm").addEventListener("submit", function(e) {
+          e.preventDefault();
+          saveSettings('securityForm', 'Security settings saved successfully!');
+        });
+
+        document.getElementById("backupForm").addEventListener("submit", function(e) {
+          e.preventDefault();
+          saveSettings('backupForm', 'Backup settings saved successfully!');
+        });
+
+        document.getElementById("createBackupBtn").addEventListener("click", function() {
+          if (confirm("Create a database backup now?")) {
+            console.log("Creating backup...");
+            alert("Backup feature coming soon!");
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

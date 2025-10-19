@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <title>Admin Dashboard - My Clinic</title>
+    <meta name="description" content="Administrator Dashboard" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+  </head>
+
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        
+        <!-- Menu (Sidebar) -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="dashboard.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <img src="../assets/img/favicon/logo.png" alt="Logo" width="32" />
+              </span>
+              <span class="app-brand-text demo menu-text fw-bold ms-2">My Clinic</span>
+            </a>
+          </div>
+
+          <div class="menu-inner-shadow"></div>
+
+          <ul class="menu-inner py-1">
+            <!-- Dashboard -->
+            <li class="menu-item active">
+              <a href="dashboard.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Dashboard">Dashboard</div>
+              </a>
+            </li>
+
+            <!-- User Management -->
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Management</span>
+            </li>
+            
+            <li class="menu-item">
+              <a href="users.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Users">Users</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="doctors.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-plus-medical"></i>
+                <div data-i18n="Doctors">Doctors</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="staff.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-briefcase"></i>
+                <div data-i18n="Staff">Staff</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="patients.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-group"></i>
+                <div data-i18n="Patients">Patients</div>
+              </a>
+            </li>
+
+            <!-- System -->
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">System</span>
+            </li>
+
+            <li class="menu-item">
+              <a href="settings.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-cog"></i>
+                <div data-i18n="Settings">Settings</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="audit-logs.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                <div data-i18n="Audit Logs">Audit Logs</div>
+              </a>
+            </li>
+          </ul>
+        </aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          
+          <!-- Navbar -->
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <!-- Search -->
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input
+                    type="text"
+                    class="form-control border-0 shadow-none"
+                    placeholder="Search..."
+                    aria-label="Search..."
+                  />
+                </div>
+              </div>
+              <!-- /Search -->
+
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <!-- Notifications -->
+                <li class="nav-item navbar-dropdown dropdown-notifications dropdown me-3 me-xl-2">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <i class="bx bx-bell bx-sm"></i>
+                    <span class="badge bg-danger rounded-pill badge-notifications" id="notificationBadge">0</span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end py-0">
+                    <li class="dropdown-menu-header border-bottom">
+                      <div class="dropdown-header d-flex align-items-center py-3">
+                        <h5 class="text-body mb-0 me-auto">Notifications</h5>
+                        <a href="javascript:void(0)" class="dropdown-notifications-all text-body" data-bs-toggle="tooltip" data-bs-placement="top" title="Mark all as read">
+                          <i class="bx fs-4 bx-envelope-open"></i>
+                        </a>
+                      </div>
+                    </li>
+                    <li class="dropdown-notifications-list scrollable-container">
+                      <ul class="list-group list-group-flush" id="notificationList">
+                        <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                          <div class="d-flex">
+                            <div class="flex-grow-1">
+                              <h6 class="mb-1">No new notifications</h6>
+                              <p class="mb-0">You're all caught up!</p>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <!-- /Notifications -->
+
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatar">A</span>
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatarDropdown">A</span>
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block" id="userFullName">Admin User</span>
+                            <small class="text-muted" id="userRole">Administrator</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="settings.html">
+                        <i class="bx bx-cog me-2"></i>
+                        <span class="align-middle">Settings</span>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);" id="logoutBtn">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!--/ User -->
+              </ul>
+            </div>
+          </nav>
+          <!-- / Navbar -->
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+            <div class="container-xxl flex-grow-1 container-p-y">
+              
+              <div class="row">
+                <div class="col-lg-8 mb-4 order-0">
+                  <div class="card">
+                    <div class="d-flex align-items-end row">
+                      <div class="col-sm-7">
+                        <div class="card-body">
+                          <h5 class="card-title text-primary">Welcome back, <span id="welcomeName">Admin</span>! 🎉</h5>
+                          <p class="mb-4">
+                            You have <span class="fw-bold" id="pendingTasksCount">0</span> pending tasks today. 
+                            Check your dashboard to manage the clinic efficiently.
+                          </p>
+                          <a href="users.html" class="btn btn-sm btn-outline-primary">Manage Users</a>
+                        </div>
+                      </div>
+                      <div class="col-sm-5 text-center text-sm-left">
+                        <div class="card-body pb-0 px-0 px-md-4">
+                          <img
+                            src="../assets/img/illustrations/man-with-laptop-light.png"
+                            height="140"
+                            alt="View Badge User"
+                            data-app-dark-img="illustrations/man-with-laptop-dark.png"
+                            data-app-light-img="illustrations/man-with-laptop-light.png"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 order-1">
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-6 mb-4">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="card-title d-flex align-items-start justify-content-between">
+                            <div class="avatar flex-shrink-0">
+                              <span class="avatar-initial rounded bg-label-primary">
+                                <i class="bx bx-user"></i>
+                              </span>
+                            </div>
+                          </div>
+                          <span class="fw-semibold d-block mb-1">Total Users</span>
+                          <h3 class="card-title mb-2" id="totalUsers">0</h3>
+                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> Active</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Statistics Cards -->
+              <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">Doctors</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="totalDoctors">0</h4>
+                          </div>
+                          <small>Active doctors</small>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-primary rounded p-2">
+                            <i class="bx bx-plus-medical bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">Patients</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="totalPatients">0</h4>
+                          </div>
+                          <small>Registered patients</small>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-info rounded p-2">
+                            <i class="bx bx-group bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">Staff</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="totalStaff">0</h4>
+                          </div>
+                          <small>Secretaries & Receptionists</small>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-success rounded p-2">
+                            <i class="bx bx-briefcase bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">Appointments</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="todayAppointments">0</h4>
+                          </div>
+                          <small>Today's schedule</small>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-warning rounded p-2">
+                            <i class="bx bx-calendar bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recent Activities & System Status -->
+              <div class="row">
+                <!-- Recent Activities -->
+                <div class="col-md-6 col-lg-8 mb-4 order-0">
+                  <div class="card h-100">
+                    <div class="card-header d-flex align-items-center justify-content-between pb-0">
+                      <div class="card-title mb-0">
+                        <h5 class="m-0 me-2">Recent Activities</h5>
+                        <small class="text-muted">Latest system activities</small>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <ul class="p-0 m-0" id="recentActivities">
+                        <li class="d-flex mb-4 pb-1">
+                          <div class="avatar flex-shrink-0 me-3">
+                            <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-user"></i></span>
+                          </div>
+                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                            <div class="me-2">
+                              <h6 class="mb-0">Loading activities...</h6>
+                              <small class="text-muted">Please wait</small>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- System Status -->
+                <div class="col-md-6 col-lg-4 order-1 mb-4">
+                  <div class="card h-100">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                      <h5 class="card-title m-0 me-2">System Status</h5>
+                    </div>
+                    <div class="card-body">
+                      <ul class="p-0 m-0">
+                        <li class="d-flex mb-3">
+                          <div class="avatar flex-shrink-0 me-3">
+                            <span class="avatar-initial rounded bg-label-success"><i class="bx bx-server"></i></span>
+                          </div>
+                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                            <div class="me-2">
+                              <small class="text-muted d-block mb-1">Server Status</small>
+                              <h6 class="mb-0">Online</h6>
+                            </div>
+                            <div class="user-progress d-flex align-items-center gap-1">
+                              <span class="badge bg-label-success">Active</span>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="d-flex mb-3">
+                          <div class="avatar flex-shrink-0 me-3">
+                            <span class="avatar-initial rounded bg-label-info"><i class="bx bx-data"></i></span>
+                          </div>
+                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                            <div class="me-2">
+                              <small class="text-muted d-block mb-1">Database</small>
+                              <h6 class="mb-0">Connected</h6>
+                            </div>
+                            <div class="user-progress d-flex align-items-center gap-1">
+                              <span class="badge bg-label-success">OK</span>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="d-flex">
+                          <div class="avatar flex-shrink-0 me-3">
+                            <span class="avatar-initial rounded bg-label-warning"><i class="bx bx-time"></i></span>
+                          </div>
+                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                            <div class="me-2">
+                              <small class="text-muted d-block mb-1">Last Backup</small>
+                              <h6 class="mb-0" id="lastBackup">--</h6>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!-- / Content -->
+
+            <!-- Footer -->
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  © <script>document.write(new Date().getFullYear());</script> My Clinic CMS
+                </div>
+              </div>
+            </footer>
+            <!-- / Footer -->
+
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <!-- Core JS -->
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/js/session-handler.js"></script>
+    
+    <script>
+      (function () {
+        "use strict";
+
+        // Require admin authentication (usertype 1)
+        if (!SessionHandler.requireUserType(1)) {
+          return;
+        }
+
+        // Get user data
+        var user = SessionHandler.getUser();
+        var session = SessionHandler.getSession();
+
+        // Display user info in navbar
+        var fullName = SessionHandler.getUserFullName();
+        var firstName = fullName.split(' ')[0];
+        var initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        
+        document.getElementById("userFullName").textContent = fullName;
+        document.getElementById("userRole").textContent = SessionHandler.getUserRole();
+        document.getElementById("welcomeName").textContent = firstName;
+        document.getElementById("userAvatar").textContent = initials;
+        document.getElementById("userAvatarDropdown").textContent = initials;
+
+        // Display notification count
+        var notifCount = SessionHandler.getUnreadNotificationsCount();
+        document.getElementById("notificationBadge").textContent = notifCount;
+        
+        if (notifCount > 0) {
+          document.getElementById("notificationBadge").style.display = "inline-block";
+          // Populate notifications list
+          var notificationList = document.getElementById("notificationList");
+          var notifications = session.notifications.filter(n => !n.is_read).slice(0, 5);
+          
+          if (notifications.length > 0) {
+            notificationList.innerHTML = notifications.map(notif => `
+              <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                <div class="d-flex">
+                  <div class="flex-grow-1">
+                    <h6 class="mb-1">${notif.title || 'Notification'}</h6>
+                    <p class="mb-0 small">${notif.message || ''}</p>
+                    <small class="text-muted">${notif.created_at || ''}</small>
+                  </div>
+                </div>
+              </li>
+            `).join('');
+          }
+        } else {
+          document.getElementById("notificationBadge").style.display = "none";
+        }
+
+        // Logout handler
+        document.getElementById("logoutBtn").addEventListener("click", function(e) {
+          e.preventDefault();
+          if (confirm("Are you sure you want to logout?")) {
+            SessionHandler.logout();
+          }
+        });
+
+        // Menu toggle for mobile
+        var menuToggle = document.querySelector('.layout-menu-toggle');
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function() {
+            document.querySelector('.layout-wrapper').classList.toggle('layout-menu-expanded');
+          });
+        }
+
+        // Load dashboard statistics
+        loadDashboardStats();
+        loadRecentActivities();
+
+        async function loadDashboardStats() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getStatistics');
+            params.append('json', JSON.stringify({
+              usertype_id: user.usertype_id,
+              user_id: user.user_id
+            }));
+
+            const response = await axios.post('../../backend/dashboard.php', params);
+            
+            if (response.data.success) {
+              const stats = response.data.data;
+              
+              // Update cards based on user role
+              if (user.usertype_id == 1) { // Admin
+                document.getElementById("totalUsers").textContent = stats.system_stats?.total_users || "0";
+                document.getElementById("totalDoctors").textContent = stats.system_stats?.total_doctors || "0";
+                document.getElementById("totalPatients").textContent = stats.system_stats?.total_patients || "0";
+                document.getElementById("totalStaff").textContent = stats.system_stats?.total_staff || "0";
+                document.getElementById("todayAppointments").textContent = stats.system_stats?.today_appointments || "0";
+                document.getElementById("pendingTasksCount").textContent = stats.system_stats?.pending_appointments || "0";
+              }
+            } else {
+              console.error('Error loading statistics:', response.data.error);
+            }
+          } catch (error) {
+            console.error('Error loading dashboard stats:', error);
+          }
+        }
+
+        async function loadRecentActivities() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getStatistics');
+            params.append('json', JSON.stringify({
+              usertype_id: user.usertype_id,
+              user_id: user.user_id
+            }));
+
+            const response = await axios.post('../../backend/dashboard.php', params);
+            
+            if (response.data.success && response.data.data.recent_activities) {
+              const activities = response.data.data.recent_activities.map(activity => ({
+                icon: getActivityIcon(activity.action),
+                iconColor: getActivityColor(activity.action),
+                title: activity.action.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+                description: activity.description || 'No description',
+                time: timeAgo(activity.created_at)
+              }));
+
+              renderActivities(activities);
+            }
+          } catch (error) {
+            console.error('Error loading recent activities:', error);
+          }
+        }
+
+        function getActivityIcon(action) {
+          const iconMap = {
+            'create_user': 'bx-user-plus',
+            'update_user': 'bx-user',
+            'delete_user': 'bx-user-x',
+            'create_doctor': 'bx-plus-medical',
+            'create_patient': 'bx-group',
+            'create_appointment': 'bx-calendar',
+            'update_profile': 'bx-edit',
+            'update_settings': 'bx-cog'
+          };
+          return iconMap[action] || 'bx-info-circle';
+        }
+
+        function getActivityColor(action) {
+          if (action.includes('create')) return 'success';
+          if (action.includes('update')) return 'info';
+          if (action.includes('delete')) return 'danger';
+          return 'primary';
+        }
+
+        function timeAgo(datetime) {
+          const date = new Date(datetime);
+          const now = new Date();
+          const seconds = Math.floor((now - date) / 1000);
+          
+          if (seconds < 60) return seconds + ' seconds ago';
+          const minutes = Math.floor(seconds / 60);
+          if (minutes < 60) return minutes + ' minute' + (minutes > 1 ? 's' : '') + ' ago';
+          const hours = Math.floor(minutes / 60);
+          if (hours < 24) return hours + ' hour' + (hours > 1 ? 's' : '') + ' ago';
+          const days = Math.floor(hours / 24);
+          return days + ' day' + (days > 1 ? 's' : '') + ' ago';
+        }
+
+        function renderActivities(activities) {
+          var activitiesHtml = activities.map(activity => `
+            <li class="d-flex mb-4 pb-1">
+              <div class="avatar flex-shrink-0 me-3">
+                <span class="avatar-initial rounded bg-label-${activity.iconColor}">
+                  <i class="bx ${activity.icon}"></i>
+                </span>
+              </div>
+              <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-2">
+                  <h6 class="mb-0">${activity.title}</h6>
+                  <small class="text-muted">${activity.description}</small>
+                </div>
+                <div class="user-progress">
+                  <small class="fw-semibold">${activity.time}</small>
+                </div>
+              </div>
+            </li>
+          `).join('');
+
+          document.getElementById("recentActivities").innerHTML = activitiesHtml;
+        }
+
+        console.log("Admin Dashboard loaded");
+        console.log("User:", user);
+      })();
+    </script>
+  </body>
+</html>

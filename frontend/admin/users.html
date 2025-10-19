@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <title>User Management - My Clinic</title>
+    <meta name="description" content="Manage System Users" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+  </head>
+
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        
+        <!-- Menu (Sidebar) -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="dashboard.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <img src="../assets/img/favicon/logo.png" alt="Logo" width="32" />
+              </span>
+              <span class="app-brand-text demo menu-text fw-bold ms-2">My Clinic</span>
+            </a>
+          </div>
+
+          <div class="menu-inner-shadow"></div>
+
+          <ul class="menu-inner py-1">
+            <!-- Dashboard -->
+            <li class="menu-item">
+              <a href="dashboard.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Dashboard">Dashboard</div>
+              </a>
+            </li>
+
+            <!-- User Management -->
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Management</span>
+            </li>
+            
+            <li class="menu-item active">
+              <a href="users.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Users">Users</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="doctors.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-plus-medical"></i>
+                <div data-i18n="Doctors">Doctors</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="staff.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-briefcase"></i>
+                <div data-i18n="Staff">Staff</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="patients.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-group"></i>
+                <div data-i18n="Patients">Patients</div>
+              </a>
+            </li>
+
+            <!-- System -->
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">System</span>
+            </li>
+
+            <li class="menu-item">
+              <a href="settings.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-cog"></i>
+                <div data-i18n="Settings">Settings</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="audit-logs.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                <div data-i18n="Audit Logs">Audit Logs</div>
+              </a>
+            </li>
+          </ul>
+        </aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          
+          <!-- Navbar -->
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <!-- Search -->
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input
+                    type="text"
+                    class="form-control border-0 shadow-none"
+                    placeholder="Search..."
+                    aria-label="Search..."
+                  />
+                </div>
+              </div>
+              <!-- /Search -->
+
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <!-- Notifications -->
+                <li class="nav-item navbar-dropdown dropdown-notifications dropdown me-3 me-xl-2">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <i class="bx bx-bell bx-sm"></i>
+                    <span class="badge bg-danger rounded-pill badge-notifications" id="notificationBadge">0</span>
+                  </a>
+                </li>
+
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatar">A</span>
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatarDropdown">A</span>
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block" id="userFullName">Admin User</span>
+                            <small class="text-muted" id="userRole">Administrator</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="settings.html">
+                        <i class="bx bx-cog me-2"></i>
+                        <span class="align-middle">Settings</span>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);" id="logoutBtn">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!--/ User -->
+              </ul>
+            </div>
+          </nav>
+          <!-- / Navbar -->
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+            <div class="container-xxl flex-grow-1 container-p-y">
+              
+              <h4 class="fw-bold py-3 mb-4">
+                <span class="text-muted fw-light">Management /</span> Users
+              </h4>
+
+              <!-- Users List Table -->
+              <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0">User Management</h5>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                    <i class="bx bx-plus me-1"></i> Add New User
+                  </button>
+                </div>
+                
+                <div class="card-body">
+                  <!-- Filter and Search -->
+                  <div class="row mb-3">
+                    <div class="col-md-4">
+                      <input type="text" class="form-control" id="searchUser" placeholder="Search by name, username or email...">
+                    </div>
+                    <div class="col-md-3">
+                      <select class="form-select" id="filterUserType">
+                        <option value="">All User Types</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Doctor</option>
+                        <option value="3">Secretary</option>
+                        <option value="4">Receptionist</option>
+                        <option value="5">Patient</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <select class="form-select" id="filterStatus">
+                        <option value="">All Status</option>
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </select>
+                    </div>
+                    <div class="col-md-2">
+                      <button type="button" class="btn btn-outline-secondary w-100" id="resetFilters">
+                        <i class="bx bx-refresh"></i> Reset
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Users Table -->
+                  <div class="table-responsive text-nowrap">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>User</th>
+                          <th>Username</th>
+                          <th>Email</th>
+                          <th>Role</th>
+                          <th>Status</th>
+                          <th>Created</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table-border-bottom-0" id="usersTableBody">
+                        <tr>
+                          <td colspan="8" class="text-center">
+                            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2 mb-0">Loading users...</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Pagination -->
+                  <nav aria-label="Page navigation" class="mt-3">
+                    <ul class="pagination justify-content-center" id="pagination">
+                      <li class="page-item disabled">
+                        <a class="page-link" href="javascript:void(0);">Previous</a>
+                      </li>
+                      <li class="page-item active">
+                        <a class="page-link" href="javascript:void(0);">1</a>
+                      </li>
+                      <li class="page-item">
+                        <a class="page-link" href="javascript:void(0);">Next</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+
+            </div>
+            <!-- / Content -->
+
+            <!-- Footer -->
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  © <script>document.write(new Date().getFullYear());</script> My Clinic CMS
+                </div>
+              </div>
+            </footer>
+            <!-- / Footer -->
+
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <!-- Add User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add New User</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="addUserForm">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="addUsername" class="form-label">Username <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="addUsername" name="username" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="addEmail" class="form-label">Email <span class="text-danger">*</span></label>
+                  <input type="email" class="form-control" id="addEmail" name="email" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="addPassword" class="form-label">Password <span class="text-danger">*</span></label>
+                  <input type="password" class="form-control" id="addPassword" name="password" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="addUserType" class="form-label">User Type <span class="text-danger">*</span></label>
+                  <select class="form-select" id="addUserType" name="usertype_id" required>
+                    <option value="">Select Role</option>
+                    <option value="1">Admin</option>
+                    <option value="2">Doctor</option>
+                    <option value="3">Secretary</option>
+                    <option value="4">Receptionist</option>
+                    <option value="5">Patient</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="addFirstName" class="form-label">First Name</label>
+                  <input type="text" class="form-control" id="addFirstName" name="first_name">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="addLastName" class="form-label">Last Name</label>
+                  <input type="text" class="form-control" id="addLastName" name="last_name">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="addStatus" class="form-label">Status</label>
+                <select class="form-select" id="addStatus" name="status">
+                  <option value="1">Active</option>
+                  <option value="0">Inactive</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Add User</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit User</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="editUserForm">
+            <input type="hidden" id="editUserId" name="user_id">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="editUsername" class="form-label">Username <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="editUsername" name="username" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="editEmail" class="form-label">Email <span class="text-danger">*</span></label>
+                  <input type="email" class="form-control" id="editEmail" name="email" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="editPassword" class="form-label">Password <small class="text-muted">(leave blank to keep current)</small></label>
+                  <input type="password" class="form-control" id="editPassword" name="password">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="editUserType" class="form-label">User Type <span class="text-danger">*</span></label>
+                  <select class="form-select" id="editUserType" name="usertype_id" required>
+                    <option value="">Select Role</option>
+                    <option value="1">Admin</option>
+                    <option value="2">Doctor</option>
+                    <option value="3">Secretary</option>
+                    <option value="4">Receptionist</option>
+                    <option value="5">Patient</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="editFirstName" class="form-label">First Name</label>
+                  <input type="text" class="form-control" id="editFirstName" name="first_name">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="editLastName" class="form-label">Last Name</label>
+                  <input type="text" class="form-control" id="editLastName" name="last_name">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="editStatus" class="form-label">Status</label>
+                <select class="form-select" id="editStatus" name="status">
+                  <option value="1">Active</option>
+                  <option value="0">Inactive</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Update User</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Core JS -->
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/js/session-handler.js"></script>
+    
+    <script>
+      (function () {
+        "use strict";
+
+        // Require admin authentication
+        if (!SessionHandler.requireUserType(1)) {
+          return;
+        }
+
+        // Get user data
+        var user = SessionHandler.getUser();
+        var fullName = SessionHandler.getUserFullName();
+        var firstName = fullName.split(' ')[0];
+        var initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        
+        document.getElementById("userFullName").textContent = fullName;
+        document.getElementById("userRole").textContent = SessionHandler.getUserRole();
+        document.getElementById("userAvatar").textContent = initials;
+        document.getElementById("userAvatarDropdown").textContent = initials;
+
+        // Notification count
+        var notifCount = SessionHandler.getUnreadNotificationsCount();
+        document.getElementById("notificationBadge").textContent = notifCount;
+        if (notifCount === 0) {
+          document.getElementById("notificationBadge").style.display = "none";
+        }
+
+        // Logout handler
+        document.getElementById("logoutBtn").addEventListener("click", function(e) {
+          e.preventDefault();
+          if (confirm("Are you sure you want to logout?")) {
+            SessionHandler.logout();
+          }
+        });
+
+        // Menu toggle for mobile
+        var menuToggle = document.querySelector('.layout-menu-toggle');
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function() {
+            document.querySelector('.layout-wrapper').classList.toggle('layout-menu-expanded');
+          });
+        }
+
+        // Load users
+        loadUsers();
+
+        async function loadUsers() {
+          try {
+            const searchTerm = document.getElementById("searchUser")?.value || "";
+            const usertype = document.getElementById("filterUserType")?.value || "";
+            const status = document.getElementById("filterStatus")?.value || "";
+
+            const params = new URLSearchParams();
+            params.append('operation', 'getAll');
+            params.append('json', JSON.stringify({
+              search: searchTerm,
+              usertype_id: usertype,
+              status: status
+            }));
+
+            const response = await axios.post('../../backend/users.php', params);
+            
+            if (response.data.success) {
+              renderUsersTable(response.data.data);
+            } else {
+              console.error('Error loading users:', response.data.error);
+              alert('Error loading users: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error loading users:', error);
+            alert('Error loading users. Please check your connection.');
+          }
+        }
+
+        function renderUsersTable(users) {
+          var tbody = document.getElementById("usersTableBody");
+          
+          if (users.length === 0) {
+            tbody.innerHTML = `
+              <tr>
+                <td colspan="8" class="text-center py-4">
+                  <i class="bx bx-search-alt bx-lg text-muted"></i>
+                  <p class="mt-2 mb-0">No users found</p>
+                </td>
+              </tr>
+            `;
+            return;
+          }
+
+          tbody.innerHTML = users.map(user => {
+            var statusBadge = user.status == 1 
+              ? '<span class="badge bg-label-success">Active</span>' 
+              : '<span class="badge bg-label-danger">Inactive</span>';
+            
+            var roleBadge = getRoleBadge(user.usertype_id);
+            var fullName = (user.first_name && user.last_name) 
+              ? user.first_name + ' ' + user.last_name 
+              : user.username;
+
+            return `
+              <tr>
+                <td><strong>#${user.user_id}</strong></td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="avatar avatar-sm me-2">
+                      <span class="avatar-initial rounded-circle bg-label-primary">
+                        ${getInitials(fullName)}
+                      </span>
+                    </div>
+                    <div>
+                      <strong>${fullName}</strong>
+                    </div>
+                  </div>
+                </td>
+                <td>${user.username}</td>
+                <td>${user.email}</td>
+                <td>${roleBadge}</td>
+                <td>${statusBadge}</td>
+                <td>${formatDate(user.created_at)}</td>
+                <td>
+                  <div class="dropdown">
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="javascript:void(0);" onclick="editUser(${user.user_id})">
+                        <i class="bx bx-edit-alt me-1"></i> Edit
+                      </a>
+                      <a class="dropdown-item" href="javascript:void(0);" onclick="deleteUser(${user.user_id}, '${user.username}')">
+                        <i class="bx bx-trash me-1"></i> Delete
+                      </a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        }
+
+        function getRoleBadge(usertype_id) {
+          var badges = {
+            1: '<span class="badge bg-label-danger">Admin</span>',
+            2: '<span class="badge bg-label-primary">Doctor</span>',
+            3: '<span class="badge bg-label-info">Secretary</span>',
+            4: '<span class="badge bg-label-warning">Receptionist</span>',
+            5: '<span class="badge bg-label-success">Patient</span>'
+          };
+          return badges[usertype_id] || '<span class="badge bg-label-secondary">Unknown</span>';
+        }
+
+        function getInitials(name) {
+          return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        }
+
+        function formatDate(dateStr) {
+          if (!dateStr) return 'N/A';
+          var date = new Date(dateStr);
+          return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        // Add User Form Submit
+        document.getElementById("addUserForm").addEventListener("submit", async function(e) {
+          e.preventDefault();
+          
+          try {
+            const formData = new FormData(this);
+            const jsonData = {
+              username: formData.get('username'),
+              email: formData.get('email'),
+              password: formData.get('password'),
+              usertype_id: formData.get('usertype_id'),
+              first_name: formData.get('first_name'),
+              last_name: formData.get('last_name'),
+              phone: formData.get('phone'),
+              address: formData.get('address'),
+              admin_user_id: user.user_id
+            };
+
+            const params = new URLSearchParams();
+            params.append('operation', 'create');
+            params.append('json', JSON.stringify(jsonData));
+
+            const response = await axios.post('../../backend/users.php', params);
+            
+            if (response.data.success) {
+              alert('User added successfully!');
+              bootstrap.Modal.getInstance(document.getElementById("addUserModal")).hide();
+              this.reset();
+              loadUsers();
+            } else {
+              alert('Error: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error adding user:', error);
+            alert('Error adding user. Please try again.');
+          }
+        });
+
+        // Edit User Form Submit
+        document.getElementById("editUserForm").addEventListener("submit", async function(e) {
+          e.preventDefault();
+          
+          try {
+            const formData = new FormData(this);
+            const jsonData = {
+              user_id: formData.get('user_id'),
+              username: formData.get('username'),
+              email: formData.get('email'),
+              usertype_id: formData.get('usertype_id'),
+              first_name: formData.get('first_name'),
+              last_name: formData.get('last_name'),
+              phone: formData.get('phone'),
+              address: formData.get('address'),
+              status: formData.get('status'),
+              admin_user_id: user.user_id
+            };
+
+            const params = new URLSearchParams();
+            params.append('operation', 'update');
+            params.append('json', JSON.stringify(jsonData));
+
+            const response = await axios.post('../../backend/users.php', params);
+            
+            if (response.data.success) {
+              alert('User updated successfully!');
+              bootstrap.Modal.getInstance(document.getElementById("editUserModal")).hide();
+              this.reset();
+              loadUsers();
+            } else {
+              alert('Error: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error updating user:', error);
+            alert('Error updating user. Please try again.');
+          }
+        });
+
+        // Global functions for edit and delete
+        window.editUser = async function(userId) {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getById');
+            params.append('json', JSON.stringify({ user_id: userId }));
+
+            const response = await axios.post('../../backend/users.php', params);
+            
+            if (response.data.success) {
+              const userData = response.data.data;
+              document.getElementById("editUserId").value = userData.user_id;
+              document.getElementById("editUsername").value = userData.username;
+              document.getElementById("editEmail").value = userData.email;
+              document.getElementById("editUserType").value = userData.usertype_id;
+              document.getElementById("editFirstName").value = userData.first_name || '';
+              document.getElementById("editLastName").value = userData.last_name || '';
+              document.getElementById("editPhone").value = userData.phone || '';
+              document.getElementById("editAddress").value = userData.address || '';
+              document.getElementById("editStatus").value = userData.status;
+              
+              var editModal = new bootstrap.Modal(document.getElementById("editUserModal"));
+              editModal.show();
+            } else {
+              alert('Error loading user data: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error loading user:', error);
+            alert('Error loading user data.');
+          }
+        };
+
+        window.deleteUser = async function(userId, username) {
+          if (confirm("Are you sure you want to delete user '" + username + "'?")) {
+            try {
+              const params = new URLSearchParams();
+              params.append('operation', 'delete');
+              params.append('json', JSON.stringify({ 
+                user_id: userId,
+                admin_user_id: user.user_id
+              }));
+
+              const response = await axios.post('../../backend/users.php', params);
+              
+              if (response.data.success) {
+                alert('User deleted successfully!');
+                loadUsers();
+              } else {
+                alert('Error: ' + response.data.error);
+              }
+            } catch (error) {
+              console.error('Error deleting user:', error);
+              alert('Error deleting user. Please try again.');
+            }
+          }
+        };
+
+        // Search and filter handlers
+        document.getElementById("searchUser").addEventListener("input", function() {
+          // TODO: Implement search
+          console.log("Search:", this.value);
+        });
+
+        document.getElementById("filterUserType").addEventListener("change", function() {
+          // TODO: Implement filter
+          console.log("Filter by type:", this.value);
+        });
+
+        document.getElementById("filterStatus").addEventListener("change", function() {
+          // TODO: Implement filter
+          console.log("Filter by status:", this.value);
+        });
+
+        document.getElementById("resetFilters").addEventListener("click", function() {
+          document.getElementById("searchUser").value = "";
+          document.getElementById("filterUserType").value = "";
+          document.getElementById("filterStatus").value = "";
+          loadUsers();
+        });
+
+        console.log("Users page loaded");
+      })();
+    </script>
+  </body>
+</html>

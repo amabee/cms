@@ -47,12 +47,16 @@
               <input type="hidden" name="usertype_id" value="5">
 
               <div class="row g-2">
-                <div class="col-6 mb-3">
+                <div class="col-4 mb-3">
                   <label for="first_name" class="form-label">First name *</label>
                   <input type="text" id="first_name" name="first_name" class="form-control" required>
                   <div class="invalid-feedback">First name required.</div>
                 </div>
-                <div class="col-6 mb-3">
+                <div class="col-4 mb-3">
+                  <label for="middle_name" class="form-label">Middle name</label>
+                  <input type="text" id="middle_name" name="middle_name" class="form-control">
+                </div>
+                <div class="col-4 mb-3">
                   <label for="last_name" class="form-label">Last name *</label>
                   <input type="text" id="last_name" name="last_name" class="form-control" required>
                   <div class="invalid-feedback">Last name required.</div>
@@ -72,29 +76,32 @@
                   <div class="invalid-feedback">Password must be at least 8 characters.</div>
                 </div>
                 <div class="col-6 mb-3">
-                  <label for="phone" class="form-label">Phone</label>
-                  <input type="tel" id="phone" name="phone" class="form-control">
+                  <label for="phone_number" class="form-label">Phone number</label>
+                  <input type="tel" id="phone_number" name="phone_number" class="form-control">
+                </div>
+              </div>
+
+              <div class="row g-2">
+                <div class="col-6 mb-3">
+                  <label for="date_of_birth" class="form-label">Date of Birth *</label>
+                  <input type="date" id="date_of_birth" name="date_of_birth" class="form-control" required>
+                  <div class="invalid-feedback">Date of birth is required.</div>
+                </div>
+                <div class="col-6 mb-3">
+                  <label for="gender" class="form-label">Gender *</label>
+                  <select id="gender" name="gender" class="form-select" required>
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <div class="invalid-feedback">Please select gender.</div>
                 </div>
               </div>
 
               <div class="mb-3">
-                <label for="birth_date" class="form-label">Birthdate</label>
-                <input type="date" id="birth_date" name="birth_date" class="form-control">
-              </div>
-
-              <div class="mb-3">
-                <label for="gender" class="form-label">Gender</label>
-                <select id="gender" name="gender" class="form-select">
-                  <option value="">Select</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-
-              <div class="mb-3">
                 <label for="address" class="form-label">Address</label>
-                <input type="text" id="address" name="address" class="form-control">
+                <textarea id="address" name="address" class="form-control" rows="2"></textarea>
               </div>
 
               <div class="row g-2">
@@ -113,16 +120,43 @@
                   </select>
                 </div>
                 <div class="col-6 mb-3">
-                  <label for="emergency_contact" class="form-label">Emergency contact</label>
-                  <input type="text" id="emergency_contact" name="emergency_contact" class="form-control">
+                  <label for="insurance_id" class="form-label">Insurance (optional)</label>
+                  <select id="insurance_id" name="insurance_id" class="form-select">
+                    <option value="">None</option>
+                  </select>
                 </div>
               </div>
 
+              <hr class="my-3">
+              <h6 class="mb-3">Emergency Contact</h6>
+              
+              <div class="row g-2">
+                <div class="col-6 mb-3">
+                  <label for="emergency_contact_name" class="form-label">Contact name</label>
+                  <input type="text" id="emergency_contact_name" name="emergency_contact_name" class="form-control">
+                </div>
+                <div class="col-6 mb-3">
+                  <label for="emergency_contact_phone" class="form-label">Contact phone</label>
+                  <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" class="form-control">
+                </div>
+              </div>
+
+              <hr class="my-3">
+              <h6 class="mb-3">Medical Information (Optional)</h6>
+              
               <div class="mb-3">
-                <label for="insurance_id" class="form-label">Insurance (optional)</label>
-                <select id="insurance_id" name="insurance_id" class="form-select">
-                  <option value="">None</option>
-                </select>
+                <label for="allergies" class="form-label">Known allergies</label>
+                <textarea id="allergies" name="allergies" class="form-control" rows="2" placeholder="e.g., Penicillin, Peanuts"></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label for="existing_conditions" class="form-label">Existing medical conditions</label>
+                <textarea id="existing_conditions" name="existing_conditions" class="form-control" rows="2" placeholder="e.g., Diabetes, Hypertension"></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label for="notes" class="form-label">Additional notes</label>
+                <textarea id="notes" name="notes" class="form-control" rows="2"></textarea>
               </div>
 
               <div class="d-flex gap-2">
@@ -158,18 +192,23 @@
 
         var payload = {
           usertype_id: form.usertype_id.value,
-          // username autogenerated server-side from email when omitted
           password: form.password.value,
           first_name: form.first_name.value.trim(),
+          middle_name: form.middle_name.value.trim(),
           last_name: form.last_name.value.trim(),
+          date_of_birth: form.date_of_birth.value,
+          gender: form.gender.value,
           email: form.email.value.trim(),
-          phone: form.phone.value.trim(),
-          birth_date: form.birth_date.value || null,
-          gender: form.gender.value || null,
+          phone_number: form.phone_number.value.trim(),
           address: form.address.value.trim(),
           blood_type: form.blood_type.value || null,
-          emergency_contact: form.emergency_contact.value.trim(),
-          insurance_id: form.insurance_id.value || null
+          emergency_contact_name: form.emergency_contact_name.value.trim(),
+          emergency_contact_phone: form.emergency_contact_phone.value.trim(),
+          allergies: form.allergies.value.trim(),
+          existing_conditions: form.existing_conditions.value.trim(),
+          notes: form.notes.value.trim(),
+          insurance_id: form.insurance_id.value || null,
+          create_account: 1
         };
 
         var submitBtn = form.querySelector('button[type="submit"]');
@@ -179,16 +218,17 @@
 
 
         var params = new URLSearchParams();
+        params.append('operation', 'register');
         params.append('json', JSON.stringify(payload));
 
-        axios.post('backend/patients/patients.php?operation=register', params)
+        axios.post('backend/patients.php', params)
           .then(function (res) {
             var data = res.data;
             if (data.success) {
               var alert = document.createElement('div');
               alert.className = 'alert alert-success mt-3';
               alert.role = 'alert';
-              alert.textContent = 'Registration successful. Your patient code: ' + (data.patient_code || data.patient_code || '') ;
+              alert.textContent = 'Registration successful! Your patient code: ' + (data.patient_code || '') + '. Username: ' + (data.username || 'N/A');
               form.parentElement.insertBefore(alert, form.nextSibling);
               submitBtn.textContent = 'Done';
               setTimeout(function () { window.location.href = 'index.html'; }, 2200);
@@ -223,7 +263,11 @@
   <script>
     // Load insurances on page load
     (function () {
-      axios.get('backend/patients/insurances.php')
+      var params = new URLSearchParams();
+      params.append('operation', 'getAll');
+      params.append('json', JSON.stringify({}));
+      
+      axios.post('backend/insurances.php', params)
         .then(function (res) {
           var data = res.data;
           if (data && data.success && Array.isArray(data.data)) {

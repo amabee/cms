@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-wide">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <title>Login - My Clinic</title>
+    <meta name="description" content="Sign in to My Clinic CMS" />
+
+    <link rel="stylesheet" href="frontend/assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="frontend/assets/css/demo.css" />
+  </head>
+
+  <body>
+    <div class="authentication-wrapper authentication-basic container-p-y">
+      <div class="authentication-inner">
+        <div class="row justify-content-center">
+          <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+            <div class="card">
+              <div class="card-body">
+                <div class="app-brand justify-content-center mb-4">
+                  <a href="#" class="app-brand-link gap-2">
+                    <span class="app-brand-logo demo">
+                      <img
+                        src="frontend/assets/img/favicon/logo.png"
+                        alt="Logo"
+                        width="32"
+                      />
+                    </span>
+                    <span class="app-brand-text demo text-body fw-bold"
+                      >My Clinic</span
+                    >
+                  </a>
+                </div>
+
+                <h4 class="mb-2">Welcome! 👋</h4>
+                <p class="mb-4">
+                  Please sign-in to your account and start the adventure
+                </p>
+
+                <form
+                  id="loginForm"
+                  method="post"
+                  action="backend/auth.php"
+                  class="mb-3"
+                  novalidate
+                >
+                  <input type="hidden" name="operation" value="login" />
+
+                  <div class="mb-3">
+                    <label for="username" class="form-label"
+                      >Username or Email</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="username"
+                      name="username"
+                      placeholder="Enter your username or email"
+                      required
+                      autofocus
+                    />
+                    <div class="invalid-feedback">
+                      Please enter your username or email.
+                    </div>
+                  </div>
+
+                  <div class="mb-3 form-password-toggle">
+                    <div class="d-flex justify-content-between">
+                      <label class="form-label" for="password">Password</label>
+                      <a href="#">
+                        <small>Forgot Password?</small>
+                      </a>
+                    </div>
+                    <div class="input-group input-group-merge">
+                      <input
+                        type="password"
+                        id="password"
+                        class="form-control"
+                        name="password"
+                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                        minlength="8"
+                        required
+                        aria-describedby="password"
+                      />
+                    </div>
+                    <div class="invalid-feedback">
+                      Please enter your password (min 8 characters).
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="remember"
+                        name="remember"
+                      />
+                      <label class="form-check-label" for="remember">
+                        Remember Me
+                      </label>
+                    </div>
+                  </div>
+
+                  <div
+                    id="loginError"
+                    class="alert alert-danger d-none"
+                    role="alert"
+                  ></div>
+
+                  <div class="mb-3">
+                    <button
+                      id="loginBtn"
+                      class="btn btn-primary d-grid w-100"
+                      type="submit"
+                    >
+                      Sign in
+                    </button>
+                  </div>
+                </form>
+
+                <p class="text-center">
+                  <span>New on our platform?</span>
+                  <a href="patient-register.html">
+                    <span>Create an account</span>
+                  </a>
+                </p>
+
+                <div class="divider my-4">
+                  <div class="divider-text">or</div>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                  <a
+                    href="javascript:;"
+                    class="btn btn-icon btn-label-facebook me-3"
+                  >
+                    <i class="tf-icons bx bxl-facebook"></i>
+                  </a>
+                  <a
+                    href="javascript:;"
+                    class="btn btn-icon btn-label-google-plus me-3"
+                  >
+                    <i class="tf-icons bx bxl-google-plus"></i>
+                  </a>
+                  <a href="javascript:;" class="btn btn-icon btn-label-twitter">
+                    <i class="tf-icons bx bxl-twitter"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="frontend/assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="frontend/assets/js/session-handler.js"></script>
+    <script>
+      (function () {
+        "use strict";
+
+        // Redirect if already logged in
+        if (SessionHandler.isAuthenticated()) {
+          SessionHandler.redirectToDashboard();
+          return;
+        }
+
+        var form = document.getElementById("loginForm");
+        var btn = document.getElementById("loginBtn");
+        var errorEl = document.getElementById("loginError");
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          if (!form.checkValidity()) {
+            form.classList.add("was-validated");
+            return;
+          }
+
+          btn.disabled = true;
+          var originalText = btn.textContent;
+          btn.innerHTML =
+            '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Signing in...';
+
+          var formData = new FormData(form);
+          var jsonData = {
+            username: formData.get("username"),
+            password: formData.get("password"),
+          };
+
+          var postData = new URLSearchParams();
+          postData.append("operation", "login");
+          postData.append("json", JSON.stringify(jsonData));
+
+          axios
+            .post(form.getAttribute("action"), postData, {
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            })
+            .then(function (response) {
+              var data = response.data;
+              if (data && data.success) {
+                errorEl.classList.add("d-none");
+
+                // Save session data
+                var rememberMe = document.getElementById("remember").checked;
+                SessionHandler.saveSession(data, rememberMe);
+
+                // Redirect to appropriate dashboard based on user role
+                SessionHandler.redirectToDashboard();
+              } else {
+                errorEl.textContent =
+                  data && data.error
+                    ? data.error
+                    : "Invalid credentials. Please try again.";
+                errorEl.classList.remove("d-none");
+                btn.disabled = false;
+                btn.textContent = originalText;
+              }
+            })
+            .catch(function (error) {
+              var errMsg =
+                "Network error. Please check your connection and try again.";
+              if (
+                error.response &&
+                error.response.data &&
+                error.response.data.error
+              ) {
+                errMsg = error.response.data.error;
+              }
+              errorEl.textContent = errMsg;
+              errorEl.classList.remove("d-none");
+              btn.disabled = false;
+              btn.textContent = originalText;
+            });
+        });
+      })();
+    </script>
+  </body>
+</html>

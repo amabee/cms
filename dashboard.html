@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <title>Dashboard - My Clinic</title>
+
+    <link rel="stylesheet" href="frontend/assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="frontend/assets/css/demo.css" />
+  </head>
+
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        <!-- Layout page -->
+        <div class="layout-page">
+          <!-- Navbar -->
+          <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">My Clinic</a>
+              <div class="d-flex align-items-center">
+                <span class="me-3">Welcome, <strong id="userName">User</strong></span>
+                <span class="badge bg-primary me-3" id="userRole">User</span>
+                <button class="btn btn-sm btn-outline-danger" id="logoutBtn">Logout</button>
+              </div>
+            </div>
+          </nav>
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4">Dashboard</h4>
+
+              <div class="row">
+                <div class="col-lg-8 mb-4 order-0">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Welcome Back! 🎉</h5>
+                      <p class="mb-4" id="welcomeMessage">
+                        You're logged in successfully.
+                      </p>
+                      
+                      <div class="alert alert-info">
+                        <h6>Session Information</h6>
+                        <div id="sessionInfo"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 order-1">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="card-title d-flex align-items-start justify-content-between">
+                        <div class="avatar flex-shrink-0">
+                          <span class="badge bg-label-primary p-2">
+                            <i class="bx bx-bell"></i>
+                          </span>
+                        </div>
+                      </div>
+                      <span class="fw-semibold d-block mb-1">Notifications</span>
+                      <h3 class="card-title mb-2" id="notificationCount">0</h3>
+                      <small class="text-muted">Unread notifications</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="frontend/assets/vendor/js/bootstrap.js"></script>
+    <script src="frontend/assets/js/session-handler.js"></script>
+    <script>
+      (function () {
+        "use strict";
+
+        // Require authentication - redirect to login if not authenticated
+        if (!SessionHandler.requireAuth()) {
+          return;
+        }
+
+        // Get user data
+        var user = SessionHandler.getUser();
+        var session = SessionHandler.getSession();
+
+        // Display user info
+        document.getElementById("userName").textContent = SessionHandler.getUserFullName();
+        document.getElementById("userRole").textContent = SessionHandler.getUserRole();
+
+        // Display welcome message
+        document.getElementById("welcomeMessage").textContent = 
+          "Hello " + SessionHandler.getUserFullName() + ", welcome to your dashboard!";
+
+        // Display session info
+        var sessionInfo = document.getElementById("sessionInfo");
+        sessionInfo.innerHTML = 
+          "<p><strong>User ID:</strong> " + user.user_id + "</p>" +
+          "<p><strong>Username:</strong> " + user.username + "</p>" +
+          "<p><strong>Email:</strong> " + user.email + "</p>" +
+          "<p><strong>Role:</strong> " + SessionHandler.getUserRole() + " (Type ID: " + user.usertype_id + ")</p>" +
+          "<p><strong>Status:</strong> " + (user.status === 1 ? "Active" : "Inactive") + "</p>";
+
+        // Display notification count
+        var notifCount = SessionHandler.getUnreadNotificationsCount();
+        document.getElementById("notificationCount").textContent = notifCount;
+
+        // Logout handler
+        document.getElementById("logoutBtn").addEventListener("click", function() {
+          if (confirm("Are you sure you want to logout?")) {
+            SessionHandler.logout();
+          }
+        });
+
+        // Example: How to access full user object
+        console.log("Full user data:", user);
+        console.log("Full session data:", session);
+      })();
+    </script>
+  </body>
+</html>

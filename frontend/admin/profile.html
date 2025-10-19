@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>My Profile - My Clinic</title>
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+  </head>
+
+  <body>
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="dashboard.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <img src="../assets/img/favicon/logo.png" alt="Logo" width="32" />
+              </span>
+              <span class="app-brand-text demo menu-text fw-bold ms-2">My Clinic</span>
+            </a>
+          </div>
+          <div class="menu-inner-shadow"></div>
+          <ul class="menu-inner py-1">
+            <li class="menu-item">
+              <a href="dashboard.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div>Dashboard</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Management</span></li>
+            <li class="menu-item">
+              <a href="users.html" class="menu-link"><i class="menu-icon tf-icons bx bx-user"></i><div>Users</div></a>
+            </li>
+            <li class="menu-item">
+              <a href="doctors.html" class="menu-link"><i class="menu-icon tf-icons bx bx-plus-medical"></i><div>Doctors</div></a>
+            </li>
+            <li class="menu-item">
+              <a href="staff.html" class="menu-link"><i class="menu-icon tf-icons bx bx-briefcase"></i><div>Staff</div></a>
+            </li>
+            <li class="menu-item">
+              <a href="patients.html" class="menu-link"><i class="menu-icon tf-icons bx bx-group"></i><div>Patients</div></a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">System</span></li>
+            <li class="menu-item">
+              <a href="settings.html" class="menu-link"><i class="menu-icon tf-icons bx bx-cog"></i><div>Settings</div></a>
+            </li>
+            <li class="menu-item">
+              <a href="audit-logs.html" class="menu-link"><i class="menu-icon tf-icons bx bx-list-ul"></i><div>Audit Logs</div></a>
+            </li>
+          </ul>
+        </aside>
+
+        <div class="layout-page">
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+            <div class="navbar-nav-right d-flex align-items-center">
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <li class="nav-item navbar-dropdown dropdown-notifications dropdown me-3 me-xl-2">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);">
+                    <i class="bx bx-bell bx-sm"></i>
+                    <span class="badge bg-danger rounded-pill badge-notifications" id="notificationBadge">0</span>
+                  </a>
+                </li>
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatar">A</span>
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatarDropdown">A</span>
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block" id="userFullName">Admin User</span>
+                            <small class="text-muted" id="userRole">Administrator</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li><a class="dropdown-item" href="profile.html"><i class="bx bx-user me-2"></i><span>My Profile</span></a></li>
+                    <li><a class="dropdown-item" href="settings.html"><i class="bx bx-cog me-2"></i><span>Settings</span></a></li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li><a class="dropdown-item" href="javascript:void(0);" id="logoutBtn"><i class="bx bx-power-off me-2"></i><span>Log Out</span></a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              
+              <h4 class="fw-bold py-3 mb-4">My Profile</h4>
+
+              <div class="row">
+                <!-- Profile Card -->
+                <div class="col-md-4 mb-4">
+                  <div class="card">
+                    <div class="card-body text-center">
+                      <div class="mb-3">
+                        <div class="avatar avatar-xl mx-auto">
+                          <span class="avatar-initial rounded-circle bg-label-primary" style="font-size: 2rem;" id="profileAvatar">A</span>
+                        </div>
+                      </div>
+                      <h5 class="mb-1" id="profileFullName">Admin User</h5>
+                      <p class="text-muted mb-1" id="profileRole">Administrator</p>
+                      <p class="text-muted small" id="profileEmail">admin@clinic.com</p>
+                      <div class="d-flex justify-content-center gap-2 mt-3">
+                        <button type="button" class="btn btn-primary btn-sm">
+                          <i class="bx bx-upload me-1"></i>Upload Photo
+                        </button>
+                        <button type="button" class="btn btn-outline-danger btn-sm">
+                          <i class="bx bx-trash me-1"></i>Remove
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card mt-4">
+                    <div class="card-body">
+                      <h6 class="mb-3">Account Status</h6>
+                      <ul class="list-unstyled mb-0">
+                        <li class="d-flex align-items-center mb-3">
+                          <i class="bx bx-check-circle text-success me-2"></i>
+                          <span>Email Verified</span>
+                        </li>
+                        <li class="d-flex align-items-center mb-3">
+                          <i class="bx bx-check-circle text-success me-2"></i>
+                          <span>Account Active</span>
+                        </li>
+                        <li class="d-flex align-items-center">
+                          <i class="bx bx-user-check text-success me-2"></i>
+                          <span>Administrator Role</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Profile Information -->
+                <div class="col-md-8 mb-4">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="mb-0">Personal Information</h5>
+                    </div>
+                    <div class="card-body">
+                      <form id="profileForm">
+                        <div class="row mb-3">
+                          <div class="col-md-6">
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-control" name="first_name" id="firstName" value="">
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-control" name="last_name" id="lastName" value="">
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Username</label>
+                          <input type="text" class="form-control" name="username" id="username" value="" readonly>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Email</label>
+                          <input type="email" class="form-control" name="email" id="email" value="">
+                        </div>
+                        <div class="row mb-3">
+                          <div class="col-md-6">
+                            <label class="form-label">Phone</label>
+                            <input type="text" class="form-control" name="phone" id="phone" value="">
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label">Date of Birth</label>
+                            <input type="date" class="form-control" name="date_of_birth" id="dateOfBirth" value="">
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Address</label>
+                          <textarea class="form-control" name="address" id="address" rows="2"></textarea>
+                        </div>
+                        <div class="text-end">
+                          <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                  <div class="card mt-4">
+                    <div class="card-header">
+                      <h5 class="mb-0">Change Password</h5>
+                    </div>
+                    <div class="card-body">
+                      <form id="changePasswordForm">
+                        <div class="mb-3">
+                          <label class="form-label">Current Password</label>
+                          <input type="password" class="form-control" name="current_password" required>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">New Password</label>
+                          <input type="password" class="form-control" name="new_password" required>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Confirm New Password</label>
+                          <input type="password" class="form-control" name="confirm_password" required>
+                        </div>
+                        <div class="text-end">
+                          <button type="submit" class="btn btn-warning">Update Password</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  © <script>document.write(new Date().getFullYear());</script> My Clinic CMS
+                </div>
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/js/session-handler.js"></script>
+    
+    <script>
+      (function () {
+        "use strict";
+        if (!SessionHandler.requireUserType(1)) return;
+
+        var user = SessionHandler.getUser();
+        var fullName = SessionHandler.getUserFullName();
+        var initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        
+        document.getElementById("userFullName").textContent = fullName;
+        document.getElementById("userRole").textContent = SessionHandler.getUserRole();
+        document.getElementById("userAvatar").textContent = initials;
+        document.getElementById("userAvatarDropdown").textContent = initials;
+        document.getElementById("profileAvatar").textContent = initials;
+        document.getElementById("profileFullName").textContent = fullName;
+        document.getElementById("profileRole").textContent = SessionHandler.getUserRole();
+        document.getElementById("profileEmail").textContent = user.email;
+
+        var notifCount = SessionHandler.getUnreadNotificationsCount();
+        document.getElementById("notificationBadge").textContent = notifCount;
+        if (notifCount === 0) document.getElementById("notificationBadge").style.display = "none";
+
+        document.getElementById("logoutBtn").addEventListener("click", function(e) {
+          e.preventDefault();
+          if (confirm("Are you sure you want to logout?")) SessionHandler.logout();
+        });
+
+        var menuToggle = document.querySelector('.layout-menu-toggle');
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function() {
+            document.querySelector('.layout-wrapper').classList.toggle('layout-menu-expanded');
+          });
+        }
+
+        // Load and populate profile data
+        loadProfile();
+
+        async function loadProfile() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getProfile');
+            params.append('json', JSON.stringify({ user_id: user.user_id }));
+
+            const response = await axios.post('../../backend/admin-profile.php', params);
+            
+            if (response.data.success) {
+              const profileData = response.data.data;
+              document.getElementById("username").value = profileData.username || '';
+              document.getElementById("email").value = profileData.email || '';
+              document.getElementById("firstName").value = profileData.first_name || '';
+              document.getElementById("lastName").value = profileData.last_name || '';
+              document.getElementById("phone").value = profileData.phone || '';
+              document.getElementById("dateOfBirth").value = profileData.date_of_birth || '';
+              document.getElementById("address").value = profileData.address || '';
+            } else {
+              console.error('Error loading profile:', response.data.error);
+            }
+          } catch (error) {
+            console.error('Error loading profile:', error);
+          }
+        }
+
+        document.getElementById("profileForm").addEventListener("submit", async function(e) {
+          e.preventDefault();
+          
+          try {
+            const formData = new FormData(this);
+            const jsonData = {
+              user_id: user.user_id,
+              username: formData.get('username'),
+              email: formData.get('email'),
+              first_name: formData.get('first_name'),
+              last_name: formData.get('last_name'),
+              phone: formData.get('phone'),
+              date_of_birth: formData.get('date_of_birth'),
+              address: formData.get('address')
+            };
+
+            const params = new URLSearchParams();
+            params.append('operation', 'updateProfile');
+            params.append('json', JSON.stringify(jsonData));
+
+            const response = await axios.post('../../backend/admin-profile.php', params);
+            
+            if (response.data.success) {
+              alert('Profile updated successfully!');
+              // Update session data
+              user.username = jsonData.username;
+              user.email = jsonData.email;
+              if (!user.profile) user.profile = {};
+              user.profile.first_name = jsonData.first_name;
+              user.profile.last_name = jsonData.last_name;
+              SessionHandler.saveSession(user);
+              location.reload();
+            } else {
+              alert('Error: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error updating profile:', error);
+            alert('Error updating profile. Please try again.');
+          }
+        });
+
+        document.getElementById("changePasswordForm").addEventListener("submit", async function(e) {
+          e.preventDefault();
+          
+          const formData = new FormData(this);
+          const newPassword = formData.get('new_password');
+          const confirmPassword = formData.get('confirm_password');
+          
+          if (newPassword !== confirmPassword) {
+            alert("New passwords do not match!");
+            return;
+          }
+
+          try {
+            const jsonData = {
+              user_id: user.user_id,
+              current_password: formData.get('current_password'),
+              new_password: newPassword
+            };
+
+            const params = new URLSearchParams();
+            params.append('operation', 'changePassword');
+            params.append('json', JSON.stringify(jsonData));
+
+            const response = await axios.post('../../backend/admin-profile.php', params);
+            
+            if (response.data.success) {
+              alert('Password changed successfully!');
+              this.reset();
+            } else {
+              alert('Error: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error changing password:', error);
+            alert('Error changing password. Please try again.');
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

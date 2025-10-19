@@ -21,8 +21,8 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-3">
     <div class="container container--narrow">
       <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-        <img src="frontend/assets/img/favicon/logo.png" alt="Logo" width="36" height="36" style="border-radius:8px;object-fit:cover;">
-        <span class="fw-semibold">My Clinic</span>
+        <img id="clinic_logo" src="frontend/assets/img/favicon/logo.png" alt="Logo" width="36" height="36" style="border-radius:8px;object-fit:cover;">
+        <span id="clinic_name_nav" class="fw-semibold">My Clinic</span>
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -262,33 +262,12 @@
         </div>
 
         <div class="row g-4">
-          <div class="col-lg-6">
-            <form class="card-soft p-4" novalidate>
-              <div class="mb-3">
-                <label for="name" class="form-label">Full name</label>
-                <input type="text" id="name" class="form-control" required aria-required="true">
-              </div>
-
-              <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" class="form-control" required aria-required="true">
-              </div>
-
-              <div class="mb-3">
-                <label for="message" class="form-label">Message</label>
-                <textarea id="message" class="form-control" rows="5" required aria-required="true"></textarea>
-              </div>
-
-              <button type="submit" class="btn btn-primary">Send Message</button>
-            </form>
-          </div>
-
-          <div class="col-lg-6">
+          <div class="col-12">
             <div class="card-soft p-4">
               <h5 class="mb-3">Contact information</h5>
-              <p class="mb-1"><strong>Address:</strong> 123 Main St, City</p>
-              <p class="mb-1"><strong>Phone:</strong> +63 900 000 0000</p>
-              <p class="mb-1"><strong>Email:</strong> contact@clinic.local</p>
+              <p class="mb-1"><strong>Address:</strong> <span id="clinic_address">123 Main St, City</span></p>
+              <p class="mb-1"><strong>Phone:</strong> <span id="clinic_contact">+63 900 000 0000</span></p>
+              <p class="mb-1"><strong>Email:</strong> <span id="clinic_email">contact@clinic.local</span></p>
 
               <hr>
 
@@ -312,7 +291,7 @@
         </div>
       </div>
 
-      <div class="text-muted small">© <span id="year"></span> My Clinic. All rights reserved.</div>
+  <div class="text-muted small">© <span id="year"></span> <span id="clinic_name_footer">My Clinic</span>. All rights reserved.</div>
     </div>
   </footer>
 
@@ -320,14 +299,50 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Basic client-side contact form handler (no backend)
-    document.querySelector('#contact form')?.addEventListener('submit', function (e) {
-      e.preventDefault();
-      const btn = this.querySelector('button[type="submit"]');
-      btn.disabled = true;
-      btn.textContent = 'Sending...';
-      setTimeout(() => { btn.textContent = 'Sent'; btn.classList.add('btn-success'); }, 800);
-    });
+    // Contact form was removed per request — no client-side submit handler.
+
+    // Load clinic settings from backend and populate UI using actual DB keys
+    (function () {
+      fetch('backend/system_settings.php')
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (data && data.success && data.data) {
+            var s = data.data;
+            // Keys from DB: hospital_name, address, contact_number, email, logo
+            if (s.hospital_name) {
+              var nav = document.getElementById('clinic_name_nav');
+              if (nav) nav.textContent = s.hospital_name;
+              var footer = document.getElementById('clinic_name_footer');
+              if (footer) footer.textContent = s.hospital_name;
+            }
+
+            if (s.address) {
+              var addr = document.getElementById('clinic_address');
+              if (addr) addr.textContent = s.address;
+            }
+
+            if (s.contact_number) {
+              var phone = document.getElementById('clinic_contact');
+              if (phone) phone.textContent = s.contact_number;
+            }
+
+            if (s.email) {
+              var emailEl = document.getElementById('clinic_email');
+              if (emailEl) emailEl.textContent = s.email;
+            }
+
+            if (s.logo) {
+              var logo = document.getElementById('clinic_logo');
+              if (logo) {
+                // if the logo value is a path or filename, try to set it
+                var path = s.logo.indexOf('/') === -1 ? 'frontend/assets/img/favicon/' + s.logo : s.logo;
+                logo.setAttribute('src', path);
+              }
+            }
+          }
+        })
+        .catch(function (err) { console.warn('Failed to load system settings', err); });
+    })();
   </script>
 
 </body>
