@@ -514,76 +514,119 @@
 
     <!-- View Medical Record Modal -->
     <div class="modal fade" id="viewRecordModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Medical Record Details</h5>
+          <div class="modal-header border-bottom-0 pb-0">
+            <div class="w-100">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h3 class="mb-1 text-primary fw-bold">Medical Record</h3>
+                  <p class="text-muted mb-0 small">My Clinic Medical Center</p>
+                </div>
+                <div class="text-end">
+                  <p class="text-muted mb-0 small">Date</p>
+                  <h5 class="mb-0 fw-bold" id="viewRecordDate">-</h5>
+                </div>
+              </div>
+            </div>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+          
           <div class="modal-body">
-            <div class="row mb-3">
+            <!-- Patient & Doctor Info -->
+            <div class="row g-3 mb-4">
               <div class="col-md-6">
-                <p class="mb-1"><strong>Record ID:</strong></p>
-                <p id="viewRecordId" class="text-muted">-</p>
-              </div>
-              <div class="col-md-6">
-                <p class="mb-1"><strong>Record Date:</strong></p>
-                <p id="viewRecordDate" class="text-muted">-</p>
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <p class="mb-1"><strong>Patient:</strong></p>
-                <p id="viewPatient" class="text-muted">-</p>
+                <div class="p-3 border rounded">
+                  <p class="text-muted small mb-1 text-uppercase fw-semibold">Patient Name</p>
+                  <h5 class="mb-2 text-dark" id="viewPatient">-</h5>
+                  <p class="mb-0 text-muted small" id="viewAppointment">
+                    <i class="bx bx-calendar-check me-1"></i>-
+                  </p>
+                </div>
               </div>
               <div class="col-md-6">
-                <p class="mb-1"><strong>Doctor:</strong></p>
-                <p id="viewDoctor" class="text-muted">-</p>
+                <div class="p-3 border rounded">
+                  <p class="text-muted small mb-1 text-uppercase fw-semibold">Attending Physician</p>
+                  <h5 class="mb-0 text-dark" id="viewDoctor">-</h5>
+                </div>
               </div>
             </div>
-            <div class="row mb-3">
-              <div class="col-12">
-                <p class="mb-1"><strong>Appointment:</strong></p>
-                <p id="viewAppointment" class="text-muted">-</p>
+
+            <!-- Diagnosis -->
+            <div class="mb-4">
+              <div class="d-flex align-items-center mb-2">
+                <div class="badge bg-primary me-2">
+                  <i class="bx bx-plus-medical"></i>
+                </div>
+                <h6 class="mb-0 fw-semibold text-uppercase">Diagnosis</h6>
+              </div>
+              <div class="p-3 bg-light rounded">
+                <p id="viewDiagnosis" class="mb-0">-</p>
               </div>
             </div>
-            <div class="mb-3">
-              <p class="mb-1"><strong>Diagnosis:</strong></p>
-              <p id="viewDiagnosis" class="text-muted">-</p>
+
+            <!-- Treatment Plan -->
+            <div class="mb-4">
+              <div class="d-flex align-items-center mb-2">
+                <div class="badge bg-success me-2">
+                  <i class="bx bx-clinic"></i>
+                </div>
+                <h6 class="mb-0 fw-semibold text-uppercase">Treatment Plan</h6>
+              </div>
+              <div class="p-3 bg-light rounded">
+                <p id="viewTreatment" class="mb-0">-</p>
+              </div>
             </div>
-            <div class="mb-3">
-              <p class="mb-1"><strong>Treatment:</strong></p>
-              <p id="viewTreatment" class="text-muted">-</p>
-            </div>
-            <div class="mb-3">
-              <p class="mb-1"><strong>Notes:</strong></p>
-              <p id="viewNotes" class="text-muted">-</p>
+
+            <!-- Additional Notes -->
+            <div class="mb-4">
+              <div class="d-flex align-items-center mb-2">
+                <div class="badge bg-info me-2">
+                  <i class="bx bx-notepad"></i>
+                </div>
+                <h6 class="mb-0 fw-semibold text-uppercase">Additional Notes</h6>
+              </div>
+              <div class="p-3 bg-light rounded">
+                <p id="viewNotes" class="mb-0 text-muted fst-italic">-</p>
+              </div>
             </div>
             
             <!-- Prescriptions -->
-            <div class="mb-3">
-              <p class="mb-2"><strong>Prescriptions:</strong></p>
-              <div id="viewPrescriptions" class="table-responsive">
-                <table class="table table-sm table-bordered">
-                  <thead>
+            <div>
+              <div class="d-flex align-items-center mb-3">
+                <div class="badge bg-danger me-2">
+                  <i class="bx bx-capsule"></i>
+                </div>
+                <h6 class="mb-0 fw-semibold text-uppercase">Prescriptions</h6>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle mb-0">
+                  <thead class="table-light">
                     <tr>
-                      <th>Medicine</th>
-                      <th>Dosage</th>
-                      <th>Frequency</th>
-                      <th>Duration</th>
-                      <th>Instructions</th>
+                      <th class="fw-semibold">Medicine</th>
+                      <th class="fw-semibold">Dosage</th>
+                      <th class="fw-semibold">Frequency</th>
+                      <th class="fw-semibold">Duration</th>
+                      <th class="fw-semibold">Instructions</th>
                     </tr>
                   </thead>
                   <tbody id="viewPrescriptionsBody">
                     <tr>
-                      <td colspan="5" class="text-center text-muted">No prescriptions</td>
+                      <td colspan="5" class="text-center text-muted py-4">
+                        <i class="bx bx-info-circle fs-4 d-block mb-2"></i>
+                        No prescriptions available
+                      </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
-          <div class="modal-footer">
+          
+          <div class="modal-footer border-top-0 pt-0">
+            <button type="button" class="btn btn-label-primary" onclick="window.print()">
+              <i class="bx bx-printer me-1"></i>Print
+            </button>
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
@@ -651,10 +694,10 @@
           });
           
           if (response.data.success) {
-            const stats = response.data.statistics;
+            const stats = response.data.data;
             document.getElementById('totalRecords').textContent = stats.total_records || 0;
-            document.getElementById('monthlyRecords').textContent = stats.monthly_records || 0;
-            document.getElementById('todayRecords').textContent = stats.daily_records || 0;
+            document.getElementById('monthlyRecords').textContent = stats.this_month || 0;
+            document.getElementById('todayRecords').textContent = stats.today || 0;
             document.getElementById('totalPatients').textContent = stats.total_patients || 0;
           }
         } catch (error) {
@@ -679,8 +722,8 @@
           });
           
           if (response.data.success) {
-            displayRecords(response.data.records);
-            updatePagination(response.data.total, response.data.page, response.data.totalPages);
+            displayRecords(response.data.data);
+            updatePagination(response.data.total, response.data.page, Math.ceil(response.data.total / response.data.limit));
           }
         } catch (error) {
           console.error('Error loading records:', error);
@@ -729,13 +772,16 @@
       // Load patients for dropdowns
       async function loadPatients() {
         try {
-          const response = await axios.post(API_BASE + 'patients.php', {
-            action: 'getAll',
+          const params = new URLSearchParams();
+          params.append('operation', 'getAll');
+          params.append('json', JSON.stringify({
             limit: 1000
-          });
+          }));
+          
+          const response = await axios.post(API_BASE + 'patients.php', params);
           
           if (response.data.success) {
-            allPatients = response.data.patients;
+            allPatients = response.data.data;
             populatePatientDropdowns();
           }
         } catch (error) {
@@ -765,13 +811,16 @@
       // Load doctors for dropdowns
       async function loadDoctors() {
         try {
-          const response = await axios.post(API_BASE + 'doctors.php', {
-            action: 'getAll',
+          const params = new URLSearchParams();
+          params.append('operation', 'getAll');
+          params.append('json', JSON.stringify({
             limit: 1000
-          });
+          }));
+          
+          const response = await axios.post(API_BASE + 'doctors.php', params);
           
           if (response.data.success) {
-            allDoctors = response.data.doctors;
+            allDoctors = response.data.data;
             populateDoctorDropdowns();
           }
         } catch (error) {
@@ -1018,32 +1067,34 @@
           });
           
           if (response.data.success) {
-            const record = response.data.record;
+            const record = response.data.data;
             
-            document.getElementById('viewRecordId').textContent = record.record_id;
+            // Populate header and basic info
             document.getElementById('viewRecordDate').textContent = formatDate(record.record_date);
             document.getElementById('viewPatient').textContent = record.patient_name || 'N/A';
             document.getElementById('viewDoctor').textContent = 'Dr. ' + (record.doctor_name || 'N/A');
             document.getElementById('viewAppointment').textContent = record.appointment_date ? 
-              `Appointment on ${formatDate(record.appointment_date)}` : 'No appointment linked';
-            document.getElementById('viewDiagnosis').textContent = record.diagnosis || 'N/A';
-            document.getElementById('viewTreatment').textContent = record.treatment || 'N/A';
-            document.getElementById('viewNotes').textContent = record.notes || 'No additional notes';
+              `Linked to appointment on ${formatDate(record.appointment_date)}` : 'Walk-in / No appointment';
+            
+            // Populate clinical details
+            document.getElementById('viewDiagnosis').textContent = record.diagnosis || 'Not specified';
+            document.getElementById('viewTreatment').textContent = record.treatment || 'Not specified';
+            document.getElementById('viewNotes').textContent = record.notes || 'No additional notes recorded';
             
             // Display prescriptions
             const prescriptionsBody = document.getElementById('viewPrescriptionsBody');
             if (record.prescriptions && record.prescriptions.length > 0) {
-              prescriptionsBody.innerHTML = record.prescriptions.map(rx => `
+              prescriptionsBody.innerHTML = record.prescriptions.map((rx, index) => `
                 <tr>
-                  <td>${rx.medicine_name}</td>
-                  <td>${rx.dosage}</td>
+                  <td><strong>${rx.medicine_name}</strong></td>
+                  <td><span class="badge bg-label-info">${rx.dosage}</span></td>
                   <td>${rx.frequency}</td>
-                  <td>${rx.duration}</td>
-                  <td>${rx.instructions || '-'}</td>
+                  <td><span class="badge bg-label-warning">${rx.duration}</span></td>
+                  <td class="text-muted small">${rx.instructions || 'No specific instructions'}</td>
                 </tr>
               `).join('');
             } else {
-              prescriptionsBody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No prescriptions</td></tr>';
+              prescriptionsBody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4"><i class="bx bx-info-circle me-1"></i>No prescriptions available</td></tr>';
             }
             
             const modal = new bootstrap.Modal(document.getElementById('viewRecordModal'));
@@ -1064,7 +1115,7 @@
           });
           
           if (response.data.success) {
-            const record = response.data.record;
+            const record = response.data.data;
             
             document.getElementById('editRecordId').value = record.record_id;
             document.getElementById('editPatientId').value = record.patient_id;
@@ -1073,7 +1124,8 @@
             document.getElementById('editDiagnosis').value = record.diagnosis;
             document.getElementById('editTreatment').value = record.treatment;
             document.getElementById('editNotes').value = record.notes || '';
-            document.getElementById('editRecordDate').value = record.record_date;
+            // Extract date part from timestamp (YYYY-MM-DD)
+            document.getElementById('editRecordDate').value = record.record_date ? record.record_date.split(' ')[0] : '';
             
             // Load prescriptions
             const container = document.getElementById('editPrescriptionsContainer');
@@ -1272,6 +1324,21 @@
       function showError(message) {
         alert(message); // Replace with better notification system
       }
+
+      // Expose functions to global scope for onclick handlers
+      window.openAddModal = openAddModal;
+      window.saveRecord = saveRecord;
+      window.viewRecord = viewRecord;
+      window.editRecord = editRecord;
+      window.updateRecord = updateRecord;
+      window.deleteRecord = deleteRecord;
+      window.addPrescriptionRow = addPrescriptionRow;
+      window.addEditPrescriptionRow = addEditPrescriptionRow;
+      window.removePrescriptionRow = removePrescriptionRow;
+      window.removeEditPrescriptionRow = removeEditPrescriptionRow;
+      window.searchRecords = searchRecords;
+      window.resetFilters = resetFilters;
+      window.changePage = changePage;
 
       console.log("Medical Records page loaded");
       })();

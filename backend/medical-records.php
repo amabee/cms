@@ -192,16 +192,33 @@ class MedicalRecordsAPI {
         try {
             $this->conn->beginTransaction();
 
-            $sql = "INSERT INTO medical_records (appointment_id, patient_id, doctor_id, diagnosis, treatment, notes) 
-                    VALUES (:appointment_id, :patient_id, :doctor_id, :diagnosis, :treatment, :notes)";
+            // Check if appointment_id is provided and not empty
+            $hasAppointment = !empty($data['appointment_id']);
+
+            if ($hasAppointment) {
+                $sql = "INSERT INTO medical_records (appointment_id, patient_id, doctor_id, diagnosis, treatment, notes, record_date) 
+                        VALUES (:appointment_id, :patient_id, :doctor_id, :diagnosis, :treatment, :notes, :record_date)";
+            } else {
+                $sql = "INSERT INTO medical_records (patient_id, doctor_id, diagnosis, treatment, notes, record_date) 
+                        VALUES (:patient_id, :doctor_id, :diagnosis, :treatment, :notes, :record_date)";
+            }
 
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':appointment_id', $data['appointment_id'], PDO::PARAM_INT);
+            
+            if ($hasAppointment) {
+                $stmt->bindParam(':appointment_id', $data['appointment_id'], PDO::PARAM_INT);
+            }
+            
             $stmt->bindParam(':patient_id', $data['patient_id'], PDO::PARAM_INT);
             $stmt->bindParam(':doctor_id', $data['doctor_id'], PDO::PARAM_INT);
             $stmt->bindParam(':diagnosis', $data['diagnosis'], PDO::PARAM_STR);
             $stmt->bindParam(':treatment', $data['treatment'], PDO::PARAM_STR);
             $stmt->bindParam(':notes', $data['notes'], PDO::PARAM_STR);
+            
+            // Use provided record_date or default to today
+            $recordDate = $data['record_date'] ?? date('Y-m-d');
+            $stmt->bindParam(':record_date', $recordDate, PDO::PARAM_STR);
+            
             $stmt->execute();
 
             $record_id = $this->conn->lastInsertId();

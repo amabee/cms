@@ -612,12 +612,18 @@
             action: 'getStatistics'
           });
           
+          console.log('Statistics response:', response.data);
+          
           if (response.data.success) {
-            const stats = response.data;
+            const stats = response.data.data;
+            console.log('Stats object:', stats);
+            
             document.getElementById('totalAppointments').textContent = stats.total_appointments || 0;
             document.getElementById('todayAppointments').textContent = stats.today_appointments || 0;
             document.getElementById('pendingAppointments').textContent = stats.pending_appointments || 0;
             document.getElementById('confirmedAppointments').textContent = stats.confirmed_appointments || 0;
+            
+            console.log('Statistics updated successfully');
           }
         } catch (error) {
           console.error('Error loading statistics:', error);
@@ -728,13 +734,16 @@
       // Load patients for dropdowns
       async function loadPatients() {
         try {
-          const response = await axios.post(API_BASE + 'patients.php', {
-            action: 'getAll',
+          const params = new URLSearchParams();
+          params.append('operation', 'getAll');
+          params.append('json', JSON.stringify({
             limit: 1000
-          });
+          }));
+          
+          const response = await axios.post(API_BASE + 'patients.php', params);
           
           if (response.data.success) {
-            allPatients = response.data.patients;
+            allPatients = response.data.data;
             populatePatientDropdowns();
           }
         } catch (error) {
@@ -764,13 +773,16 @@
       // Load doctors for dropdowns
       async function loadDoctors() {
         try {
-          const response = await axios.post(API_BASE + 'doctors.php', {
-            action: 'getAll',
+          const params = new URLSearchParams();
+          params.append('operation', 'getAll');
+          params.append('json', JSON.stringify({
             limit: 1000
-          });
+          }));
+          
+          const response = await axios.post(API_BASE + 'doctors.php', params);
           
           if (response.data.success) {
-            allDoctors = response.data.doctors;
+            allDoctors = response.data.data;
             populateDoctorDropdowns();
           }
         } catch (error) {
@@ -1084,6 +1096,19 @@
       function showError(message) {
         alert(message);
       }
+
+      // Expose functions to global scope for onclick handlers
+      window.openAddModal = openAddModal;
+      window.saveAppointment = saveAppointment;
+      window.viewAppointment = viewAppointment;
+      window.editAppointment = editAppointment;
+      window.updateAppointment = updateAppointment;
+      window.deleteAppointment = deleteAppointment;
+      window.updateStatus = updateStatus;
+      window.resetFilters = resetFilters;
+      window.changePage = changePage;
+      window.searchAppointments = searchAppointments;
+      window.loadAppointments = loadAppointments;
 
       console.log("Appointments page loaded");
       })();

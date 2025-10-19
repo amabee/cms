@@ -55,18 +55,20 @@ class AppointmentsAPI {
 
             $sql = "SELECT a.*, 
                            CONCAT(p.first_name, ' ', p.last_name) as patient_name,
-                           CONCAT(d.first_name, ' ', d.last_name) as doctor_name,
-                           d.specialization
+                           CONCAT(up.first_name, ' ', up.last_name) as doctor_name,
+                           doc.specialization
                     FROM appointments a
                     LEFT JOIN patients p ON a.patient_id = p.patient_id
-                    LEFT JOIN doctors d ON a.doctor_id = d.doctor_id
+                    LEFT JOIN doctors doc ON a.doctor_id = doc.doctor_id
+                    LEFT JOIN users u ON doc.user_id = u.user_id
+                    LEFT JOIN user_profiles up ON u.user_id = up.user_id
                     WHERE 1=1";
 
             $params = [];
 
             if (!empty($search)) {
                 $sql .= " AND (p.first_name LIKE :search OR p.last_name LIKE :search 
-                          OR d.first_name LIKE :search OR d.last_name LIKE :search 
+                          OR up.first_name LIKE :search OR up.last_name LIKE :search 
                           OR a.reason LIKE :search)";
                 $params[':search'] = "%$search%";
             }
@@ -131,12 +133,14 @@ class AppointmentsAPI {
                            CONCAT(p.first_name, ' ', p.last_name) as patient_name,
                            p.phone as patient_phone,
                            p.email as patient_email,
-                           CONCAT(d.first_name, ' ', d.last_name) as doctor_name,
-                           d.specialization,
-                           d.phone as doctor_phone
+                           CONCAT(up.first_name, ' ', up.last_name) as doctor_name,
+                           doc.specialization,
+                           doc.contact_number as doctor_phone
                     FROM appointments a
                     LEFT JOIN patients p ON a.patient_id = p.patient_id
-                    LEFT JOIN doctors d ON a.doctor_id = d.doctor_id
+                    LEFT JOIN doctors doc ON a.doctor_id = doc.doctor_id
+                    LEFT JOIN users u ON doc.user_id = u.user_id
+                    LEFT JOIN user_profiles up ON u.user_id = up.user_id
                     WHERE a.appointment_id = :appointment_id";
 
             $stmt = $this->conn->prepare($sql);
@@ -163,10 +167,12 @@ class AppointmentsAPI {
             }
 
             $sql = "SELECT a.*, 
-                           CONCAT(d.first_name, ' ', d.last_name) as doctor_name,
-                           d.specialization
+                           CONCAT(up.first_name, ' ', up.last_name) as doctor_name,
+                           doc.specialization
                     FROM appointments a
-                    LEFT JOIN doctors d ON a.doctor_id = d.doctor_id
+                    LEFT JOIN doctors doc ON a.doctor_id = doc.doctor_id
+                    LEFT JOIN users u ON doc.user_id = u.user_id
+                    LEFT JOIN user_profiles up ON u.user_id = up.user_id
                     WHERE a.patient_id = :patient_id
                     ORDER BY a.appointment_date DESC, a.appointment_time DESC";
 
@@ -456,7 +462,12 @@ class AppointmentsAPI {
                                        WHERE status = 'cancelled'");
             $stats['cancelled_appointments'] = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
-            return $this->response(true, 'Statistics retrieved successfully', $stats);
+            // Return stats directly in the response, not through the response() method
+            return json_encode([
+                'success' => true,
+                'message' => 'Statistics retrieved successfully',
+                'data' => $stats
+            ]);
 
         } catch (Exception $e) {
             return $this->response(false, 'Error: ' . $e->getMessage(), null);
