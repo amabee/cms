@@ -4,21 +4,22 @@ header('Content-Type: application/json');
 
 class MedicalRecordsAPI {
     private $conn;
-    private $db;
 
     public function __construct() {
-        $database = new DatabaseConnection();
-        $this->conn = $database->connect();
-        $this->db = $database;
+        $this->conn = DatabaseConnection::getInstance()->getConnection();
     }
 
     public function handleRequest() {
-        $operation = $_POST['operation'] ?? $_GET['operation'] ?? '';
-        $json = $_POST['json'] ?? $_GET['json'] ?? '';
-        $data = json_decode($json, true);
+        $data = json_decode(file_get_contents('php://input'), true);
+        
+        if (!$data || !isset($data['action'])) {
+            return $this->response(false, 'Invalid request', null);
+        }
+
+        $action = $data['action'];
 
         try {
-            switch($operation) {
+            switch($action) {
                 case 'getAll':
                     return $this->getAll($data);
                 case 'getById':
@@ -34,7 +35,7 @@ class MedicalRecordsAPI {
                 case 'getStatistics':
                     return $this->getStatistics($data);
                 default:
-                    return $this->response(false, 'Invalid operation', null);
+                    return $this->response(false, 'Invalid action', null);
             }
         } catch (Exception $e) {
             return $this->response(false, 'Error: ' . $e->getMessage(), null);
@@ -51,14 +52,15 @@ class MedicalRecordsAPI {
                     mr.*,
                     CONCAT(p.first_name, ' ', p.last_name) as patient_name,
                     p.patient_code,
-                    CONCAT(d.first_name, ' ', d.last_name) as doctor_name,
-                    d.specialization,
+                    CONCAT(up.first_name, ' ', up.last_name) as doctor_name,
+                    doc.specialization,
                     a.appointment_date,
                     a.status as appointment_status
                 FROM medical_records mr
                 LEFT JOIN patients p ON mr.patient_id = p.patient_id
                 LEFT JOIN doctors doc ON mr.doctor_id = doc.doctor_id
-                LEFT JOIN users d ON doc.user_id = d.user_id
+                LEFT JOIN users u ON doc.user_id = u.user_id
+                LEFT JOIN user_profiles up ON u.user_id = up.user_id
                 LEFT JOIN appointments a ON mr.appointment_id = a.appointment_id
                 WHERE 1=1";
 
@@ -66,8 +68,8 @@ class MedicalRecordsAPI {
             $sql .= " AND (p.first_name LIKE :search 
                       OR p.last_name LIKE :search 
                       OR p.patient_code LIKE :search
-                      OR d.first_name LIKE :search
-                      OR d.last_name LIKE :search
+                      OR up.first_name LIKE :search
+                      OR up.last_name LIKE :search
                       OR mr.diagnosis LIKE :search)";
         }
 
@@ -126,15 +128,16 @@ class MedicalRecordsAPI {
                     p.date_of_birth,
                     p.gender,
                     p.blood_type,
-                    CONCAT(d.first_name, ' ', d.last_name) as doctor_name,
-                    d.specialization,
+                    CONCAT(up.first_name, ' ', up.last_name) as doctor_name,
+                    doc.specialization,
                     a.appointment_date,
                     a.appointment_time,
                     a.status as appointment_status
                 FROM medical_records mr
                 LEFT JOIN patients p ON mr.patient_id = p.patient_id
                 LEFT JOIN doctors doc ON mr.doctor_id = doc.doctor_id
-                LEFT JOIN users d ON doc.user_id = d.user_id
+                LEFT JOIN users u ON doc.user_id = u.user_id
+                LEFT JOIN user_profiles up ON u.user_id = up.user_id
                 LEFT JOIN appointments a ON mr.appointment_id = a.appointment_id
                 WHERE mr.record_id = :record_id";
 
@@ -164,13 +167,14 @@ class MedicalRecordsAPI {
         $sql = "SELECT 
                     mr.*,
                     CONCAT(p.first_name, ' ', p.last_name) as patient_name,
-                    CONCAT(d.first_name, ' ', d.last_name) as doctor_name,
-                    d.specialization,
+                    CONCAT(up.first_name, ' ', up.last_name) as doctor_name,
+                    doc.specialization,
                     a.appointment_date
                 FROM medical_records mr
                 LEFT JOIN patients p ON mr.patient_id = p.patient_id
                 LEFT JOIN doctors doc ON mr.doctor_id = doc.doctor_id
-                LEFT JOIN users d ON doc.user_id = d.user_id
+                LEFT JOIN users u ON doc.user_id = u.user_id
+                LEFT JOIN user_profiles up ON u.user_id = up.user_id
                 LEFT JOIN appointments a ON mr.appointment_id = a.appointment_id
                 WHERE mr.patient_id = :patient_id
                 ORDER BY mr.record_date DESC";
@@ -221,10 +225,11 @@ class MedicalRecordsAPI {
 
             // Log the action
             if (isset($_SESSION['user_id'])) {
-                $this->db->logAction(
+                $this->logAction(
                     $_SESSION['user_id'],
-                    'create_medical_record',
-                    'Created medical record #' . $record_id . ' for patient ID: ' . $data['patient_id']
+                    'create',
+                    'Created medical record #' . $record_id . ' for patient ID: ' . $data['patient_id'],
+                    $_SERVER['REMOTE_ADDR'] ?? 'unknown'
                 );
             }
 
@@ -280,10 +285,11 @@ class MedicalRecordsAPI {
 
             // Log the action
             if (isset($_SESSION['user_id'])) {
-                $this->db->logAction(
+                $this->logAction(
                     $_SESSION['user_id'],
-                    'update_medical_record',
-                    'Updated medical record #' . $data['record_id']
+                    'update',
+                    'Updated medical record #' . $data['record_id'],
+                    $_SERVER['REMOTE_ADDR'] ?? 'unknown'
                 );
             }
 
@@ -314,10 +320,11 @@ class MedicalRecordsAPI {
 
             // Log the action
             if (isset($_SESSION['user_id'])) {
-                $this->db->logAction(
+                $this->logAction(
                     $_SESSION['user_id'],
-                    'delete_medical_record',
-                    'Deleted medical record #' . $record_id
+                    'delete',
+                    'Deleted medical record #' . $record_id,
+                    $_SERVER['REMOTE_ADDR'] ?? 'unknown'
                 );
             }
 
@@ -358,6 +365,21 @@ class MedicalRecordsAPI {
         $stats['total_patients'] = $patientsStmt->fetch(PDO::FETCH_ASSOC)['total'];
 
         return $this->response(true, 'Statistics retrieved successfully', $stats);
+    }
+
+    private function logAction($user_id, $action, $description, $ip_address) {
+        try {
+            $stmt = $this->conn->prepare("INSERT INTO system_logs (user_id, action, description, ip_address)
+                                          VALUES (:user_id, :action, :description, :ip_address)");
+            $stmt->execute([
+                ':user_id' => $user_id,
+                ':action' => $action,
+                ':description' => $description,
+                ':ip_address' => $ip_address
+            ]);
+        } catch (PDOException $e) {
+            // Log silently fails
+        }
     }
 
     private function response($success, $message, $data, $extra = []) {

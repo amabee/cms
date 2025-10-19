@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-    <title>Medical Records - My Clinic</title>
-    <meta name="description" content="Manage Medical Records" />
+    <title>Appointments - My Clinic</title>
+    <meta name="description" content="Manage Appointments" />
     <link rel="stylesheet" href="../assets/vendor/css/core.css" />
     <link rel="stylesheet" href="../assets/css/demo.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
@@ -93,22 +93,16 @@
               </a>
             </li>
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Clinical</span></li>
-            <li class="menu-item active">
+            <li class="menu-item">
               <a href="medical-records.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-file-find"></i>
                 <div>Medical Records</div>
               </a>
             </li>
-            <li class="menu-item">
+            <li class="menu-item active">
               <a href="appointments.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
                 <div>Appointments</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="queue.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-list-ol"></i>
-                <div>Queue</div>
               </a>
             </li>
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Laboratory</span></li>
@@ -212,7 +206,7 @@
           <div class="content-wrapper">
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4">
-                <span class="text-muted fw-light">Clinical /</span> Medical Records
+                <span class="text-muted fw-light">Clinical /</span> Appointments
               </h4>
 
               <!-- Statistics Cards -->
@@ -222,32 +216,13 @@
                     <div class="card-body">
                       <div class="d-flex justify-content-between">
                         <div class="card-info">
-                          <p class="card-text">Total Records</p>
+                          <p class="card-text">Total</p>
                           <div class="d-flex align-items-end mb-2">
-                            <h4 class="card-title mb-0 me-2" id="totalRecords">0</h4>
+                            <h4 class="card-title mb-0 me-2" id="totalAppointments">0</h4>
                           </div>
                         </div>
                         <div class="card-icon">
                           <span class="badge bg-label-primary rounded p-2">
-                            <i class="bx bx-file-find bx-sm"></i>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="d-flex justify-content-between">
-                        <div class="card-info">
-                          <p class="card-text">This Month</p>
-                          <div class="d-flex align-items-end mb-2">
-                            <h4 class="card-title mb-0 me-2" id="monthlyRecords">0</h4>
-                          </div>
-                        </div>
-                        <div class="card-icon">
-                          <span class="badge bg-label-success rounded p-2">
                             <i class="bx bx-calendar bx-sm"></i>
                           </span>
                         </div>
@@ -262,7 +237,7 @@
                         <div class="card-info">
                           <p class="card-text">Today</p>
                           <div class="d-flex align-items-end mb-2">
-                            <h4 class="card-title mb-0 me-2" id="todayRecords">0</h4>
+                            <h4 class="card-title mb-0 me-2" id="todayAppointments">0</h4>
                           </div>
                         </div>
                         <div class="card-icon">
@@ -279,14 +254,33 @@
                     <div class="card-body">
                       <div class="d-flex justify-content-between">
                         <div class="card-info">
-                          <p class="card-text">Total Patients</p>
+                          <p class="card-text">Pending</p>
                           <div class="d-flex align-items-end mb-2">
-                            <h4 class="card-title mb-0 me-2" id="totalPatients">0</h4>
+                            <h4 class="card-title mb-0 me-2" id="pendingAppointments">0</h4>
                           </div>
                         </div>
                         <div class="card-icon">
                           <span class="badge bg-label-warning rounded p-2">
-                            <i class="bx bx-user bx-sm"></i>
+                            <i class="bx bx-hourglass bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">Confirmed</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="confirmedAppointments">0</h4>
+                          </div>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-success rounded p-2">
+                            <i class="bx bx-check-circle bx-sm"></i>
                           </span>
                         </div>
                       </div>
@@ -295,32 +289,44 @@
                 </div>
               </div>
 
-              <!-- Medical Records Table Card -->
+              <!-- Appointments Table Card -->
               <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                  <h5 class="mb-0">Medical Records List</h5>
+                  <h5 class="mb-0">Appointments List</h5>
                   <button type="button" class="btn btn-primary" onclick="openAddModal()">
-                    <i class="bx bx-plus me-1"></i> Add Record
+                    <i class="bx bx-plus me-1"></i> Add Appointment
                   </button>
                 </div>
                 <div class="card-body">
                   <div class="row mb-3">
-                    <div class="col-md-4">
-                      <input type="text" class="form-control" id="searchInput" placeholder="Search by patient name, diagnosis..." onkeyup="searchRecords()">
-                    </div>
                     <div class="col-md-3">
-                      <select class="form-select" id="patientFilter" onchange="loadRecords()">
-                        <option value="">All Patients</option>
+                      <input type="text" class="form-control" id="searchInput" placeholder="Search..." onkeyup="searchAppointments()">
+                    </div>
+                    <div class="col-md-2">
+                      <select class="form-select" id="statusFilter" onchange="loadAppointments()">
+                        <option value="">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
                       </select>
                     </div>
-                    <div class="col-md-3">
-                      <select class="form-select" id="doctorFilter" onchange="loadRecords()">
+                    <div class="col-md-2">
+                      <input type="date" class="form-control" id="dateFilter" onchange="loadAppointments()">
+                    </div>
+                    <div class="col-md-2">
+                      <select class="form-select" id="doctorFilter" onchange="loadAppointments()">
                         <option value="">All Doctors</option>
                       </select>
                     </div>
                     <div class="col-md-2">
+                      <select class="form-select" id="patientFilter" onchange="loadAppointments()">
+                        <option value="">All Patients</option>
+                      </select>
+                    </div>
+                    <div class="col-md-1">
                       <button class="btn btn-outline-secondary w-100" onclick="resetFilters()">
-                        <i class="bx bx-reset me-1"></i> Reset
+                        <i class="bx bx-reset"></i>
                       </button>
                     </div>
                   </div>
@@ -328,24 +334,25 @@
                     <table class="table">
                       <thead>
                         <tr>
-                          <th>Record ID</th>
+                          <th>ID</th>
                           <th>Patient</th>
                           <th>Doctor</th>
-                          <th>Diagnosis</th>
-                          <th>Record Date</th>
+                          <th>Date & Time</th>
+                          <th>Reason</th>
+                          <th>Status</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
-                      <tbody id="recordsTableBody">
+                      <tbody id="appointmentsTableBody">
                         <tr>
-                          <td colspan="6" class="text-center">Loading...</td>
+                          <td colspan="7" class="text-center">Loading...</td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
                   <div class="d-flex justify-content-between align-items-center mt-3">
                     <div>
-                      <span class="text-muted" id="recordsInfo">Showing 0 records</span>
+                      <span class="text-muted" id="appointmentsInfo">Showing 0 appointments</span>
                     </div>
                     <nav aria-label="Page navigation">
                       <ul class="pagination pagination-sm mb-0" id="pagination"></ul>
@@ -369,16 +376,16 @@
       <div class="layout-overlay layout-menu-toggle"></div>
     </div>
 
-    <!-- Add Medical Record Modal -->
-    <div class="modal fade" id="addRecordModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-xl" role="document">
+    <!-- Add Appointment Modal -->
+    <div class="modal fade" id="addAppointmentModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Add Medical Record</h5>
+            <h5 class="modal-title">Add Appointment</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form id="addRecordForm">
+            <form id="addAppointmentForm">
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label class="form-label">Patient <span class="text-danger">*</span></label>
@@ -395,62 +402,52 @@
               </div>
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <label class="form-label">Appointment (Optional) <small class="text-muted">(Not available yet)</small></label>
-                  <select class="form-select" id="addAppointmentId" disabled>
-                    <option value="">No Appointment</option>
-                  </select>
+                  <label class="form-label">Appointment Date <span class="text-danger">*</span></label>
+                  <input type="date" class="form-control" id="addAppointmentDate" required>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label class="form-label">Record Date <span class="text-danger">*</span></label>
-                  <input type="date" class="form-control" id="addRecordDate" required>
+                  <label class="form-label">Appointment Time <span class="text-danger">*</span></label>
+                  <input type="time" class="form-control" id="addAppointmentTime" required>
                 </div>
               </div>
               <div class="mb-3">
-                <label class="form-label">Diagnosis <span class="text-danger">*</span></label>
-                <textarea class="form-control" id="addDiagnosis" rows="3" placeholder="Enter diagnosis..." required></textarea>
+                <label class="form-label">Status <span class="text-danger">*</span></label>
+                <select class="form-select" id="addStatus" required>
+                  <option value="pending">Pending</option>
+                  <option value="confirmed">Confirmed</option>
+                  <option value="completed">Completed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
               </div>
               <div class="mb-3">
-                <label class="form-label">Treatment <span class="text-danger">*</span></label>
-                <textarea class="form-control" id="addTreatment" rows="3" placeholder="Enter treatment plan..." required></textarea>
+                <label class="form-label">Reason <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="addReason" rows="3" placeholder="Enter reason for appointment..." required></textarea>
               </div>
               <div class="mb-3">
                 <label class="form-label">Notes</label>
                 <textarea class="form-control" id="addNotes" rows="2" placeholder="Additional notes..."></textarea>
               </div>
-              
-              <!-- Prescriptions Section -->
-              <div class="mb-3">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                  <h6 class="mb-0">Prescriptions</h6>
-                  <button type="button" class="btn btn-sm btn-outline-primary" onclick="addPrescriptionRow()">
-                    <i class="bx bx-plus me-1"></i> Add Medicine
-                  </button>
-                </div>
-                <div id="prescriptionsContainer">
-                  <!-- Prescription rows will be added here -->
-                </div>
-              </div>
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary" onclick="saveRecord()">Save Record</button>
+            <button type="button" class="btn btn-primary" onclick="saveAppointment()">Save Appointment</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Edit Medical Record Modal -->
-    <div class="modal fade" id="editRecordModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-xl" role="document">
+    <!-- Edit Appointment Modal -->
+    <div class="modal fade" id="editAppointmentModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Edit Medical Record</h5>
+            <h5 class="modal-title">Edit Appointment</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form id="editRecordForm">
-              <input type="hidden" id="editRecordId">
+            <form id="editAppointmentForm">
+              <input type="hidden" id="editAppointmentId">
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label class="form-label">Patient <span class="text-danger">*</span></label>
@@ -467,68 +464,58 @@
               </div>
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <label class="form-label">Appointment (Optional) <small class="text-muted">(Not available yet)</small></label>
-                  <select class="form-select" id="editAppointmentId" disabled>
-                    <option value="">No Appointment</option>
-                  </select>
+                  <label class="form-label">Appointment Date <span class="text-danger">*</span></label>
+                  <input type="date" class="form-control" id="editAppointmentDate" required>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label class="form-label">Record Date <span class="text-danger">*</span></label>
-                  <input type="date" class="form-control" id="editRecordDate" required>
+                  <label class="form-label">Appointment Time <span class="text-danger">*</span></label>
+                  <input type="time" class="form-control" id="editAppointmentTime" required>
                 </div>
               </div>
               <div class="mb-3">
-                <label class="form-label">Diagnosis <span class="text-danger">*</span></label>
-                <textarea class="form-control" id="editDiagnosis" rows="3" required></textarea>
+                <label class="form-label">Status <span class="text-danger">*</span></label>
+                <select class="form-select" id="editStatus" required>
+                  <option value="pending">Pending</option>
+                  <option value="confirmed">Confirmed</option>
+                  <option value="completed">Completed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
               </div>
               <div class="mb-3">
-                <label class="form-label">Treatment <span class="text-danger">*</span></label>
-                <textarea class="form-control" id="editTreatment" rows="3" required></textarea>
+                <label class="form-label">Reason <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="editReason" rows="3" required></textarea>
               </div>
               <div class="mb-3">
                 <label class="form-label">Notes</label>
                 <textarea class="form-control" id="editNotes" rows="2"></textarea>
               </div>
-              
-              <!-- Prescriptions Section -->
-              <div class="mb-3">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                  <h6 class="mb-0">Prescriptions</h6>
-                  <button type="button" class="btn btn-sm btn-outline-primary" onclick="addEditPrescriptionRow()">
-                    <i class="bx bx-plus me-1"></i> Add Medicine
-                  </button>
-                </div>
-                <div id="editPrescriptionsContainer">
-                  <!-- Prescription rows will be added here -->
-                </div>
-              </div>
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary" onclick="updateRecord()">Update Record</button>
+            <button type="button" class="btn btn-primary" onclick="updateAppointment()">Update Appointment</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- View Medical Record Modal -->
-    <div class="modal fade" id="viewRecordModal" tabindex="-1" aria-hidden="true">
+    <!-- View Appointment Modal -->
+    <div class="modal fade" id="viewAppointmentModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Medical Record Details</h5>
+            <h5 class="modal-title">Appointment Details</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="row mb-3">
               <div class="col-md-6">
-                <p class="mb-1"><strong>Record ID:</strong></p>
-                <p id="viewRecordId" class="text-muted">-</p>
+                <p class="mb-1"><strong>Appointment ID:</strong></p>
+                <p id="viewAppointmentId" class="text-muted">-</p>
               </div>
               <div class="col-md-6">
-                <p class="mb-1"><strong>Record Date:</strong></p>
-                <p id="viewRecordDate" class="text-muted">-</p>
+                <p class="mb-1"><strong>Status:</strong></p>
+                <p id="viewStatus" class="text-muted">-</p>
               </div>
             </div>
             <div class="row mb-3">
@@ -542,45 +529,22 @@
               </div>
             </div>
             <div class="row mb-3">
-              <div class="col-12">
-                <p class="mb-1"><strong>Appointment:</strong></p>
-                <p id="viewAppointment" class="text-muted">-</p>
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Date:</strong></p>
+                <p id="viewDate" class="text-muted">-</p>
+              </div>
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Time:</strong></p>
+                <p id="viewTime" class="text-muted">-</p>
               </div>
             </div>
             <div class="mb-3">
-              <p class="mb-1"><strong>Diagnosis:</strong></p>
-              <p id="viewDiagnosis" class="text-muted">-</p>
-            </div>
-            <div class="mb-3">
-              <p class="mb-1"><strong>Treatment:</strong></p>
-              <p id="viewTreatment" class="text-muted">-</p>
+              <p class="mb-1"><strong>Reason:</strong></p>
+              <p id="viewReason" class="text-muted">-</p>
             </div>
             <div class="mb-3">
               <p class="mb-1"><strong>Notes:</strong></p>
               <p id="viewNotes" class="text-muted">-</p>
-            </div>
-            
-            <!-- Prescriptions -->
-            <div class="mb-3">
-              <p class="mb-2"><strong>Prescriptions:</strong></p>
-              <div id="viewPrescriptions" class="table-responsive">
-                <table class="table table-sm table-bordered">
-                  <thead>
-                    <tr>
-                      <th>Medicine</th>
-                      <th>Dosage</th>
-                      <th>Frequency</th>
-                      <th>Duration</th>
-                      <th>Instructions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="viewPrescriptionsBody">
-                    <tr>
-                      <td colspan="5" class="text-center text-muted">No prescriptions</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -626,104 +590,139 @@
 
       const API_BASE = '../../backend/';
       let currentPage = 1;
-      let recordsPerPage = 10;
+      let appointmentsPerPage = 10;
       let allPatients = [];
       let allDoctors = [];
-      let allAppointments = [];
-      let prescriptionCounter = 0;
 
       // Initialize page
       loadStatistics();
-      loadRecords();
+      loadAppointments();
       loadPatients();
       loadDoctors();
-      // loadAppointments(); // TODO: Enable when Appointments module is built
       
       // Set default date to today
       const today = new Date().toISOString().split('T')[0];
-      document.getElementById('addRecordDate').value = today;
+      document.getElementById('addAppointmentDate').value = today;
+      document.getElementById('addAppointmentDate').setAttribute('min', today);
 
       // Load statistics
       async function loadStatistics() {
         try {
-          const response = await axios.post(API_BASE + 'medical-records.php', {
+          const response = await axios.post(API_BASE + 'appointments.php', {
             action: 'getStatistics'
           });
           
           if (response.data.success) {
-            const stats = response.data.statistics;
-            document.getElementById('totalRecords').textContent = stats.total_records || 0;
-            document.getElementById('monthlyRecords').textContent = stats.monthly_records || 0;
-            document.getElementById('todayRecords').textContent = stats.daily_records || 0;
-            document.getElementById('totalPatients').textContent = stats.total_patients || 0;
+            const stats = response.data;
+            document.getElementById('totalAppointments').textContent = stats.total_appointments || 0;
+            document.getElementById('todayAppointments').textContent = stats.today_appointments || 0;
+            document.getElementById('pendingAppointments').textContent = stats.pending_appointments || 0;
+            document.getElementById('confirmedAppointments').textContent = stats.confirmed_appointments || 0;
           }
         } catch (error) {
           console.error('Error loading statistics:', error);
         }
       }
 
-      // Load medical records
-      async function loadRecords() {
+      // Load appointments
+      async function loadAppointments() {
         try {
           const search = document.getElementById('searchInput').value;
-          const patientFilter = document.getElementById('patientFilter').value;
+          const status = document.getElementById('statusFilter').value;
+          const dateFilter = document.getElementById('dateFilter').value;
           const doctorFilter = document.getElementById('doctorFilter').value;
+          const patientFilter = document.getElementById('patientFilter').value;
           
-          const response = await axios.post(API_BASE + 'medical-records.php', {
+          const response = await axios.post(API_BASE + 'appointments.php', {
             action: 'getAll',
             page: currentPage,
-            limit: recordsPerPage,
+            limit: appointmentsPerPage,
             search: search,
-            patient_id: patientFilter,
-            doctor_id: doctorFilter
+            status: status,
+            date_filter: dateFilter,
+            doctor_id: doctorFilter,
+            patient_id: patientFilter
           });
           
           if (response.data.success) {
-            displayRecords(response.data.records);
+            displayAppointments(response.data.appointments);
             updatePagination(response.data.total, response.data.page, response.data.totalPages);
           }
         } catch (error) {
-          console.error('Error loading records:', error);
-          showError('Failed to load medical records');
+          console.error('Error loading appointments:', error);
+          showError('Failed to load appointments');
         }
       }
 
-      // Display records in table
-      function displayRecords(records) {
-        const tbody = document.getElementById('recordsTableBody');
+      // Display appointments in table
+      function displayAppointments(appointments) {
+        const tbody = document.getElementById('appointmentsTableBody');
         
-        if (records.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="6" class="text-center">No medical records found</td></tr>';
+        if (appointments.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" class="text-center">No appointments found</td></tr>';
           return;
         }
         
-        tbody.innerHTML = records.map(record => `
-          <tr>
-            <td><strong>${record.record_id}</strong></td>
-            <td>${record.patient_name || 'N/A'}</td>
-            <td>Dr. ${record.doctor_name || 'N/A'}</td>
-            <td>${record.diagnosis ? record.diagnosis.substring(0, 50) + (record.diagnosis.length > 50 ? '...' : '') : 'N/A'}</td>
-            <td>${formatDate(record.record_date)}</td>
-            <td>
-              <div class="dropdown">
-                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                  <i class="bx bx-dots-vertical-rounded"></i>
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="javascript:void(0);" onclick="viewRecord(${record.record_id})">
-                    <i class="bx bx-show me-1"></i> View
-                  </a>
-                  <a class="dropdown-item" href="javascript:void(0);" onclick="editRecord(${record.record_id})">
-                    <i class="bx bx-edit me-1"></i> Edit
-                  </a>
-                  <a class="dropdown-item text-danger" href="javascript:void(0);" onclick="deleteRecord(${record.record_id})">
-                    <i class="bx bx-trash me-1"></i> Delete
-                  </a>
+        tbody.innerHTML = appointments.map(apt => {
+          const statusBadge = getStatusBadge(apt.status);
+          return `
+            <tr>
+              <td><strong>${apt.appointment_id}</strong></td>
+              <td>${apt.patient_name || 'N/A'}</td>
+              <td>Dr. ${apt.doctor_name || 'N/A'}</td>
+              <td>
+                <div>${formatDate(apt.appointment_date)}</div>
+                <small class="text-muted">${formatTime(apt.appointment_time)}</small>
+              </td>
+              <td>${apt.reason ? apt.reason.substring(0, 40) + (apt.reason.length > 40 ? '...' : '') : 'N/A'}</td>
+              <td>${statusBadge}</td>
+              <td>
+                <div class="dropdown">
+                  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                    <i class="bx bx-dots-vertical-rounded"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="javascript:void(0);" onclick="viewAppointment(${apt.appointment_id})">
+                      <i class="bx bx-show me-1"></i> View
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0);" onclick="editAppointment(${apt.appointment_id})">
+                      <i class="bx bx-edit me-1"></i> Edit
+                    </a>
+                    ${apt.status === 'pending' ? `
+                    <a class="dropdown-item" href="javascript:void(0);" onclick="updateStatus(${apt.appointment_id}, 'confirmed')">
+                      <i class="bx bx-check me-1"></i> Confirm
+                    </a>
+                    ` : ''}
+                    ${apt.status === 'confirmed' ? `
+                    <a class="dropdown-item" href="javascript:void(0);" onclick="updateStatus(${apt.appointment_id}, 'completed')">
+                      <i class="bx bx-check-double me-1"></i> Complete
+                    </a>
+                    ` : ''}
+                    ${apt.status !== 'cancelled' && apt.status !== 'completed' ? `
+                    <a class="dropdown-item text-warning" href="javascript:void(0);" onclick="updateStatus(${apt.appointment_id}, 'cancelled')">
+                      <i class="bx bx-x me-1"></i> Cancel
+                    </a>
+                    ` : ''}
+                    <a class="dropdown-item text-danger" href="javascript:void(0);" onclick="deleteAppointment(${apt.appointment_id})">
+                      <i class="bx bx-trash me-1"></i> Delete
+                    </a>
+                  </div>
                 </div>
-              </div>
-            </td>
-          </tr>
-        `).join('');
+              </td>
+            </tr>
+          `;
+        }).join('');
+      }
+
+      // Get status badge
+      function getStatusBadge(status) {
+        const badges = {
+          pending: '<span class="badge bg-label-warning">Pending</span>',
+          confirmed: '<span class="badge bg-label-info">Confirmed</span>',
+          completed: '<span class="badge bg-label-success">Completed</span>',
+          cancelled: '<span class="badge bg-label-danger">Cancelled</span>'
+        };
+        return badges[status] || '<span class="badge bg-label-secondary">Unknown</span>';
       }
 
       // Load patients for dropdowns
@@ -792,430 +791,233 @@
           allDoctors.forEach(doctor => {
             const option = document.createElement('option');
             option.value = doctor.doctor_id;
-            option.textContent = `Dr. ${doctor.first_name} ${doctor.last_name}`;
+            option.textContent = `Dr. ${doctor.first_name} ${doctor.last_name} - ${doctor.specialization}`;
             select.appendChild(option);
           });
         });
-      }
-
-      // Load appointments for dropdowns
-      async function loadAppointments() {
-        try {
-          const response = await axios.post(API_BASE + 'appointments.php', {
-            action: 'getAll',
-            limit: 1000,
-            status: 'confirmed'
-          });
-          
-          if (response.data.success) {
-            allAppointments = response.data.appointments || [];
-            populateAppointmentDropdowns();
-          }
-        } catch (error) {
-          console.error('Error loading appointments:', error);
-          // Continue even if appointments API doesn't exist yet
-          allAppointments = [];
-        }
-      }
-
-      // Populate appointment dropdowns
-      function populateAppointmentDropdowns() {
-        const selects = ['addAppointmentId', 'editAppointmentId'];
-        
-        selects.forEach(selectId => {
-          const select = document.getElementById(selectId);
-          select.innerHTML = '<option value="">No Appointment</option>';
-          
-          allAppointments.forEach(appt => {
-            const option = document.createElement('option');
-            option.value = appt.appointment_id;
-            const patient = allPatients.find(p => p.patient_id == appt.patient_id);
-            const patientName = patient ? `${patient.first_name} ${patient.last_name}` : 'Unknown';
-            option.textContent = `${appt.appointment_date} - ${patientName}`;
-            select.appendChild(option);
-          });
-        });
-      }
-
-      // Add prescription row
-      function addPrescriptionRow() {
-        prescriptionCounter++;
-        const container = document.getElementById('prescriptionsContainer');
-        const row = document.createElement('div');
-        row.className = 'prescription-row card mb-2 p-3';
-        row.id = `prescription-${prescriptionCounter}`;
-        row.innerHTML = `
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <h6 class="mb-0">Medicine #${prescriptionCounter}</h6>
-            <button type="button" class="btn btn-sm btn-outline-danger" onclick="removePrescriptionRow(${prescriptionCounter})">
-              <i class="bx bx-trash"></i>
-            </button>
-          </div>
-          <div class="row">
-            <div class="col-md-6 mb-2">
-              <label class="form-label">Medicine Name <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" name="medicine_name[]" required>
-            </div>
-            <div class="col-md-6 mb-2">
-              <label class="form-label">Dosage <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" name="dosage[]" placeholder="e.g., 500mg" required>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4 mb-2">
-              <label class="form-label">Frequency <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" name="frequency[]" placeholder="e.g., Twice daily" required>
-            </div>
-            <div class="col-md-4 mb-2">
-              <label class="form-label">Duration <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" name="duration[]" placeholder="e.g., 7 days" required>
-            </div>
-            <div class="col-md-4 mb-2">
-              <label class="form-label">Instructions</label>
-              <input type="text" class="form-control" name="instructions[]" placeholder="After meals">
-            </div>
-          </div>
-        `;
-        container.appendChild(row);
-      }
-
-      // Add prescription row for edit modal
-      function addEditPrescriptionRow() {
-        prescriptionCounter++;
-        const container = document.getElementById('editPrescriptionsContainer');
-        const row = document.createElement('div');
-        row.className = 'prescription-row card mb-2 p-3';
-        row.id = `edit-prescription-${prescriptionCounter}`;
-        row.innerHTML = `
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <h6 class="mb-0">Medicine #${prescriptionCounter}</h6>
-            <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeEditPrescriptionRow(${prescriptionCounter})">
-              <i class="bx bx-trash"></i>
-            </button>
-          </div>
-          <div class="row">
-            <div class="col-md-6 mb-2">
-              <label class="form-label">Medicine Name <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" name="edit_medicine_name[]" required>
-            </div>
-            <div class="col-md-6 mb-2">
-              <label class="form-label">Dosage <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" name="edit_dosage[]" placeholder="e.g., 500mg" required>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4 mb-2">
-              <label class="form-label">Frequency <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" name="edit_frequency[]" placeholder="e.g., Twice daily" required>
-            </div>
-            <div class="col-md-4 mb-2">
-              <label class="form-label">Duration <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" name="edit_duration[]" placeholder="e.g., 7 days" required>
-            </div>
-            <div class="col-md-4 mb-2">
-              <label class="form-label">Instructions</label>
-              <input type="text" class="form-control" name="edit_instructions[]" placeholder="After meals">
-            </div>
-          </div>
-        `;
-        container.appendChild(row);
-      }
-
-      // Remove prescription row
-      function removePrescriptionRow(id) {
-        const row = document.getElementById(`prescription-${id}`);
-        if (row) row.remove();
-      }
-
-      // Remove edit prescription row
-      function removeEditPrescriptionRow(id) {
-        const row = document.getElementById(`edit-prescription-${id}`);
-        if (row) row.remove();
-      }
-
-      // Collect prescriptions from form
-      function collectPrescriptions(prefix = '') {
-        const prescriptions = [];
-        const medicineNames = document.getElementsByName(`${prefix}medicine_name[]`);
-        const dosages = document.getElementsByName(`${prefix}dosage[]`);
-        const frequencies = document.getElementsByName(`${prefix}frequency[]`);
-        const durations = document.getElementsByName(`${prefix}duration[]`);
-        const instructions = document.getElementsByName(`${prefix}instructions[]`);
-        
-        for (let i = 0; i < medicineNames.length; i++) {
-          if (medicineNames[i].value.trim()) {
-            prescriptions.push({
-              medicine_name: medicineNames[i].value,
-              dosage: dosages[i].value,
-              frequency: frequencies[i].value,
-              duration: durations[i].value,
-              instructions: instructions[i].value
-            });
-          }
-        }
-        
-        return prescriptions;
       }
 
       // Open add modal
       function openAddModal() {
-        document.getElementById('addRecordForm').reset();
-        document.getElementById('prescriptionsContainer').innerHTML = '';
-        prescriptionCounter = 0;
-        
+        document.getElementById('addAppointmentForm').reset();
         const today = new Date().toISOString().split('T')[0];
-        document.getElementById('addRecordDate').value = today;
+        document.getElementById('addAppointmentDate').value = today;
+        document.getElementById('addStatus').value = 'pending';
         
-        const modal = new bootstrap.Modal(document.getElementById('addRecordModal'));
+        const modal = new bootstrap.Modal(document.getElementById('addAppointmentModal'));
         modal.show();
       }
 
-      // Save new record
-      async function saveRecord() {
-        const form = document.getElementById('addRecordForm');
+      // Save new appointment
+      async function saveAppointment() {
+        const form = document.getElementById('addAppointmentForm');
         if (!form.checkValidity()) {
           form.reportValidity();
           return;
         }
-        
-        const prescriptions = collectPrescriptions();
         
         const data = {
           action: 'create',
           patient_id: document.getElementById('addPatientId').value,
           doctor_id: document.getElementById('addDoctorId').value,
-          appointment_id: document.getElementById('addAppointmentId').value || null,
-          diagnosis: document.getElementById('addDiagnosis').value,
-          treatment: document.getElementById('addTreatment').value,
-          notes: document.getElementById('addNotes').value,
-          record_date: document.getElementById('addRecordDate').value,
-          prescriptions: prescriptions
+          appointment_date: document.getElementById('addAppointmentDate').value,
+          appointment_time: document.getElementById('addAppointmentTime').value,
+          reason: document.getElementById('addReason').value,
+          status: document.getElementById('addStatus').value,
+          notes: document.getElementById('addNotes').value
         };
         
         try {
-          const response = await axios.post(API_BASE + 'medical-records.php', data);
+          const response = await axios.post(API_BASE + 'appointments.php', data);
           
           if (response.data.success) {
-            showSuccess('Medical record created successfully');
-            bootstrap.Modal.getInstance(document.getElementById('addRecordModal')).hide();
-            loadRecords();
+            showSuccess('Appointment created successfully');
+            bootstrap.Modal.getInstance(document.getElementById('addAppointmentModal')).hide();
+            loadAppointments();
             loadStatistics();
           } else {
-            showError(response.data.message || 'Failed to create record');
+            showError(response.data.message || 'Failed to create appointment');
           }
         } catch (error) {
-          console.error('Error creating record:', error);
-          showError('Failed to create medical record');
+          console.error('Error creating appointment:', error);
+          showError('Failed to create appointment');
         }
       }
 
-      // View record details
-      async function viewRecord(id) {
+      // View appointment details
+      async function viewAppointment(id) {
         try {
-          const response = await axios.post(API_BASE + 'medical-records.php', {
+          const response = await axios.post(API_BASE + 'appointments.php', {
             action: 'getById',
-            record_id: id
+            appointment_id: id
           });
           
           if (response.data.success) {
-            const record = response.data.record;
+            const apt = response.data.appointment;
             
-            document.getElementById('viewRecordId').textContent = record.record_id;
-            document.getElementById('viewRecordDate').textContent = formatDate(record.record_date);
-            document.getElementById('viewPatient').textContent = record.patient_name || 'N/A';
-            document.getElementById('viewDoctor').textContent = 'Dr. ' + (record.doctor_name || 'N/A');
-            document.getElementById('viewAppointment').textContent = record.appointment_date ? 
-              `Appointment on ${formatDate(record.appointment_date)}` : 'No appointment linked';
-            document.getElementById('viewDiagnosis').textContent = record.diagnosis || 'N/A';
-            document.getElementById('viewTreatment').textContent = record.treatment || 'N/A';
-            document.getElementById('viewNotes').textContent = record.notes || 'No additional notes';
+            document.getElementById('viewAppointmentId').textContent = apt.appointment_id;
+            document.getElementById('viewStatus').innerHTML = getStatusBadge(apt.status);
+            document.getElementById('viewPatient').textContent = apt.patient_name || 'N/A';
+            document.getElementById('viewDoctor').textContent = 'Dr. ' + (apt.doctor_name || 'N/A');
+            document.getElementById('viewDate').textContent = formatDate(apt.appointment_date);
+            document.getElementById('viewTime').textContent = formatTime(apt.appointment_time);
+            document.getElementById('viewReason').textContent = apt.reason || 'N/A';
+            document.getElementById('viewNotes').textContent = apt.notes || 'No additional notes';
             
-            // Display prescriptions
-            const prescriptionsBody = document.getElementById('viewPrescriptionsBody');
-            if (record.prescriptions && record.prescriptions.length > 0) {
-              prescriptionsBody.innerHTML = record.prescriptions.map(rx => `
-                <tr>
-                  <td>${rx.medicine_name}</td>
-                  <td>${rx.dosage}</td>
-                  <td>${rx.frequency}</td>
-                  <td>${rx.duration}</td>
-                  <td>${rx.instructions || '-'}</td>
-                </tr>
-              `).join('');
-            } else {
-              prescriptionsBody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No prescriptions</td></tr>';
-            }
-            
-            const modal = new bootstrap.Modal(document.getElementById('viewRecordModal'));
+            const modal = new bootstrap.Modal(document.getElementById('viewAppointmentModal'));
             modal.show();
           }
         } catch (error) {
-          console.error('Error loading record:', error);
-          showError('Failed to load record details');
+          console.error('Error loading appointment:', error);
+          showError('Failed to load appointment details');
         }
       }
 
-      // Edit record
-      async function editRecord(id) {
+      // Edit appointment
+      async function editAppointment(id) {
         try {
-          const response = await axios.post(API_BASE + 'medical-records.php', {
+          const response = await axios.post(API_BASE + 'appointments.php', {
             action: 'getById',
-            record_id: id
+            appointment_id: id
           });
           
           if (response.data.success) {
-            const record = response.data.record;
+            const apt = response.data.appointment;
             
-            document.getElementById('editRecordId').value = record.record_id;
-            document.getElementById('editPatientId').value = record.patient_id;
-            document.getElementById('editDoctorId').value = record.doctor_id;
-            document.getElementById('editAppointmentId').value = record.appointment_id || '';
-            document.getElementById('editDiagnosis').value = record.diagnosis;
-            document.getElementById('editTreatment').value = record.treatment;
-            document.getElementById('editNotes').value = record.notes || '';
-            document.getElementById('editRecordDate').value = record.record_date;
+            document.getElementById('editAppointmentId').value = apt.appointment_id;
+            document.getElementById('editPatientId').value = apt.patient_id;
+            document.getElementById('editDoctorId').value = apt.doctor_id;
+            document.getElementById('editAppointmentDate').value = apt.appointment_date;
+            document.getElementById('editAppointmentTime').value = apt.appointment_time;
+            document.getElementById('editStatus').value = apt.status;
+            document.getElementById('editReason').value = apt.reason;
+            document.getElementById('editNotes').value = apt.notes || '';
             
-            // Load prescriptions
-            const container = document.getElementById('editPrescriptionsContainer');
-            container.innerHTML = '';
-            prescriptionCounter = 0;
-            
-            if (record.prescriptions && record.prescriptions.length > 0) {
-              record.prescriptions.forEach(rx => {
-                prescriptionCounter++;
-                const row = document.createElement('div');
-                row.className = 'prescription-row card mb-2 p-3';
-                row.id = `edit-prescription-${prescriptionCounter}`;
-                row.innerHTML = `
-                  <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h6 class="mb-0">Medicine #${prescriptionCounter}</h6>
-                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeEditPrescriptionRow(${prescriptionCounter})">
-                      <i class="bx bx-trash"></i>
-                    </button>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6 mb-2">
-                      <label class="form-label">Medicine Name <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" name="edit_medicine_name[]" value="${rx.medicine_name}" required>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                      <label class="form-label">Dosage <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" name="edit_dosage[]" value="${rx.dosage}" required>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-4 mb-2">
-                      <label class="form-label">Frequency <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" name="edit_frequency[]" value="${rx.frequency}" required>
-                    </div>
-                    <div class="col-md-4 mb-2">
-                      <label class="form-label">Duration <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" name="edit_duration[]" value="${rx.duration}" required>
-                    </div>
-                    <div class="col-md-4 mb-2">
-                      <label class="form-label">Instructions</label>
-                      <input type="text" class="form-control" name="edit_instructions[]" value="${rx.instructions || ''}">
-                    </div>
-                  </div>
-                `;
-                container.appendChild(row);
-              });
-            }
-            
-            const modal = new bootstrap.Modal(document.getElementById('editRecordModal'));
+            const modal = new bootstrap.Modal(document.getElementById('editAppointmentModal'));
             modal.show();
           }
         } catch (error) {
-          console.error('Error loading record:', error);
-          showError('Failed to load record details');
+          console.error('Error loading appointment:', error);
+          showError('Failed to load appointment details');
         }
       }
 
-      // Update record
-      async function updateRecord() {
-        const form = document.getElementById('editRecordForm');
+      // Update appointment
+      async function updateAppointment() {
+        const form = document.getElementById('editAppointmentForm');
         if (!form.checkValidity()) {
           form.reportValidity();
           return;
         }
         
-        const prescriptions = collectPrescriptions('edit_');
-        
         const data = {
           action: 'update',
-          record_id: document.getElementById('editRecordId').value,
+          appointment_id: document.getElementById('editAppointmentId').value,
           patient_id: document.getElementById('editPatientId').value,
           doctor_id: document.getElementById('editDoctorId').value,
-          appointment_id: document.getElementById('editAppointmentId').value || null,
-          diagnosis: document.getElementById('editDiagnosis').value,
-          treatment: document.getElementById('editTreatment').value,
-          notes: document.getElementById('editNotes').value,
-          record_date: document.getElementById('editRecordDate').value,
-          prescriptions: prescriptions
+          appointment_date: document.getElementById('editAppointmentDate').value,
+          appointment_time: document.getElementById('editAppointmentTime').value,
+          reason: document.getElementById('editReason').value,
+          status: document.getElementById('editStatus').value,
+          notes: document.getElementById('editNotes').value
         };
         
         try {
-          const response = await axios.post(API_BASE + 'medical-records.php', data);
+          const response = await axios.post(API_BASE + 'appointments.php', data);
           
           if (response.data.success) {
-            showSuccess('Medical record updated successfully');
-            bootstrap.Modal.getInstance(document.getElementById('editRecordModal')).hide();
-            loadRecords();
+            showSuccess('Appointment updated successfully');
+            bootstrap.Modal.getInstance(document.getElementById('editAppointmentModal')).hide();
+            loadAppointments();
             loadStatistics();
           } else {
-            showError(response.data.message || 'Failed to update record');
+            showError(response.data.message || 'Failed to update appointment');
           }
         } catch (error) {
-          console.error('Error updating record:', error);
-          showError('Failed to update medical record');
+          console.error('Error updating appointment:', error);
+          showError('Failed to update appointment');
         }
       }
 
-      // Delete record
-      async function deleteRecord(id) {
-        if (!confirm('Are you sure you want to delete this medical record? This will also delete all associated prescriptions.')) {
+      // Delete appointment
+      async function deleteAppointment(id) {
+        if (!confirm('Are you sure you want to delete this appointment?')) {
           return;
         }
         
         try {
-          const response = await axios.post(API_BASE + 'medical-records.php', {
+          const response = await axios.post(API_BASE + 'appointments.php', {
             action: 'delete',
-            record_id: id
+            appointment_id: id
           });
           
           if (response.data.success) {
-            showSuccess('Medical record deleted successfully');
-            loadRecords();
+            showSuccess('Appointment deleted successfully');
+            loadAppointments();
             loadStatistics();
           } else {
-            showError(response.data.message || 'Failed to delete record');
+            showError(response.data.message || 'Failed to delete appointment');
           }
         } catch (error) {
-          console.error('Error deleting record:', error);
-          showError('Failed to delete medical record');
+          console.error('Error deleting appointment:', error);
+          showError('Failed to delete appointment');
         }
       }
 
-      // Search records
-      function searchRecords() {
+      // Update status
+      async function updateStatus(id, status) {
+        const confirmMessages = {
+          confirmed: 'Are you sure you want to confirm this appointment?',
+          completed: 'Are you sure you want to mark this appointment as completed?',
+          cancelled: 'Are you sure you want to cancel this appointment?'
+        };
+
+        if (!confirm(confirmMessages[status] || 'Update appointment status?')) {
+          return;
+        }
+
+        try {
+          const response = await axios.post(API_BASE + 'appointments.php', {
+            action: 'updateStatus',
+            appointment_id: id,
+            status: status
+          });
+          
+          if (response.data.success) {
+            showSuccess('Appointment status updated successfully');
+            loadAppointments();
+            loadStatistics();
+          } else {
+            showError(response.data.message || 'Failed to update status');
+          }
+        } catch (error) {
+          console.error('Error updating status:', error);
+          showError('Failed to update appointment status');
+        }
+      }
+
+      // Search appointments
+      function searchAppointments() {
         currentPage = 1;
-        loadRecords();
+        loadAppointments();
       }
 
       // Reset filters
       function resetFilters() {
         document.getElementById('searchInput').value = '';
-        document.getElementById('patientFilter').value = '';
+        document.getElementById('statusFilter').value = '';
+        document.getElementById('dateFilter').value = '';
         document.getElementById('doctorFilter').value = '';
+        document.getElementById('patientFilter').value = '';
         currentPage = 1;
-        loadRecords();
+        loadAppointments();
       }
 
       // Update pagination
       function updatePagination(total, current, totalPages) {
-        const start = (current - 1) * recordsPerPage + 1;
-        const end = Math.min(current * recordsPerPage, total);
-        document.getElementById('recordsInfo').textContent = `Showing ${start}-${end} of ${total} records`;
+        const start = (current - 1) * appointmentsPerPage + 1;
+        const end = Math.min(current * appointmentsPerPage, total);
+        document.getElementById('appointmentsInfo').textContent = `Showing ${start}-${end} of ${total} appointments`;
         
         const pagination = document.getElementById('pagination');
         pagination.innerHTML = '';
@@ -1253,7 +1055,7 @@
       // Change page
       function changePage(page) {
         currentPage = page;
-        loadRecords();
+        loadAppointments();
       }
 
       // Format date
@@ -1263,17 +1065,27 @@
         return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
       }
 
+      // Format time
+      function formatTime(timeString) {
+        if (!timeString) return 'N/A';
+        const [hours, minutes] = timeString.split(':');
+        const hour = parseInt(hours);
+        const ampm = hour >= 12 ? 'PM' : 'AM';
+        const displayHour = hour % 12 || 12;
+        return `${displayHour}:${minutes} ${ampm}`;
+      }
+
       // Show success message
       function showSuccess(message) {
-        alert(message); // Replace with better notification system
+        alert(message);
       }
 
       // Show error message
       function showError(message) {
-        alert(message); // Replace with better notification system
+        alert(message);
       }
 
-      console.log("Medical Records page loaded");
+      console.log("Appointments page loaded");
       })();
     </script>
   </body>

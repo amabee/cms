@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <title>Queue Management - My Clinic</title>
+  <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+  <link rel="stylesheet" href="../assets/css/demo.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+  <style>
+    .layout-menu { overflow-y: auto !important; max-height: 100vh; }
+    .layout-menu .menu-inner { overflow-y: auto; max-height: calc(100vh - 70px); }
+    .layout-menu::-webkit-scrollbar, .layout-menu .menu-inner::-webkit-scrollbar { width: 6px; }
+    .layout-menu::-webkit-scrollbar-track, .layout-menu .menu-inner::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.05); }
+    .layout-menu::-webkit-scrollbar-thumb, .layout-menu .menu-inner::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.2); border-radius: 3px; }
+    .layout-menu::-webkit-scrollbar-thumb:hover, .layout-menu .menu-inner::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.3); }
+    .queue-number-display { font-size: 4rem; font-weight: bold; }
+    .current-queue-card { border: 3px solid #28a745; }
+  </style>
+</head>
+<body>
+  <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+      <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+        <div class="app-brand demo">
+          <a href="dashboard.html" class="app-brand-link">
+            <span class="app-brand-logo demo"><img src="../assets/img/favicon/logo.png" alt="Logo" width="32" /></span>
+            <span class="app-brand-text demo menu-text fw-bold ms-2">My Clinic</span>
+          </a>
+        </div>
+        <ul class="menu-inner py-1">
+          <li class="menu-item"><a href="dashboard.html" class="menu-link"><i class="menu-icon tf-icons bx bx-home-circle"></i><div>Dashboard</div></a></li>
+          <li class="menu-header small text-uppercase"><span class="menu-header-text">Management</span></li>
+          <li class="menu-item"><a href="users.html" class="menu-link"><i class="menu-icon tf-icons bx bx-user"></i><div>Users</div></a></li>
+          <li class="menu-item"><a href="doctors.html" class="menu-link"><i class="menu-icon tf-icons bx bx-plus-medical"></i><div>Doctors</div></a></li>
+          <li class="menu-item"><a href="departments.html" class="menu-link"><i class="menu-icon tf-icons bx bx-building"></i><div>Departments</div></a></li>
+          <li class="menu-item"><a href="staff.html" class="menu-link"><i class="menu-icon tf-icons bx bx-briefcase"></i><div>Staff</div></a></li>
+          <li class="menu-item"><a href="patients.html" class="menu-link"><i class="menu-icon tf-icons bx bx-group"></i><div>Patients</div></a></li>
+          <li class="menu-header small text-uppercase"><span class="menu-header-text">Clinical</span></li>
+          <li class="menu-item"><a href="medical-records.html" class="menu-link"><i class="menu-icon tf-icons bx bx-file-find"></i><div>Medical Records</div></a></li>
+          <li class="menu-item"><a href="appointments.html" class="menu-link"><i class="menu-icon tf-icons bx bx-calendar"></i><div>Appointments</div></a></li>
+          <li class="menu-item active"><a href="queue.html" class="menu-link"><i class="menu-icon tf-icons bx bx-list-ol"></i><div>Queue</div></a></li>
+          <li class="menu-header small text-uppercase"><span class="menu-header-text">Laboratory</span></li>
+          <li class="menu-item"><a href="lab-tests.html" class="menu-link"><i class="menu-icon tf-icons bx bx-test-tube"></i><div>Lab Tests</div></a></li>
+          <li class="menu-item"><a href="lab-requests.html" class="menu-link"><i class="menu-icon tf-icons bx bx-clipboard-plus"></i><div>Lab Requests</div></a></li>
+          <li class="menu-header small text-uppercase"><span class="menu-header-text">System</span></li>
+          <li class="menu-item"><a href="settings.html" class="menu-link"><i class="menu-icon tf-icons bx bx-cog"></i><div>Settings</div></a></li>
+          <li class="menu-item"><a href="audit-logs.html" class="menu-link"><i class="menu-icon tf-icons bx bx-list-ul"></i><div>Audit Logs</div></a></li>
+        </ul>
+      </aside>
+
+      <div class="layout-page">
+        <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme">
+          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)"><i class="bx bx-menu bx-sm"></i></a>
+          </div>
+          <div class="navbar-nav-right d-flex align-items-center">
+            <div class="navbar-nav align-items-center">
+              <div class="nav-item d-flex align-items-center">
+                <i class="bx bx-search fs-4 lh-0"></i>
+                <input type="text" class="form-control border-0 shadow-none" placeholder="Search..." />
+              </div>
+            </div>
+            <ul class="navbar-nav flex-row align-items-center ms-auto">
+              <li class="nav-item navbar-dropdown dropdown-notifications dropdown me-3 me-xl-2">
+                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"><i class="bx bx-bell bx-sm"></i><span class="badge bg-danger rounded-pill badge-notifications" id="notificationBadge">0</span></a>
+              </li>
+              <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                  <div class="avatar avatar-online"><span class="avatar-initial rounded-circle bg-label-primary" id="userAvatar">A</span></div>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" href="profile.html"><div class="d-flex"><div class="flex-shrink-0 me-3"><div class="avatar avatar-online"><span class="avatar-initial rounded-circle bg-label-primary" id="userAvatarDropdown">A</span></div></div><div class="flex-grow-1"><span class="fw-semibold d-block" id="userFullName">User</span><small class="text-muted" id="userRole">Admin</small></div></div></a></li>
+                  <li><div class="dropdown-divider"></div></li>
+                  <li><a class="dropdown-item" href="profile.html"><i class="bx bx-user me-2"></i><span class="align-middle">My Profile</span></a></li>
+                  <li><a class="dropdown-item" href="settings.html"><i class="bx bx-cog me-2"></i><span class="align-middle">Settings</span></a></li>
+                  <li><div class="dropdown-divider"></div></li>
+                  <li><a class="dropdown-item" href="javascript:void(0);" id="logoutBtn"><i class="bx bx-power-off me-2"></i><span class="align-middle">Log Out</span></a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <div class="content-wrapper">
+          <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Clinical /</span> Queue Management</h4>
+
+            <div class="row mb-4">
+              <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card"><div class="card-body"><div class="d-flex justify-content-between"><div class="card-info"><p class="card-text">Total Today</p><h4 class="card-title mb-0" id="totalToday">0</h4></div><div class="card-icon"><span class="badge bg-label-primary rounded p-2"><i class="bx bx-list-ol bx-sm"></i></span></div></div></div></div>
+              </div>
+              <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card"><div class="card-body"><div class="d-flex justify-content-between"><div class="card-info"><p class="card-text">Waiting</p><h4 class="card-title mb-0" id="waiting">0</h4></div><div class="card-icon"><span class="badge bg-label-warning rounded p-2"><i class="bx bx-hourglass bx-sm"></i></span></div></div></div></div>
+              </div>
+              <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card"><div class="card-body"><div class="d-flex justify-content-between"><div class="card-info"><p class="card-text">Called</p><h4 class="card-title mb-0" id="called">0</h4></div><div class="card-icon"><span class="badge bg-label-info rounded p-2"><i class="bx bx-bell bx-sm"></i></span></div></div></div></div>
+              </div>
+              <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card"><div class="card-body"><div class="d-flex justify-content-between"><div class="card-info"><p class="card-text">Done</p><h4 class="card-title mb-0" id="done">0</h4></div><div class="card-icon"><span class="badge bg-label-success rounded p-2"><i class="bx bx-check-circle bx-sm"></i></span></div></div></div></div>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-4">
+                <div class="card text-center current-queue-card">
+                  <div class="card-body"><h5 class="card-title">Now Serving</h5><div class="queue-number-display text-primary" id="currentQueue">--</div><button class="btn btn-success btn-lg" onclick="callNext()"><i class="bx bx-bell me-2"></i>Call Next</button></div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="card">
+                  <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Queue List</h5>
+                    <button type="button" class="btn btn-primary" onclick="openAddModal()"><i class="bx bx-plus me-1"></i> Add to Queue</button>
+                  </div>
+                  <div class="card-body">
+                    <div class="row mb-3">
+                      <div class="col-md-6"><input type="text" class="form-control" id="searchInput" placeholder="Search..." onkeyup="searchQueue()"></div>
+                      <div class="col-md-3"><select class="form-select" id="statusFilter" onchange="loadQueue()"><option value="">All Status</option><option value="waiting">Waiting</option><option value="called">Called</option><option value="done">Done</option><option value="skipped">Skipped</option></select></div>
+                      <div class="col-md-3"><input type="date" class="form-control" id="dateFilter" onchange="loadQueue()"></div>
+                    </div>
+                    <div class="table-responsive"><table class="table"><thead><tr><th>#</th><th>Patient</th><th>Doctor</th><th>Status</th><th>Actions</th></tr></thead><tbody id="queueTableBody"><tr><td colspan="5" class="text-center">Loading...</td></tr></tbody></table></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <footer class="content-footer footer bg-footer-theme">
+            <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+              <div class="mb-2 mb-md-0">© <script>document.write(new Date().getFullYear());</script> My Clinic CMS</div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Queue Modal -->
+  <div class="modal fade" id="addQueueModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title">Add to Queue</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+        <div class="modal-body">
+          <form id="addQueueForm">
+            <div class="mb-3"><label class="form-label">Patient <span class="text-danger">*</span></label><select class="form-select" id="addPatientId" required><option value="">Select Patient</option></select></div>
+            <div class="mb-3"><label class="form-label">Doctor <span class="text-danger">*</span></label><select class="form-select" id="addDoctorId" required><option value="">Select Doctor</option></select></div>
+            <div class="mb-3"><label class="form-label">Appointment (Optional)</label><select class="form-select" id="addAppointmentId"><option value="">No Appointment</option></select></div>
+            <div class="mb-3"><label class="form-label">Notes</label><textarea class="form-control" id="addNotes" rows="2"></textarea></div>
+          </form>
+        </div>
+        <div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button><button type="button" class="btn btn-primary" onclick="saveQueue()">Add to Queue</button></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/vendor/js/bootstrap.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="../assets/js/session-handler.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      if (!SessionHandler.requireUserType(1)) return;
+      var user = SessionHandler.getUser();
+      var fullName = SessionHandler.getUserFullName();
+      var initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+      document.getElementById("userFullName").textContent = fullName;
+      document.getElementById("userRole").textContent = SessionHandler.getUserRole();
+      document.getElementById("userAvatar").textContent = initials;
+      document.getElementById("userAvatarDropdown").textContent = initials;
+      var notifCount = SessionHandler.getUnreadNotificationsCount();
+      document.getElementById("notificationBadge").textContent = notifCount;
+      if (notifCount === 0) document.getElementById("notificationBadge").style.display = "none";
+      document.getElementById("logoutBtn").addEventListener("click", function(e) { e.preventDefault(); if (confirm("Are you sure you want to logout?")) SessionHandler.logout(); });
+
+      const API_BASE = '../../backend/';
+      let allPatients = [], allDoctors = [], allAppointments = [];
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('dateFilter').value = today;
+
+      loadStatistics();
+      loadQueue();
+      loadPatients();
+      loadDoctors();
+      loadAppointments();
+      setInterval(loadQueue, 30000); // Auto-refresh every 30 seconds
+
+      async function loadStatistics() {
+        try {
+          const response = await axios.post(API_BASE + 'queue.php', { action: 'getStatistics' });
+          if (response.data.success) {
+            document.getElementById('totalToday').textContent = response.data.total_today || 0;
+            document.getElementById('waiting').textContent = response.data.waiting || 0;
+            document.getElementById('called').textContent = response.data.called || 0;
+            document.getElementById('done').textContent = response.data.done || 0;
+          }
+        } catch (error) { console.error('Error:', error); }
+      }
+
+      async function loadQueue() {
+        try {
+          const search = document.getElementById('searchInput').value;
+          const status = document.getElementById('statusFilter').value;
+          const date = document.getElementById('dateFilter').value;
+          const response = await axios.post(API_BASE + 'queue.php', { action: 'getAll', search: search, status: status, date_filter: date, limit: 100 });
+          if (response.data.success) {
+            displayQueue(response.data.queues);
+            updateCurrentQueue(response.data.queues);
+          }
+        } catch (error) { console.error('Error:', error); }
+      }
+
+      function displayQueue(queues) {
+        const tbody = document.getElementById('queueTableBody');
+        if (queues.length === 0) { tbody.innerHTML = '<tr><td colspan="5" class="text-center">No queue entries</td></tr>'; return; }
+        tbody.innerHTML = queues.map(q => `
+          <tr>
+            <td><strong>${q.queue_number}</strong></td>
+            <td>${q.patient_name || 'N/A'}</td>
+            <td>Dr. ${q.doctor_name || 'N/A'}</td>
+            <td>${getStatusBadge(q.status)}</td>
+            <td>
+              <div class="dropdown">
+                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                <div class="dropdown-menu">
+                  ${q.status === 'waiting' ? `<a class="dropdown-item" href="javascript:void(0);" onclick="updateStatus(${q.queue_id}, 'called')"><i class="bx bx-bell me-1"></i> Call</a>` : ''}
+                  ${q.status === 'called' ? `<a class="dropdown-item" href="javascript:void(0);" onclick="updateStatus(${q.queue_id}, 'done')"><i class="bx bx-check me-1"></i> Done</a>` : ''}
+                  ${q.status === 'waiting' ? `<a class="dropdown-item" href="javascript:void(0);" onclick="updateStatus(${q.queue_id}, 'skipped')"><i class="bx bx-x me-1"></i> Skip</a>` : ''}
+                  <a class="dropdown-item text-danger" href="javascript:void(0);" onclick="deleteQueue(${q.queue_id})"><i class="bx bx-trash me-1"></i> Delete</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      function updateCurrentQueue(queues) {
+        const called = queues.find(q => q.status === 'called');
+        document.getElementById('currentQueue').textContent = called ? called.queue_number : '--';
+      }
+
+      function getStatusBadge(status) {
+        const badges = { waiting: '<span class="badge bg-warning">Waiting</span>', called: '<span class="badge bg-info">Called</span>', done: '<span class="badge bg-success">Done</span>', skipped: '<span class="badge bg-secondary">Skipped</span>' };
+        return badges[status] || '<span class="badge bg-secondary">Unknown</span>';
+      }
+
+      async function loadPatients() {
+        try {
+          const response = await axios.post(API_BASE + 'patients.php', { action: 'getAll', limit: 1000 });
+          if (response.data.success) { allPatients = response.data.patients; populatePatientDropdown(); }
+        } catch (error) { console.error('Error:', error); }
+      }
+
+      function populatePatientDropdown() {
+        const select = document.getElementById('addPatientId');
+        select.innerHTML = '<option value="">Select Patient</option>';
+        allPatients.forEach(p => { const option = document.createElement('option'); option.value = p.patient_id; option.textContent = `${p.first_name} ${p.last_name}`; select.appendChild(option); });
+      }
+
+      async function loadDoctors() {
+        try {
+          const response = await axios.post(API_BASE + 'doctors.php', { action: 'getAll', limit: 1000 });
+          if (response.data.success) { allDoctors = response.data.doctors; populateDoctorDropdown(); }
+        } catch (error) { console.error('Error:', error); }
+      }
+
+      function populateDoctorDropdown() {
+        const select = document.getElementById('addDoctorId');
+        select.innerHTML = '<option value="">Select Doctor</option>';
+        allDoctors.forEach(d => { const option = document.createElement('option'); option.value = d.doctor_id; option.textContent = `Dr. ${d.first_name} ${d.last_name}`; select.appendChild(option); });
+      }
+
+      async function loadAppointments() {
+        try {
+          const response = await axios.post(API_BASE + 'appointments.php', { action: 'getAll', limit: 1000, status: 'confirmed', date_filter: today });
+          if (response.data.success) { allAppointments = response.data.appointments || []; populateAppointmentDropdown(); }
+        } catch (error) { console.error('Error:', error); allAppointments = []; }
+      }
+
+      function populateAppointmentDropdown() {
+        const select = document.getElementById('addAppointmentId');
+        select.innerHTML = '<option value="">No Appointment</option>';
+        allAppointments.forEach(a => { const option = document.createElement('option'); option.value = a.appointment_id; const patient = allPatients.find(p => p.patient_id == a.patient_id); const patientName = patient ? `${patient.first_name} ${patient.last_name}` : 'Unknown'; option.textContent = `${a.appointment_time} - ${patientName}`; select.appendChild(option); });
+      }
+
+      function openAddModal() { document.getElementById('addQueueForm').reset(); const modal = new bootstrap.Modal(document.getElementById('addQueueModal')); modal.show(); }
+
+      async function saveQueue() {
+        const form = document.getElementById('addQueueForm');
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+        try {
+          const response = await axios.post(API_BASE + 'queue.php', { action: 'create', patient_id: document.getElementById('addPatientId').value, doctor_id: document.getElementById('addDoctorId').value, appointment_id: document.getElementById('addAppointmentId').value || null, notes: document.getElementById('addNotes').value });
+          if (response.data.success) { alert('Added to queue successfully'); bootstrap.Modal.getInstance(document.getElementById('addQueueModal')).hide(); loadQueue(); loadStatistics(); } else { alert(response.data.message || 'Failed'); }
+        } catch (error) { console.error('Error:', error); alert('Failed to add to queue'); }
+      }
+
+      async function callNext() {
+        try {
+          const response = await axios.post(API_BASE + 'queue.php', { action: 'callNext' });
+          if (response.data.success) { alert('Called queue #' + response.data.queue_number); loadQueue(); loadStatistics(); } else { alert(response.data.message || 'No waiting queue entries'); }
+        } catch (error) { console.error('Error:', error); alert('Failed to call next'); }
+      }
+
+      async function updateStatus(id, status) {
+        try {
+          const response = await axios.post(API_BASE + 'queue.php', { action: 'updateStatus', queue_id: id, status: status });
+          if (response.data.success) { loadQueue(); loadStatistics(); } else { alert(response.data.message || 'Failed'); }
+        } catch (error) { console.error('Error:', error); alert('Failed to update status'); }
+      }
+
+      async function deleteQueue(id) {
+        if (!confirm('Delete this queue entry?')) return;
+        try {
+          const response = await axios.post(API_BASE + 'queue.php', { action: 'delete', queue_id: id });
+          if (response.data.success) { alert('Deleted successfully'); loadQueue(); loadStatistics(); } else { alert(response.data.message || 'Failed'); }
+        } catch (error) { console.error('Error:', error); alert('Failed to delete'); }
+      }
+
+      function searchQueue() { loadQueue(); }
+      console.log("Queue page loaded");
+    })();
+  </script>
+</body>
+</html>
