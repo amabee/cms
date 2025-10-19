@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Medical Records - My Clinic</title>
+    <meta name="description" content="Manage Medical Records" />
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+    <style>
+      /* Make sidebar scrollable */
+      .layout-menu {
+        overflow-y: auto !important;
+        max-height: 100vh;
+      }
+      .layout-menu .menu-inner {
+        overflow-y: auto;
+        max-height: calc(100vh - 70px);
+      }
+      /* Custom scrollbar for sidebar */
+      .layout-menu::-webkit-scrollbar,
+      .layout-menu .menu-inner::-webkit-scrollbar {
+        width: 6px;
+      }
+      .layout-menu::-webkit-scrollbar-track,
+      .layout-menu .menu-inner::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .layout-menu::-webkit-scrollbar-thumb,
+      .layout-menu .menu-inner::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+      }
+      .layout-menu::-webkit-scrollbar-thumb:hover,
+      .layout-menu .menu-inner::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        
+        <!-- Menu (Sidebar) -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="dashboard.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <img src="../assets/img/favicon/logo.png" alt="Logo" width="32" />
+              </span>
+              <span class="app-brand-text demo menu-text fw-bold ms-2">My Clinic</span>
+            </a>
+          </div>
+          <div class="menu-inner-shadow"></div>
+          <ul class="menu-inner py-1">
+            <li class="menu-item">
+              <a href="dashboard.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div>Dashboard</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Management</span></li>
+            <li class="menu-item">
+              <a href="users.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div>Users</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="doctors.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-plus-medical"></i>
+                <div>Doctors</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="departments.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-building"></i>
+                <div>Departments</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="staff.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-briefcase"></i>
+                <div>Staff</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="patients.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-group"></i>
+                <div>Patients</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Clinical</span></li>
+            <li class="menu-item active">
+              <a href="medical-records.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file-find"></i>
+                <div>Medical Records</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Laboratory</span></li>
+            <li class="menu-item">
+              <a href="lab-tests.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-test-tube"></i>
+                <div>Lab Tests</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="lab-requests.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-clipboard-plus"></i>
+                <div>Lab Requests</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">System</span></li>
+            <li class="menu-item">
+              <a href="settings.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-cog"></i>
+                <div>Settings</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="audit-logs.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                <div>Audit Logs</div>
+              </a>
+            </li>
+          </ul>
+        </aside>
+
+        <div class="layout-page">
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <i class="bx bx-user bx-md"></i>
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <i class="bx bx-user bx-md"></i>
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block" id="userName">User</span>
+                            <small class="text-muted" id="userRole">Admin</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li>
+                      <a class="dropdown-item" href="#" onclick="logout()">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4">
+                <span class="text-muted fw-light">Clinical /</span> Medical Records
+              </h4>
+
+              <!-- Statistics Cards -->
+              <div class="row mb-4">
+                <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">Total Records</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="totalRecords">0</h4>
+                          </div>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-primary rounded p-2">
+                            <i class="bx bx-file-find bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">This Month</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="monthlyRecords">0</h4>
+                          </div>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-success rounded p-2">
+                            <i class="bx bx-calendar bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">Today</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="todayRecords">0</h4>
+                          </div>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-info rounded p-2">
+                            <i class="bx bx-time-five bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">Total Patients</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="totalPatients">0</h4>
+                          </div>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-warning rounded p-2">
+                            <i class="bx bx-user bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Medical Records Table Card -->
+              <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0">Medical Records List</h5>
+                  <button type="button" class="btn btn-primary" onclick="openAddModal()">
+                    <i class="bx bx-plus me-1"></i> Add Record
+                  </button>
+                </div>
+                <div class="card-body">
+                  <div class="row mb-3">
+                    <div class="col-md-4">
+                      <input type="text" class="form-control" id="searchInput" placeholder="Search by patient name, diagnosis..." onkeyup="searchRecords()">
+                    </div>
+                    <div class="col-md-3">
+                      <select class="form-select" id="patientFilter" onchange="loadRecords()">
+                        <option value="">All Patients</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <select class="form-select" id="doctorFilter" onchange="loadRecords()">
+                        <option value="">All Doctors</option>
+                      </select>
+                    </div>
+                    <div class="col-md-2">
+                      <button class="btn btn-outline-secondary w-100" onclick="resetFilters()">
+                        <i class="bx bx-reset me-1"></i> Reset
+                      </button>
+                    </div>
+                  </div>
+                  <div class="table-responsive text-nowrap">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Record ID</th>
+                          <th>Patient</th>
+                          <th>Doctor</th>
+                          <th>Diagnosis</th>
+                          <th>Record Date</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="recordsTableBody">
+                        <tr>
+                          <td colspan="6" class="text-center">Loading...</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                      <span class="text-muted" id="recordsInfo">Showing 0 records</span>
+                    </div>
+                    <nav aria-label="Page navigation">
+                      <ul class="pagination pagination-sm mb-0" id="pagination"></ul>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  © 2024 My Clinic. All rights reserved.
+                </div>
+              </div>
+            </footer>
+
+            <div class="content-backdrop fade"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+    <!-- Add Medical Record Modal -->
+    <div class="modal fade" id="addRecordModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Medical Record</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="addRecordForm">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Patient <span class="text-danger">*</span></label>
+                  <select class="form-select" id="addPatientId" required>
+                    <option value="">Select Patient</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Doctor <span class="text-danger">*</span></label>
+                  <select class="form-select" id="addDoctorId" required>
+                    <option value="">Select Doctor</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Appointment (Optional)</label>
+                  <select class="form-select" id="addAppointmentId">
+                    <option value="">No Appointment</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Record Date <span class="text-danger">*</span></label>
+                  <input type="date" class="form-control" id="addRecordDate" required>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Diagnosis <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="addDiagnosis" rows="3" placeholder="Enter diagnosis..." required></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Treatment <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="addTreatment" rows="3" placeholder="Enter treatment plan..." required></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Notes</label>
+                <textarea class="form-control" id="addNotes" rows="2" placeholder="Additional notes..."></textarea>
+              </div>
+              
+              <!-- Prescriptions Section -->
+              <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <h6 class="mb-0">Prescriptions</h6>
+                  <button type="button" class="btn btn-sm btn-outline-primary" onclick="addPrescriptionRow()">
+                    <i class="bx bx-plus me-1"></i> Add Medicine
+                  </button>
+                </div>
+                <div id="prescriptionsContainer">
+                  <!-- Prescription rows will be added here -->
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="saveRecord()">Save Record</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Medical Record Modal -->
+    <div class="modal fade" id="editRecordModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Medical Record</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="editRecordForm">
+              <input type="hidden" id="editRecordId">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Patient <span class="text-danger">*</span></label>
+                  <select class="form-select" id="editPatientId" required>
+                    <option value="">Select Patient</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Doctor <span class="text-danger">*</span></label>
+                  <select class="form-select" id="editDoctorId" required>
+                    <option value="">Select Doctor</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Appointment (Optional)</label>
+                  <select class="form-select" id="editAppointmentId">
+                    <option value="">No Appointment</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Record Date <span class="text-danger">*</span></label>
+                  <input type="date" class="form-control" id="editRecordDate" required>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Diagnosis <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="editDiagnosis" rows="3" required></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Treatment <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="editTreatment" rows="3" required></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Notes</label>
+                <textarea class="form-control" id="editNotes" rows="2"></textarea>
+              </div>
+              
+              <!-- Prescriptions Section -->
+              <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <h6 class="mb-0">Prescriptions</h6>
+                  <button type="button" class="btn btn-sm btn-outline-primary" onclick="addEditPrescriptionRow()">
+                    <i class="bx bx-plus me-1"></i> Add Medicine
+                  </button>
+                </div>
+                <div id="editPrescriptionsContainer">
+                  <!-- Prescription rows will be added here -->
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="updateRecord()">Update Record</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- View Medical Record Modal -->
+    <div class="modal fade" id="viewRecordModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Medical Record Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Record ID:</strong></p>
+                <p id="viewRecordId" class="text-muted">-</p>
+              </div>
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Record Date:</strong></p>
+                <p id="viewRecordDate" class="text-muted">-</p>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Patient:</strong></p>
+                <p id="viewPatient" class="text-muted">-</p>
+              </div>
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Doctor:</strong></p>
+                <p id="viewDoctor" class="text-muted">-</p>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-12">
+                <p class="mb-1"><strong>Appointment:</strong></p>
+                <p id="viewAppointment" class="text-muted">-</p>
+              </div>
+            </div>
+            <div class="mb-3">
+              <p class="mb-1"><strong>Diagnosis:</strong></p>
+              <p id="viewDiagnosis" class="text-muted">-</p>
+            </div>
+            <div class="mb-3">
+              <p class="mb-1"><strong>Treatment:</strong></p>
+              <p id="viewTreatment" class="text-muted">-</p>
+            </div>
+            <div class="mb-3">
+              <p class="mb-1"><strong>Notes:</strong></p>
+              <p id="viewNotes" class="text-muted">-</p>
+            </div>
+            
+            <!-- Prescriptions -->
+            <div class="mb-3">
+              <p class="mb-2"><strong>Prescriptions:</strong></p>
+              <div id="viewPrescriptions" class="table-responsive">
+                <table class="table table-sm table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Medicine</th>
+                      <th>Dosage</th>
+                      <th>Frequency</th>
+                      <th>Duration</th>
+                      <th>Instructions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="viewPrescriptionsBody">
+                    <tr>
+                      <td colspan="5" class="text-center text-muted">No prescriptions</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/js/session-handler.js"></script>
+    <script>
+      const API_BASE = '../../backend/';
+      let currentPage = 1;
+      let recordsPerPage = 10;
+      let allPatients = [];
+      let allDoctors = [];
+      let allAppointments = [];
+      let prescriptionCounter = 0;
+
+      // Initialize page
+      document.addEventListener('DOMContentLoaded', function() {
+        loadStatistics();
+        loadRecords();
+        loadPatients();
+        loadDoctors();
+        loadAppointments();
+        
+        // Set default date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('addRecordDate').value = today;
+      });
+
+      // Load statistics
+      async function loadStatistics() {
+        try {
+          const response = await axios.post(API_BASE + 'medical-records.php', {
+            action: 'getStatistics'
+          });
+          
+          if (response.data.success) {
+            const stats = response.data.statistics;
+            document.getElementById('totalRecords').textContent = stats.total_records || 0;
+            document.getElementById('monthlyRecords').textContent = stats.monthly_records || 0;
+            document.getElementById('todayRecords').textContent = stats.daily_records || 0;
+            document.getElementById('totalPatients').textContent = stats.total_patients || 0;
+          }
+        } catch (error) {
+          console.error('Error loading statistics:', error);
+        }
+      }
+
+      // Load medical records
+      async function loadRecords() {
+        try {
+          const search = document.getElementById('searchInput').value;
+          const patientFilter = document.getElementById('patientFilter').value;
+          const doctorFilter = document.getElementById('doctorFilter').value;
+          
+          const response = await axios.post(API_BASE + 'medical-records.php', {
+            action: 'getAll',
+            page: currentPage,
+            limit: recordsPerPage,
+            search: search,
+            patient_id: patientFilter,
+            doctor_id: doctorFilter
+          });
+          
+          if (response.data.success) {
+            displayRecords(response.data.records);
+            updatePagination(response.data.total, response.data.page, response.data.totalPages);
+          }
+        } catch (error) {
+          console.error('Error loading records:', error);
+          showError('Failed to load medical records');
+        }
+      }
+
+      // Display records in table
+      function displayRecords(records) {
+        const tbody = document.getElementById('recordsTableBody');
+        
+        if (records.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="text-center">No medical records found</td></tr>';
+          return;
+        }
+        
+        tbody.innerHTML = records.map(record => `
+          <tr>
+            <td><strong>${record.record_id}</strong></td>
+            <td>${record.patient_name || 'N/A'}</td>
+            <td>Dr. ${record.doctor_name || 'N/A'}</td>
+            <td>${record.diagnosis ? record.diagnosis.substring(0, 50) + (record.diagnosis.length > 50 ? '...' : '') : 'N/A'}</td>
+            <td>${formatDate(record.record_date)}</td>
+            <td>
+              <div class="dropdown">
+                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                  <i class="bx bx-dots-vertical-rounded"></i>
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="viewRecord(${record.record_id})">
+                    <i class="bx bx-show me-1"></i> View
+                  </a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="editRecord(${record.record_id})">
+                    <i class="bx bx-edit me-1"></i> Edit
+                  </a>
+                  <a class="dropdown-item text-danger" href="javascript:void(0);" onclick="deleteRecord(${record.record_id})">
+                    <i class="bx bx-trash me-1"></i> Delete
+                  </a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      // Load patients for dropdowns
+      async function loadPatients() {
+        try {
+          const response = await axios.post(API_BASE + 'patients.php', {
+            action: 'getAll',
+            limit: 1000
+          });
+          
+          if (response.data.success) {
+            allPatients = response.data.patients;
+            populatePatientDropdowns();
+          }
+        } catch (error) {
+          console.error('Error loading patients:', error);
+        }
+      }
+
+      // Populate patient dropdowns
+      function populatePatientDropdowns() {
+        const selects = ['addPatientId', 'editPatientId', 'patientFilter'];
+        
+        selects.forEach(selectId => {
+          const select = document.getElementById(selectId);
+          const isFilter = selectId === 'patientFilter';
+          
+          select.innerHTML = isFilter ? '<option value="">All Patients</option>' : '<option value="">Select Patient</option>';
+          
+          allPatients.forEach(patient => {
+            const option = document.createElement('option');
+            option.value = patient.patient_id;
+            option.textContent = `${patient.first_name} ${patient.last_name}`;
+            select.appendChild(option);
+          });
+        });
+      }
+
+      // Load doctors for dropdowns
+      async function loadDoctors() {
+        try {
+          const response = await axios.post(API_BASE + 'doctors.php', {
+            action: 'getAll',
+            limit: 1000
+          });
+          
+          if (response.data.success) {
+            allDoctors = response.data.doctors;
+            populateDoctorDropdowns();
+          }
+        } catch (error) {
+          console.error('Error loading doctors:', error);
+        }
+      }
+
+      // Populate doctor dropdowns
+      function populateDoctorDropdowns() {
+        const selects = ['addDoctorId', 'editDoctorId', 'doctorFilter'];
+        
+        selects.forEach(selectId => {
+          const select = document.getElementById(selectId);
+          const isFilter = selectId === 'doctorFilter';
+          
+          select.innerHTML = isFilter ? '<option value="">All Doctors</option>' : '<option value="">Select Doctor</option>';
+          
+          allDoctors.forEach(doctor => {
+            const option = document.createElement('option');
+            option.value = doctor.doctor_id;
+            option.textContent = `Dr. ${doctor.first_name} ${doctor.last_name}`;
+            select.appendChild(option);
+          });
+        });
+      }
+
+      // Load appointments for dropdowns
+      async function loadAppointments() {
+        try {
+          const response = await axios.post(API_BASE + 'appointments.php', {
+            action: 'getAll',
+            limit: 1000,
+            status: 'confirmed'
+          });
+          
+          if (response.data.success) {
+            allAppointments = response.data.appointments || [];
+            populateAppointmentDropdowns();
+          }
+        } catch (error) {
+          console.error('Error loading appointments:', error);
+          // Continue even if appointments API doesn't exist yet
+          allAppointments = [];
+        }
+      }
+
+      // Populate appointment dropdowns
+      function populateAppointmentDropdowns() {
+        const selects = ['addAppointmentId', 'editAppointmentId'];
+        
+        selects.forEach(selectId => {
+          const select = document.getElementById(selectId);
+          select.innerHTML = '<option value="">No Appointment</option>';
+          
+          allAppointments.forEach(appt => {
+            const option = document.createElement('option');
+            option.value = appt.appointment_id;
+            const patient = allPatients.find(p => p.patient_id == appt.patient_id);
+            const patientName = patient ? `${patient.first_name} ${patient.last_name}` : 'Unknown';
+            option.textContent = `${appt.appointment_date} - ${patientName}`;
+            select.appendChild(option);
+          });
+        });
+      }
+
+      // Add prescription row
+      function addPrescriptionRow() {
+        prescriptionCounter++;
+        const container = document.getElementById('prescriptionsContainer');
+        const row = document.createElement('div');
+        row.className = 'prescription-row card mb-2 p-3';
+        row.id = `prescription-${prescriptionCounter}`;
+        row.innerHTML = `
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="mb-0">Medicine #${prescriptionCounter}</h6>
+            <button type="button" class="btn btn-sm btn-outline-danger" onclick="removePrescriptionRow(${prescriptionCounter})">
+              <i class="bx bx-trash"></i>
+            </button>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <label class="form-label">Medicine Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" name="medicine_name[]" required>
+            </div>
+            <div class="col-md-6 mb-2">
+              <label class="form-label">Dosage <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" name="dosage[]" placeholder="e.g., 500mg" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 mb-2">
+              <label class="form-label">Frequency <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" name="frequency[]" placeholder="e.g., Twice daily" required>
+            </div>
+            <div class="col-md-4 mb-2">
+              <label class="form-label">Duration <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" name="duration[]" placeholder="e.g., 7 days" required>
+            </div>
+            <div class="col-md-4 mb-2">
+              <label class="form-label">Instructions</label>
+              <input type="text" class="form-control" name="instructions[]" placeholder="After meals">
+            </div>
+          </div>
+        `;
+        container.appendChild(row);
+      }
+
+      // Add prescription row for edit modal
+      function addEditPrescriptionRow() {
+        prescriptionCounter++;
+        const container = document.getElementById('editPrescriptionsContainer');
+        const row = document.createElement('div');
+        row.className = 'prescription-row card mb-2 p-3';
+        row.id = `edit-prescription-${prescriptionCounter}`;
+        row.innerHTML = `
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="mb-0">Medicine #${prescriptionCounter}</h6>
+            <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeEditPrescriptionRow(${prescriptionCounter})">
+              <i class="bx bx-trash"></i>
+            </button>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <label class="form-label">Medicine Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" name="edit_medicine_name[]" required>
+            </div>
+            <div class="col-md-6 mb-2">
+              <label class="form-label">Dosage <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" name="edit_dosage[]" placeholder="e.g., 500mg" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 mb-2">
+              <label class="form-label">Frequency <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" name="edit_frequency[]" placeholder="e.g., Twice daily" required>
+            </div>
+            <div class="col-md-4 mb-2">
+              <label class="form-label">Duration <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" name="edit_duration[]" placeholder="e.g., 7 days" required>
+            </div>
+            <div class="col-md-4 mb-2">
+              <label class="form-label">Instructions</label>
+              <input type="text" class="form-control" name="edit_instructions[]" placeholder="After meals">
+            </div>
+          </div>
+        `;
+        container.appendChild(row);
+      }
+
+      // Remove prescription row
+      function removePrescriptionRow(id) {
+        const row = document.getElementById(`prescription-${id}`);
+        if (row) row.remove();
+      }
+
+      // Remove edit prescription row
+      function removeEditPrescriptionRow(id) {
+        const row = document.getElementById(`edit-prescription-${id}`);
+        if (row) row.remove();
+      }
+
+      // Collect prescriptions from form
+      function collectPrescriptions(prefix = '') {
+        const prescriptions = [];
+        const medicineNames = document.getElementsByName(`${prefix}medicine_name[]`);
+        const dosages = document.getElementsByName(`${prefix}dosage[]`);
+        const frequencies = document.getElementsByName(`${prefix}frequency[]`);
+        const durations = document.getElementsByName(`${prefix}duration[]`);
+        const instructions = document.getElementsByName(`${prefix}instructions[]`);
+        
+        for (let i = 0; i < medicineNames.length; i++) {
+          if (medicineNames[i].value.trim()) {
+            prescriptions.push({
+              medicine_name: medicineNames[i].value,
+              dosage: dosages[i].value,
+              frequency: frequencies[i].value,
+              duration: durations[i].value,
+              instructions: instructions[i].value
+            });
+          }
+        }
+        
+        return prescriptions;
+      }
+
+      // Open add modal
+      function openAddModal() {
+        document.getElementById('addRecordForm').reset();
+        document.getElementById('prescriptionsContainer').innerHTML = '';
+        prescriptionCounter = 0;
+        
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('addRecordDate').value = today;
+        
+        const modal = new bootstrap.Modal(document.getElementById('addRecordModal'));
+        modal.show();
+      }
+
+      // Save new record
+      async function saveRecord() {
+        const form = document.getElementById('addRecordForm');
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+        
+        const prescriptions = collectPrescriptions();
+        
+        const data = {
+          action: 'create',
+          patient_id: document.getElementById('addPatientId').value,
+          doctor_id: document.getElementById('addDoctorId').value,
+          appointment_id: document.getElementById('addAppointmentId').value || null,
+          diagnosis: document.getElementById('addDiagnosis').value,
+          treatment: document.getElementById('addTreatment').value,
+          notes: document.getElementById('addNotes').value,
+          record_date: document.getElementById('addRecordDate').value,
+          prescriptions: prescriptions
+        };
+        
+        try {
+          const response = await axios.post(API_BASE + 'medical-records.php', data);
+          
+          if (response.data.success) {
+            showSuccess('Medical record created successfully');
+            bootstrap.Modal.getInstance(document.getElementById('addRecordModal')).hide();
+            loadRecords();
+            loadStatistics();
+          } else {
+            showError(response.data.message || 'Failed to create record');
+          }
+        } catch (error) {
+          console.error('Error creating record:', error);
+          showError('Failed to create medical record');
+        }
+      }
+
+      // View record details
+      async function viewRecord(id) {
+        try {
+          const response = await axios.post(API_BASE + 'medical-records.php', {
+            action: 'getById',
+            record_id: id
+          });
+          
+          if (response.data.success) {
+            const record = response.data.record;
+            
+            document.getElementById('viewRecordId').textContent = record.record_id;
+            document.getElementById('viewRecordDate').textContent = formatDate(record.record_date);
+            document.getElementById('viewPatient').textContent = record.patient_name || 'N/A';
+            document.getElementById('viewDoctor').textContent = 'Dr. ' + (record.doctor_name || 'N/A');
+            document.getElementById('viewAppointment').textContent = record.appointment_date ? 
+              `Appointment on ${formatDate(record.appointment_date)}` : 'No appointment linked';
+            document.getElementById('viewDiagnosis').textContent = record.diagnosis || 'N/A';
+            document.getElementById('viewTreatment').textContent = record.treatment || 'N/A';
+            document.getElementById('viewNotes').textContent = record.notes || 'No additional notes';
+            
+            // Display prescriptions
+            const prescriptionsBody = document.getElementById('viewPrescriptionsBody');
+            if (record.prescriptions && record.prescriptions.length > 0) {
+              prescriptionsBody.innerHTML = record.prescriptions.map(rx => `
+                <tr>
+                  <td>${rx.medicine_name}</td>
+                  <td>${rx.dosage}</td>
+                  <td>${rx.frequency}</td>
+                  <td>${rx.duration}</td>
+                  <td>${rx.instructions || '-'}</td>
+                </tr>
+              `).join('');
+            } else {
+              prescriptionsBody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No prescriptions</td></tr>';
+            }
+            
+            const modal = new bootstrap.Modal(document.getElementById('viewRecordModal'));
+            modal.show();
+          }
+        } catch (error) {
+          console.error('Error loading record:', error);
+          showError('Failed to load record details');
+        }
+      }
+
+      // Edit record
+      async function editRecord(id) {
+        try {
+          const response = await axios.post(API_BASE + 'medical-records.php', {
+            action: 'getById',
+            record_id: id
+          });
+          
+          if (response.data.success) {
+            const record = response.data.record;
+            
+            document.getElementById('editRecordId').value = record.record_id;
+            document.getElementById('editPatientId').value = record.patient_id;
+            document.getElementById('editDoctorId').value = record.doctor_id;
+            document.getElementById('editAppointmentId').value = record.appointment_id || '';
+            document.getElementById('editDiagnosis').value = record.diagnosis;
+            document.getElementById('editTreatment').value = record.treatment;
+            document.getElementById('editNotes').value = record.notes || '';
+            document.getElementById('editRecordDate').value = record.record_date;
+            
+            // Load prescriptions
+            const container = document.getElementById('editPrescriptionsContainer');
+            container.innerHTML = '';
+            prescriptionCounter = 0;
+            
+            if (record.prescriptions && record.prescriptions.length > 0) {
+              record.prescriptions.forEach(rx => {
+                prescriptionCounter++;
+                const row = document.createElement('div');
+                row.className = 'prescription-row card mb-2 p-3';
+                row.id = `edit-prescription-${prescriptionCounter}`;
+                row.innerHTML = `
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="mb-0">Medicine #${prescriptionCounter}</h6>
+                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeEditPrescriptionRow(${prescriptionCounter})">
+                      <i class="bx bx-trash"></i>
+                    </button>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 mb-2">
+                      <label class="form-label">Medicine Name <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" name="edit_medicine_name[]" value="${rx.medicine_name}" required>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <label class="form-label">Dosage <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" name="edit_dosage[]" value="${rx.dosage}" required>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 mb-2">
+                      <label class="form-label">Frequency <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" name="edit_frequency[]" value="${rx.frequency}" required>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <label class="form-label">Duration <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" name="edit_duration[]" value="${rx.duration}" required>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <label class="form-label">Instructions</label>
+                      <input type="text" class="form-control" name="edit_instructions[]" value="${rx.instructions || ''}">
+                    </div>
+                  </div>
+                `;
+                container.appendChild(row);
+              });
+            }
+            
+            const modal = new bootstrap.Modal(document.getElementById('editRecordModal'));
+            modal.show();
+          }
+        } catch (error) {
+          console.error('Error loading record:', error);
+          showError('Failed to load record details');
+        }
+      }
+
+      // Update record
+      async function updateRecord() {
+        const form = document.getElementById('editRecordForm');
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+        
+        const prescriptions = collectPrescriptions('edit_');
+        
+        const data = {
+          action: 'update',
+          record_id: document.getElementById('editRecordId').value,
+          patient_id: document.getElementById('editPatientId').value,
+          doctor_id: document.getElementById('editDoctorId').value,
+          appointment_id: document.getElementById('editAppointmentId').value || null,
+          diagnosis: document.getElementById('editDiagnosis').value,
+          treatment: document.getElementById('editTreatment').value,
+          notes: document.getElementById('editNotes').value,
+          record_date: document.getElementById('editRecordDate').value,
+          prescriptions: prescriptions
+        };
+        
+        try {
+          const response = await axios.post(API_BASE + 'medical-records.php', data);
+          
+          if (response.data.success) {
+            showSuccess('Medical record updated successfully');
+            bootstrap.Modal.getInstance(document.getElementById('editRecordModal')).hide();
+            loadRecords();
+            loadStatistics();
+          } else {
+            showError(response.data.message || 'Failed to update record');
+          }
+        } catch (error) {
+          console.error('Error updating record:', error);
+          showError('Failed to update medical record');
+        }
+      }
+
+      // Delete record
+      async function deleteRecord(id) {
+        if (!confirm('Are you sure you want to delete this medical record? This will also delete all associated prescriptions.')) {
+          return;
+        }
+        
+        try {
+          const response = await axios.post(API_BASE + 'medical-records.php', {
+            action: 'delete',
+            record_id: id
+          });
+          
+          if (response.data.success) {
+            showSuccess('Medical record deleted successfully');
+            loadRecords();
+            loadStatistics();
+          } else {
+            showError(response.data.message || 'Failed to delete record');
+          }
+        } catch (error) {
+          console.error('Error deleting record:', error);
+          showError('Failed to delete medical record');
+        }
+      }
+
+      // Search records
+      function searchRecords() {
+        currentPage = 1;
+        loadRecords();
+      }
+
+      // Reset filters
+      function resetFilters() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('patientFilter').value = '';
+        document.getElementById('doctorFilter').value = '';
+        currentPage = 1;
+        loadRecords();
+      }
+
+      // Update pagination
+      function updatePagination(total, current, totalPages) {
+        const start = (current - 1) * recordsPerPage + 1;
+        const end = Math.min(current * recordsPerPage, total);
+        document.getElementById('recordsInfo').textContent = `Showing ${start}-${end} of ${total} records`;
+        
+        const pagination = document.getElementById('pagination');
+        pagination.innerHTML = '';
+        
+        if (totalPages <= 1) return;
+        
+        // Previous button
+        const prevLi = document.createElement('li');
+        prevLi.className = `page-item ${current === 1 ? 'disabled' : ''}`;
+        prevLi.innerHTML = `<a class="page-link" href="javascript:void(0);" onclick="changePage(${current - 1})">Previous</a>`;
+        pagination.appendChild(prevLi);
+        
+        // Page numbers
+        for (let i = 1; i <= totalPages; i++) {
+          if (i === 1 || i === totalPages || (i >= current - 1 && i <= current + 1)) {
+            const li = document.createElement('li');
+            li.className = `page-item ${i === current ? 'active' : ''}`;
+            li.innerHTML = `<a class="page-link" href="javascript:void(0);" onclick="changePage(${i})">${i}</a>`;
+            pagination.appendChild(li);
+          } else if (i === current - 2 || i === current + 2) {
+            const li = document.createElement('li');
+            li.className = 'page-item disabled';
+            li.innerHTML = '<a class="page-link">...</a>';
+            pagination.appendChild(li);
+          }
+        }
+        
+        // Next button
+        const nextLi = document.createElement('li');
+        nextLi.className = `page-item ${current === totalPages ? 'disabled' : ''}`;
+        nextLi.innerHTML = `<a class="page-link" href="javascript:void(0);" onclick="changePage(${current + 1})">Next</a>`;
+        pagination.appendChild(nextLi);
+      }
+
+      // Change page
+      function changePage(page) {
+        currentPage = page;
+        loadRecords();
+      }
+
+      // Format date
+      function formatDate(dateString) {
+        if (!dateString) return 'N/A';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+      }
+
+      // Show success message
+      function showSuccess(message) {
+        alert(message); // Replace with better notification system
+      }
+
+      // Show error message
+      function showError(message) {
+        alert(message); // Replace with better notification system
+      }
+
+      // Logout function
+      function logout() {
+        sessionHandler.logout();
+      }
+    </script>
+  </body>
+</html>

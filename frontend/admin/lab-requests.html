@@ -1,890 +1,1095 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab Requests Management</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
+<html lang="en" class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Lab Requests Management - My Clinic</title>
+    <meta name="description" content="Manage Lab Requests" />
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
     <style>
-        .badge-requested { background-color: #ffc107; }
-        .badge-in-progress { background-color: #0dcaf0; }
-        .badge-completed { background-color: #198754; }
-        .badge-cancelled { background-color: #6c757d; }
-        .badge-urgent { background-color: #dc3545; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        .test-item { padding: 8px; border-left: 3px solid #0d6efd; margin-bottom: 8px; background: #f8f9fa; }
+      /* Make sidebar scrollable */
+      .layout-menu {
+        overflow-y: auto !important;
+        max-height: 100vh;
+      }
+      .layout-menu .menu-inner {
+        overflow-y: auto;
+        max-height: calc(100vh - 70px);
+      }
+      /* Custom scrollbar for sidebar */
+      .layout-menu::-webkit-scrollbar,
+      .layout-menu .menu-inner::-webkit-scrollbar {
+        width: 6px;
+      }
+      .layout-menu::-webkit-scrollbar-track,
+      .layout-menu .menu-inner::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .layout-menu::-webkit-scrollbar-thumb,
+      .layout-menu .menu-inner::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+      }
+      .layout-menu::-webkit-scrollbar-thumb:hover,
+      .layout-menu .menu-inner::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }
     </style>
-</head>
-<body>
-    <div class="d-flex">
-        <!-- Sidebar -->
-        <nav id="sidebar" class="bg-dark text-white p-3">
-            <div class="sidebar-header mb-4">
-                <h3>Clinic CMS</h3>
+  </head>
+
+  <body>
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        
+        <!-- Menu (Sidebar) -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="dashboard.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <img src="../assets/img/favicon/logo.png" alt="Logo" width="32" />
+              </span>
+              <span class="app-brand-text demo menu-text fw-bold ms-2">My Clinic</span>
+            </a>
+          </div>
+          <div class="menu-inner-shadow"></div>
+          <ul class="menu-inner py-1">
+            <li class="menu-item">
+              <a href="dashboard.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i><div>Dashboard</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Management</span></li>
+            <li class="menu-item">
+              <a href="users.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i><div>Users</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="doctors.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-plus-medical"></i><div>Doctors</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="departments.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-building"></i><div>Departments</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="staff.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-briefcase"></i><div>Staff</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="patients.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-group"></i><div>Patients</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Clinical</span></li>
+            <li class="menu-item">
+              <a href="medical-records.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file-find"></i><div>Medical Records</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Laboratory</span></li>
+            <li class="menu-item">
+              <a href="lab-tests.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-test-tube"></i><div>Lab Tests</div>
+              </a>
+            </li>
+            <li class="menu-item active">
+              <a href="lab-requests.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-clipboard-plus"></i><div>Lab Requests</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">System</span></li>
+            <li class="menu-item">
+              <a href="settings.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-cog"></i><div>Settings</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="audit-logs.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ul"></i><div>Audit Logs</div>
+              </a>
+            </li>
+          </ul>
+        </aside>
+
+        <div class="layout-page">
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
             </div>
-            <ul class="nav flex-column">
-                <li class="nav-item"><a href="dashboard.html" class="nav-link text-white"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
-                <li class="nav-item"><a href="doctors.html" class="nav-link text-white"><i class="bi bi-person-badge"></i> Doctors</a></li>
-                <li class="nav-item"><a href="patients.html" class="nav-link text-white"><i class="bi bi-people"></i> Patients</a></li>
-                <li class="nav-item"><a href="staff.html" class="nav-link text-white"><i class="bi bi-person-workspace"></i> Staff</a></li>
-                <li class="nav-item"><a href="lab-tests.html" class="nav-link text-white"><i class="bi bi-prescription2"></i> Lab Tests</a></li>
-                <li class="nav-item"><a href="lab-requests.html" class="nav-link text-white active"><i class="bi bi-clipboard2-pulse"></i> Lab Requests</a></li>
-                <li class="nav-item"><a href="departments.html" class="nav-link text-white"><i class="bi bi-building"></i> Departments</a></li>
-                <li class="nav-item"><a href="users.html" class="nav-link text-white"><i class="bi bi-person-circle"></i> Users</a></li>
-                <li class="nav-item"><a href="settings.html" class="nav-link text-white"><i class="bi bi-gear"></i> Settings</a></li>
-                <li class="nav-item"><a href="backup.html" class="nav-link text-white"><i class="bi bi-database"></i> Backup</a></li>
-                <li class="nav-item"><a href="audit-logs.html" class="nav-link text-white"><i class="bi bi-clock-history"></i> Audit Logs</a></li>
-                <li class="nav-item mt-3"><a href="#" id="logoutBtn" class="nav-link text-danger"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
-            </ul>
-        </nav>
-
-        <!-- Main Content -->
-        <div class="flex-grow-1">
-            <!-- Top Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                <div class="container-fluid">
-                    <button class="btn btn-outline-secondary" id="sidebarToggle"><i class="bi bi-list"></i></button>
-                    <span class="navbar-brand mb-0 h1">Lab Requests Management</span>
-                    <div class="ms-auto">
-                        <span class="me-3">Welcome, <strong id="userName">Admin</strong></span>
-                    </div>
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input type="text" class="form-control border-0 shadow-none" placeholder="Search..." aria-label="Search..." />
                 </div>
-            </nav>
-
-            <!-- Page Content -->
-            <div class="container-fluid p-4">
-                <!-- Statistics Cards -->
-                <div class="row mb-4">
-                    <div class="col-md-2">
-                        <div class="card border-primary">
-                            <div class="card-body text-center">
-                                <h6 class="text-muted">Total</h6>
-                                <h3 id="statTotal">0</h3>
-                            </div>
-                        </div>
+              </div>
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <li class="nav-item navbar-dropdown dropdown-notifications dropdown me-3 me-xl-2">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <i class="bx bx-bell bx-sm"></i>
+                    <span class="badge bg-danger rounded-pill badge-notifications" id="notificationBadge">0</span>
+                  </a>
+                </li>
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatar">A</span>
                     </div>
-                    <div class="col-md-2">
-                        <div class="card border-info">
-                            <div class="card-body text-center">
-                                <h6 class="text-muted">Today</h6>
-                                <h3 id="statToday">0</h3>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatarDropdown">A</span>
                             </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block" id="userFullName">Admin User</span>
+                            <small class="text-muted" id="userRole">Administrator</small>
+                          </div>
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="card border-warning">
-                            <div class="card-body text-center">
-                                <h6 class="text-muted">Pending</h6>
-                                <h3 id="statPending">0</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="card border-info">
-                            <div class="card-body text-center">
-                                <h6 class="text-muted">In Progress</h6>
-                                <h3 id="statInProgress">0</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="card border-success">
-                            <div class="card-body text-center">
-                                <h6 class="text-muted">Completed</h6>
-                                <h3 id="statCompleted">0</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="card border-danger">
-                            <div class="card-body text-center">
-                                <h6 class="text-muted">Urgent</h6>
-                                <h3 id="statUrgent">0</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Filters and Actions -->
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <div class="row align-items-end">
-                            <div class="col-md-3">
-                                <label class="form-label">Search</label>
-                                <input type="text" class="form-control" id="searchInput" placeholder="Request#, Patient...">
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label">Status</label>
-                                <select class="form-select" id="statusFilter">
-                                    <option value="all">All</option>
-                                    <option value="requested">Requested</option>
-                                    <option value="in-progress">In Progress</option>
-                                    <option value="completed">Completed</option>
-                                    <option value="cancelled">Cancelled</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label">Payment</label>
-                                <select class="form-select" id="paymentFilter">
-                                    <option value="all">All</option>
-                                    <option value="unpaid">Unpaid</option>
-                                    <option value="paid">Paid</option>
-                                    <option value="waived">Waived</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label">Priority</label>
-                                <select class="form-select" id="priorityFilter">
-                                    <option value="all">All</option>
-                                    <option value="normal">Normal</option>
-                                    <option value="urgent">Urgent</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 text-end">
-                                <button class="btn btn-primary" id="addRequestBtn"><i class="bi bi-plus-circle"></i> New Request</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Lab Requests Table -->
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Request #</th>
-                                        <th>Patient</th>
-                                        <th>Doctor</th>
-                                        <th>Tests</th>
-                                        <th>Date</th>
-                                        <th>Priority</th>
-                                        <th>Status</th>
-                                        <th>Payment</th>
-                                        <th>Cost</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="requestsTableBody">
-                                    <tr>
-                                        <td colspan="10" class="text-center">
-                                            <div class="spinner-border text-primary" role="status"></div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <nav><ul class="pagination justify-content-center" id="pagination"></ul></nav>
-                    </div>
-                </div>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="settings.html">
+                        <i class="bx bx-cog me-2"></i>
+                        <span class="align-middle">Settings</span>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);" id="logoutBtn">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
             </div>
+          </nav>
+
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              
+              <h4 class="fw-bold py-3 mb-4">
+                <span class="text-muted fw-light">Laboratory /</span> Lab Requests Management
+              </h4>
+
+              <!-- Statistics Row -->
+              <div class="row mb-4">
+                <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">Total Requests</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="totalRequests">0</h4>
+                          </div>
+                          <small>All lab requests</small>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-primary rounded p-2">
+                            <i class="bx bx-clipboard bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">Pending</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="pendingRequests">0</h4>
+                          </div>
+                          <small>Awaiting processing</small>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-warning rounded p-2">
+                            <i class="bx bx-time bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">In Progress</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="inProgressRequests">0</h4>
+                          </div>
+                          <small>Being processed</small>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-info rounded p-2">
+                            <i class="bx bx-loader-circle bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">Completed</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="completedRequests">0</h4>
+                          </div>
+                          <small>Results ready</small>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-success rounded p-2">
+                            <i class="bx bx-check-circle bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Lab Requests List -->
+              <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0">Lab Requests</h5>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRequestModal">
+                    <i class="bx bx-plus me-1"></i> New Lab Request
+                  </button>
+                </div>
+                <div class="card-body">
+                  <div class="row mb-3">
+                    <div class="col-md-4">
+                      <label class="form-label">Search</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bx bx-search"></i></span>
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search by request number, patient..." />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Status Filter</label>
+                      <select class="form-select" id="statusFilter">
+                        <option value="">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                      </select>
+                    </div>
+                    <div class="col-md-2">
+                      <label class="form-label">Per Page</label>
+                      <select class="form-select" id="limitSelect">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label d-block">&nbsp;</label>
+                      <button class="btn btn-secondary" id="resetFilters">
+                        <i class="bx bx-reset"></i> Reset Filters
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="table-responsive text-nowrap mt-3">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Request #</th>
+                          <th>Patient</th>
+                          <th>Doctor</th>
+                          <th>Tests</th>
+                          <th>Total Cost</th>
+                          <th>Status</th>
+                          <th>Date</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="requestsTableBody">
+                        <tr>
+                          <td colspan="8" class="text-center">
+                            <div class="spinner-border text-primary" role="status">
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Pagination -->
+                  <nav aria-label="Page navigation" class="mt-3">
+                    <ul class="pagination justify-content-center" id="pagination"></ul>
+                  </nav>
+                </div>
+              </div>
+
+            </div>
+
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  © <script>document.write(new Date().getFullYear());</script> My Clinic CMS
+                </div>
+              </div>
+            </footer>
+            <div class="content-backdrop fade"></div>
+          </div>
         </div>
+      </div>
+      <div class="layout-overlay layout-menu-toggle"></div>
     </div>
 
     <!-- Add Request Modal -->
-    <div class="modal fade" id="requestModal" tabindex="-1">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">New Lab Request</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    <div class="modal fade" id="addRequestModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">New Lab Request</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="addRequestForm">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Patient <span class="text-danger">*</span></label>
+                  <select class="form-select" id="patient_id" name="patient_id" required>
+                    <option value="">Select Patient</option>
+                  </select>
                 </div>
-                <div class="modal-body">
-                    <form id="requestForm">
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label">Patient <span class="text-danger">*</span></label>
-                                <select class="form-select" id="patientSelect" required>
-                                    <option value="">Select Patient</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Doctor <span class="text-danger">*</span></label>
-                                <select class="form-select" id="doctorSelect" required>
-                                    <option value="">Select Doctor</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                <label class="form-label">Priority</label>
-                                <select class="form-select" id="prioritySelect">
-                                    <option value="normal">Normal</option>
-                                    <option value="urgent">Urgent</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label">Payment Status</label>
-                                <select class="form-select" id="paymentSelect">
-                                    <option value="unpaid">Unpaid</option>
-                                    <option value="paid">Paid</option>
-                                    <option value="waived">Waived</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label">Total Cost</label>
-                                <input type="text" class="form-control" id="totalCost" readonly value="₱0.00">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Select Tests <span class="text-danger">*</span></label>
-                            <div class="input-group mb-2">
-                                <input type="text" class="form-control" id="testSearch" placeholder="Search tests...">
-                                <button class="btn btn-outline-secondary" type="button" id="showAllTests">
-                                    <i class="bi bi-list"></i> Show All
-                                </button>
-                            </div>
-                            <div id="testsContainer" class="border rounded p-3" style="max-height: 300px; overflow-y: auto;">
-                                <p class="text-muted">Loading tests...</p>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Selected Tests (<span id="selectedCount">0</span>)</label>
-                            <div id="selectedTests" class="border rounded p-3 bg-light" style="min-height: 100px;">
-                                <p class="text-muted">No tests selected</p>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Remarks</label>
-                            <textarea class="form-control" id="remarks" rows="2"></textarea>
-                        </div>
-                    </form>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Doctor <span class="text-danger">*</span></label>
+                  <select class="form-select" id="doctor_id" name="doctor_id" required>
+                    <option value="">Select Doctor</option>
+                  </select>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="saveRequestBtn">Create Request</button>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Select Lab Tests <span class="text-danger">*</span></label>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row mb-2">
+                      <div class="col-md-12">
+                        <input type="text" class="form-control" id="searchTests" placeholder="Search lab tests...">
+                      </div>
+                    </div>
+                    <div id="labTestsList" style="max-height: 300px; overflow-y: auto;">
+                      <p class="text-muted text-center">Loading lab tests...</p>
+                    </div>
+                  </div>
                 </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label class="form-label">Notes</label>
+                  <textarea class="form-control" name="notes" rows="2" placeholder="Additional notes or instructions..."></textarea>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="alert alert-info d-flex align-items-center">
+                    <i class="bx bx-info-circle me-2"></i>
+                    <div>
+                      <strong>Total Cost: ₱<span id="totalCost">0.00</span></strong>
+                      <span class="ms-3 text-muted">(<span id="selectedTestsCount">0</span> test(s) selected)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Create Request</button>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
 
     <!-- View Request Modal -->
-    <div class="modal fade" id="viewModal" tabindex="-1">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Lab Request Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body" id="viewModalBody">
-                    <div class="text-center"><div class="spinner-border"></div></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="printBtn"><i class="bi bi-printer"></i> Print</button>
-                </div>
+    <div class="modal fade" id="viewRequestModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Lab Request Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Request Number:</strong></p>
+                <p class="text-muted" id="view_request_number">-</p>
+              </div>
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Status:</strong></p>
+                <p id="view_status">-</p>
+              </div>
             </div>
+
+            <hr>
+            <h6 class="mb-3">Patient Information</h6>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Patient Name:</strong></p>
+                <p class="text-muted" id="view_patient_name">-</p>
+              </div>
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Doctor:</strong></p>
+                <p class="text-muted" id="view_doctor_name">-</p>
+              </div>
+            </div>
+
+            <hr>
+            <h6 class="mb-3">Lab Tests Requested</h6>
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>Test Code</th>
+                    <th>Test Name</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="view_tests_list">
+                  <tr>
+                    <td colspan="4" class="text-center text-muted">No tests</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <p class="mb-1"><strong>Total Cost:</strong></p>
+                <h4 class="text-primary" id="view_total_cost">₱0.00</h4>
+              </div>
+            </div>
+
+            <hr>
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <p class="mb-1"><strong>Notes:</strong></p>
+                <p class="text-muted" id="view_notes">-</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Created At:</strong></p>
+                <p class="text-muted" id="view_created_at">-</p>
+              </div>
+              <div class="col-md-6">
+                <p class="mb-1"><strong>Updated At:</strong></p>
+                <p class="text-muted" id="view_updated_at">-</p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Update Status Modal -->
-    <div class="modal fade" id="updateModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Update Request Status</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="updateRequestId">
-                    <div class="mb-3">
-                        <label class="form-label">Status</label>
-                        <select class="form-select" id="updateStatus">
-                            <option value="requested">Requested</option>
-                            <option value="in-progress">In Progress</option>
-                            <option value="completed">Completed</option>
-                            <option value="cancelled">Cancelled</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Payment Status</label>
-                        <select class="form-select" id="updatePayment">
-                            <option value="unpaid">Unpaid</option>
-                            <option value="paid">Paid</option>
-                            <option value="waived">Waived</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Priority</label>
-                        <select class="form-select" id="updatePriority">
-                            <option value="normal">Normal</option>
-                            <option value="urgent">Urgent</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="confirmUpdateBtn">Update</button>
-                </div>
+    <div class="modal fade" id="updateStatusModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Update Request Status</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="updateStatusForm">
+            <input type="hidden" id="update_request_id" name="lab_request_id">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">New Status</label>
+                <select class="form-select" name="status" required>
+                  <option value="pending">Pending</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="completed">Completed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </div>
             </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Update Status</button>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/js/bootstrap.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="../assets/js/session-handler.js"></script>
+    
     <script>
-        const API_URL = 'http://localhost/cms/backend/lab-requests.php';
-        const TESTS_API = 'http://localhost/cms/backend/lab-tests.php';
-        const PATIENTS_API = 'http://localhost/cms/backend/patients.php';
-        const DOCTORS_API = 'http://localhost/cms/backend/doctors.php';
+      (function () {
+        "use strict";
+        if (!SessionHandler.requireUserType(1)) return;
+
+        var user = SessionHandler.getUser();
+        var fullName = SessionHandler.getUserFullName();
+        var initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
         
-        let currentPage = 1;
-        let user = null;
-        let allTests = [];
-        let selectedTests = new Set();
+        document.getElementById("userFullName").textContent = fullName;
+        document.getElementById("userRole").textContent = SessionHandler.getUserRole();
+        document.getElementById("userAvatar").textContent = initials;
+        document.getElementById("userAvatarDropdown").textContent = initials;
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            user = SessionHandler.getUser();
-            if (!user) {
-                window.location.href = '../index.html';
-                return;
-            }
+        var notifCount = SessionHandler.getUnreadNotificationsCount();
+        document.getElementById("notificationBadge").textContent = notifCount;
+        if (notifCount === 0) document.getElementById("notificationBadge").style.display = "none";
 
-            document.getElementById('userName').textContent = user.username;
-            loadRequests();
-            loadStatistics();
-            setupEventListeners();
+        document.getElementById("logoutBtn").addEventListener("click", function(e) {
+          e.preventDefault();
+          if (confirm("Are you sure you want to logout?")) SessionHandler.logout();
         });
 
-        // Setup Event Listeners
-        function setupEventListeners() {
-            document.getElementById('searchInput').addEventListener('input', debounce(loadRequests, 500));
-            document.getElementById('statusFilter').addEventListener('change', loadRequests);
-            document.getElementById('paymentFilter').addEventListener('change', loadRequests);
-            document.getElementById('priorityFilter').addEventListener('change', loadRequests);
-            document.getElementById('addRequestBtn').addEventListener('click', showAddModal);
-            document.getElementById('saveRequestBtn').addEventListener('click', saveRequest);
-            document.getElementById('testSearch').addEventListener('input', filterTests);
-            document.getElementById('showAllTests').addEventListener('click', () => {
-                document.getElementById('testSearch').value = '';
-                filterTests();
-            });
-            document.getElementById('confirmUpdateBtn').addEventListener('click', updateRequestStatus);
-            document.getElementById('logoutBtn').addEventListener('click', function() {
-                SessionHandler.clearSession();
-                window.location.href = '../index.html';
-            });
+        var menuToggle = document.querySelector('.layout-menu-toggle');
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function() {
+            document.querySelector('.layout-wrapper').classList.toggle('layout-menu-expanded');
+          });
         }
 
-        // Load Statistics
-        async function loadStatistics() {
-            try {
-                const response = await axios.get(API_URL, {
-                    params: { operation: 'getStatistics', json: '{}' }
-                });
+        var currentPage = 1;
+        var currentLimit = 10;
+        var selectedTests = [];
+        var allLabTests = [];
 
-                if (response.data.success) {
-                    const stats = response.data.data;
-                    document.getElementById('statTotal').textContent = stats.total;
-                    document.getElementById('statToday').textContent = stats.today;
-                    document.getElementById('statPending').textContent = stats.pending;
-                    document.getElementById('statInProgress').textContent = stats.in_progress;
-                    document.getElementById('statCompleted').textContent = stats.completed;
-                    document.getElementById('statUrgent').textContent = stats.urgent;
-                }
-            } catch (error) {
-                console.error('Error loading statistics:', error);
-            }
-        }
+        loadLabRequests();
+        loadStatistics();
+        loadPatients();
+        loadDoctors();
+        loadLabTests();
 
-        // Load Requests
-        async function loadRequests() {
-            const search = document.getElementById('searchInput').value;
-            const status = document.getElementById('statusFilter').value;
-            const payment = document.getElementById('paymentFilter').value;
-            const priority = document.getElementById('priorityFilter').value;
+        async function loadLabRequests() {
+          try {
+            const searchTerm = document.getElementById("searchInput").value;
+            const status = document.getElementById("statusFilter").value;
 
-            try {
-                const response = await axios.get(API_URL, {
-                    params: {
-                        operation: 'getAll',
-                        json: JSON.stringify({
-                            search, status,
-                            payment_status: payment,
-                            priority,
-                            page: currentPage,
-                            limit: 10
-                        })
-                    }
-                });
+            const params = new URLSearchParams();
+            params.append('operation', 'getAll');
+            params.append('json', JSON.stringify({
+              search: searchTerm,
+              status: status,
+              page: currentPage,
+              limit: currentLimit
+            }));
 
-                if (response.data.success) {
-                    renderRequestsTable(response.data.data);
-                    renderPagination(response.data.total, response.data.page, response.data.limit);
-                }
-            } catch (error) {
-                showAlert('Error loading requests: ' + error.message, 'danger');
-            }
-        }
-
-        // Render Requests Table
-        function renderRequestsTable(requests) {
-            const tbody = document.getElementById('requestsTableBody');
+            const response = await axios.post('../../backend/lab-requests.php', params);
             
-            if (requests.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="10" class="text-center text-muted"><i class="bi bi-inbox fs-1"></i><p>No requests found</p></td></tr>';
-                return;
-            }
-
-            tbody.innerHTML = requests.map(req => {
-                const statusBadge = `badge-${req.status}`;
-                const priorityBadge = req.priority === 'urgent' ? 'badge-urgent' : 'badge-secondary';
-                
-                return `
-                    <tr>
-                        <td><strong>${escapeHtml(req.request_no)}</strong></td>
-                        <td>
-                            ${escapeHtml(req.patient_name)}<br>
-                            <small class="text-muted">${escapeHtml(req.patient_code)}</small>
-                        </td>
-                        <td>
-                            ${escapeHtml(req.doctor_name)}<br>
-                            <small class="text-muted">${escapeHtml(req.specialization || '')}</small>
-                        </td>
-                        <td><span class="badge bg-info">${req.items.length} test(s)</span></td>
-                        <td>${formatDateTime(req.date_requested)}</td>
-                        <td><span class="badge ${priorityBadge}">${req.priority}</span></td>
-                        <td><span class="badge ${statusBadge}">${req.status}</span></td>
-                        <td><span class="badge ${req.payment_status === 'paid' ? 'bg-success' : 'bg-warning'}">${req.payment_status}</span></td>
-                        <td><strong>₱${parseFloat(req.total_cost).toFixed(2)}</strong></td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-primary" onclick="viewRequest(${req.lab_request_id})" title="View">
-                                <i class="bi bi-eye"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline-info" onclick="showUpdateModal(${req.lab_request_id}, '${req.status}', '${req.payment_status}', '${req.priority}')" title="Update">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-                            ${req.status !== 'completed' ? `
-                            <button class="btn btn-sm btn-outline-danger" onclick="deleteRequest(${req.lab_request_id}, '${escapeHtml(req.request_no)}')" title="Delete">
-                                <i class="bi bi-trash"></i>
-                            </button>` : ''}
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        // Show Add Modal
-        async function showAddModal() {
-            selectedTests.clear();
-            document.getElementById('requestForm').reset();
-            document.getElementById('totalCost').value = '₱0.00';
-            updateSelectedTestsDisplay();
-            
-            await Promise.all([
-                loadPatients(),
-                loadDoctors(),
-                loadTests()
-            ]);
-            
-            new bootstrap.Modal(document.getElementById('requestModal')).show();
-        }
-
-        // Load Patients
-        async function loadPatients() {
-            try {
-                const response = await axios.get(PATIENTS_API, {
-                    params: { operation: 'getAll', json: JSON.stringify({ limit: 1000 }) }
-                });
-
-                if (response.data.success) {
-                    const select = document.getElementById('patientSelect');
-                    select.innerHTML = '<option value="">Select Patient</option>' +
-                        response.data.data.map(p => 
-                            `<option value="${p.patient_id}">${escapeHtml(p.first_name + ' ' + p.last_name)} (${escapeHtml(p.patient_code)})</option>`
-                        ).join('');
-                }
-            } catch (error) {
-                console.error('Error loading patients:', error);
-            }
-        }
-
-        // Load Doctors
-        async function loadDoctors() {
-            try {
-                const response = await axios.get(DOCTORS_API, {
-                    params: { operation: 'getAll', json: JSON.stringify({ limit: 1000 }) }
-                });
-
-                if (response.data.success) {
-                    const select = document.getElementById('doctorSelect');
-                    select.innerHTML = '<option value="">Select Doctor</option>' +
-                        response.data.data.map(d => 
-                            `<option value="${d.doctor_id}">${escapeHtml(d.full_name)} - ${escapeHtml(d.specialization || 'General')}</option>`
-                        ).join('');
-                }
-            } catch (error) {
-                console.error('Error loading doctors:', error);
-            }
-        }
-
-        // Load Tests
-        async function loadTests() {
-            try {
-                const response = await axios.get(TESTS_API, {
-                    params: { operation: 'getAll', json: JSON.stringify({ status: 'active', limit: 1000 }) }
-                });
-
-                if (response.data.success) {
-                    allTests = response.data.data;
-                    renderTestsCheckboxes(allTests);
-                }
-            } catch (error) {
-                console.error('Error loading tests:', error);
-            }
-        }
-
-        // Render Tests Checkboxes
-        function renderTestsCheckboxes(tests) {
-            const container = document.getElementById('testsContainer');
-            
-            if (tests.length === 0) {
-                container.innerHTML = '<p class="text-muted">No active tests available</p>';
-                return;
-            }
-
-            container.innerHTML = tests.map(test => `
-                <div class="form-check">
-                    <input class="form-check-input test-checkbox" type="checkbox" 
-                           value="${test.lab_test_id}" 
-                           id="test_${test.lab_test_id}"
-                           data-name="${escapeHtml(test.test_name)}"
-                           data-code="${escapeHtml(test.test_code)}"
-                           data-price="${test.price}"
-                           onchange="toggleTest(this)">
-                    <label class="form-check-label" for="test_${test.lab_test_id}">
-                        <strong>${escapeHtml(test.test_code)}</strong> - ${escapeHtml(test.test_name)}
-                        <span class="badge bg-primary ms-2">₱${parseFloat(test.price).toFixed(2)}</span>
-                        ${test.sample_type ? `<small class="text-muted d-block">${escapeHtml(test.sample_type)}</small>` : ''}
-                    </label>
-                </div>
-            `).join('');
-        }
-
-        // Filter Tests
-        function filterTests() {
-            const search = document.getElementById('testSearch').value.toLowerCase();
-            const filtered = allTests.filter(test => 
-                test.test_code.toLowerCase().includes(search) ||
-                test.test_name.toLowerCase().includes(search) ||
-                (test.sample_type && test.sample_type.toLowerCase().includes(search))
-            );
-            renderTestsCheckboxes(filtered);
-            
-            // Restore checked state
-            selectedTests.forEach(id => {
-                const checkbox = document.getElementById(`test_${id}`);
-                if (checkbox) checkbox.checked = true;
-            });
-        }
-
-        // Toggle Test Selection
-        function toggleTest(checkbox) {
-            const testId = parseInt(checkbox.value);
-            
-            if (checkbox.checked) {
-                selectedTests.add(testId);
+            if (response.data.success) {
+              renderRequestsTable(response.data.data);
+              renderPagination(response.data.total, response.data.page, response.data.limit);
             } else {
-                selectedTests.delete(testId);
+              console.error('Error loading lab requests:', response.data.error);
+              alert('Error loading lab requests: ' + response.data.error);
             }
-            
-            updateSelectedTestsDisplay();
-            updateTotalCost();
+          } catch (error) {
+            console.error('Error loading lab requests:', error);
+            alert('Error loading lab requests. Please check your connection.');
+          }
         }
 
-        // Update Selected Tests Display
-        function updateSelectedTestsDisplay() {
-            const container = document.getElementById('selectedTests');
-            const count = document.getElementById('selectedCount');
-            
-            count.textContent = selectedTests.size;
-            
-            if (selectedTests.size === 0) {
-                container.innerHTML = '<p class="text-muted">No tests selected</p>';
-                return;
-            }
+        async function loadStatistics() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getStatistics');
+            params.append('json', JSON.stringify({}));
 
-            const selectedList = allTests.filter(t => selectedTests.has(t.lab_test_id));
-            container.innerHTML = selectedList.map(test => `
-                <div class="test-item">
-                    <strong>${escapeHtml(test.test_code)}</strong> - ${escapeHtml(test.test_name)}
-                    <span class="badge bg-primary float-end">₱${parseFloat(test.price).toFixed(2)}</span>
+            const response = await axios.post('../../backend/lab-requests.php', params);
+            
+            if (response.data.success) {
+              const stats = response.data.data;
+              document.getElementById("totalRequests").textContent = stats.total || 0;
+              document.getElementById("pendingRequests").textContent = stats.pending || 0;
+              document.getElementById("inProgressRequests").textContent = stats.in_progress || 0;
+              document.getElementById("completedRequests").textContent = stats.completed || 0;
+            }
+          } catch (error) {
+            console.error('Error loading statistics:', error);
+          }
+        }
+
+        async function loadPatients() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getAll');
+            params.append('json', JSON.stringify({}));
+
+            const response = await axios.post('../../backend/patients.php', params);
+            
+            if (response.data.success) {
+              const select = document.getElementById('patient_id');
+              select.innerHTML = '<option value="">Select Patient</option>';
+              response.data.data.forEach(patient => {
+                const option = document.createElement('option');
+                option.value = patient.patient_id;
+                option.textContent = `${patient.first_name} ${patient.last_name}`;
+                select.appendChild(option);
+              });
+            }
+          } catch (error) {
+            console.error('Error loading patients:', error);
+          }
+        }
+
+        async function loadDoctors() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getAll');
+            params.append('json', JSON.stringify({}));
+
+            const response = await axios.post('../../backend/doctors.php', params);
+            
+            if (response.data.success) {
+              const select = document.getElementById('doctor_id');
+              select.innerHTML = '<option value="">Select Doctor</option>';
+              response.data.data.forEach(doctor => {
+                const option = document.createElement('option');
+                option.value = doctor.doctor_id;
+                option.textContent = `Dr. ${doctor.first_name} ${doctor.last_name}`;
+                select.appendChild(option);
+              });
+            }
+          } catch (error) {
+            console.error('Error loading doctors:', error);
+          }
+        }
+
+        async function loadLabTests() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getAll');
+            params.append('json', JSON.stringify({ status: '1' }));
+
+            const response = await axios.post('../../backend/lab-tests.php', params);
+            
+            if (response.data.success) {
+              allLabTests = response.data.data;
+              renderLabTestsList(allLabTests);
+            }
+          } catch (error) {
+            console.error('Error loading lab tests:', error);
+          }
+        }
+
+        function renderLabTestsList(tests) {
+          const container = document.getElementById('labTestsList');
+          
+          if (tests.length === 0) {
+            container.innerHTML = '<p class="text-muted text-center">No active lab tests available</p>';
+            return;
+          }
+
+          container.innerHTML = tests.map(test => `
+            <div class="form-check mb-2">
+              <input class="form-check-input lab-test-checkbox" type="checkbox" value="${test.lab_test_id}" 
+                     id="test_${test.lab_test_id}" data-price="${test.price}" data-name="${escapeHtml(test.test_name)}" data-code="${escapeHtml(test.test_code)}">
+              <label class="form-check-label w-100" for="test_${test.lab_test_id}">
+                <div class="d-flex justify-content-between">
+                  <span><strong>${escapeHtml(test.test_code)}</strong> - ${escapeHtml(test.test_name)}</span>
+                  <span class="text-primary">₱${parseFloat(test.price).toFixed(2)}</span>
                 </div>
-            `).join('');
+              </label>
+            </div>
+          `).join('');
+
+          // Add event listeners to checkboxes
+          document.querySelectorAll('.lab-test-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', updateSelectedTests);
+          });
         }
 
-        // Update Total Cost
-        function updateTotalCost() {
-            const selectedList = allTests.filter(t => selectedTests.has(t.lab_test_id));
-            const total = selectedList.reduce((sum, test) => sum + parseFloat(test.price), 0);
-            document.getElementById('totalCost').value = '₱' + total.toFixed(2);
+        function updateSelectedTests() {
+          selectedTests = [];
+          let totalCost = 0;
+
+          document.querySelectorAll('.lab-test-checkbox:checked').forEach(checkbox => {
+            const testId = checkbox.value;
+            const price = parseFloat(checkbox.getAttribute('data-price'));
+            selectedTests.push({
+              lab_test_id: testId,
+              price: price
+            });
+            totalCost += price;
+          });
+
+          document.getElementById('selectedTestsCount').textContent = selectedTests.length;
+          document.getElementById('totalCost').textContent = totalCost.toFixed(2);
         }
 
-        // Save Request
-        async function saveRequest() {
-            const patientId = document.getElementById('patientSelect').value;
-            const doctorId = document.getElementById('doctorSelect').value;
-            
-            if (!patientId || !doctorId) {
-                showAlert('Please select patient and doctor', 'warning');
-                return;
-            }
-            
-            if (selectedTests.size === 0) {
-                showAlert('Please select at least one test', 'warning');
-                return;
-            }
+        // Search lab tests in modal
+        document.getElementById('searchTests').addEventListener('input', function() {
+          const searchTerm = this.value.toLowerCase();
+          const filtered = allLabTests.filter(test => 
+            test.test_code.toLowerCase().includes(searchTerm) ||
+            test.test_name.toLowerCase().includes(searchTerm)
+          );
+          renderLabTestsList(filtered);
+        });
 
-            const data = {
-                admin_user_id: user.user_id,
-                patient_id: patientId,
-                doctor_id: doctorId,
-                priority: document.getElementById('prioritySelect').value,
-                payment_status: document.getElementById('paymentSelect').value,
-                remarks: document.getElementById('remarks').value,
-                tests: Array.from(selectedTests)
-            };
-
-            try {
-                const response = await axios.post(API_URL, null, {
-                    params: {
-                        operation: 'create',
-                        json: JSON.stringify(data)
-                    }
-                });
-
-                if (response.data.success) {
-                    showAlert(response.data.message, 'success');
-                    bootstrap.Modal.getInstance(document.getElementById('requestModal')).hide();
-                    loadRequests();
-                    loadStatistics();
-                } else {
-                    showAlert(response.data.error, 'danger');
-                }
-            } catch (error) {
-                showAlert('Error creating request: ' + error.message, 'danger');
-            }
-        }
-
-        // View Request
-        async function viewRequest(id) {
-            const modal = new bootstrap.Modal(document.getElementById('viewModal'));
-            modal.show();
-            
-            try {
-                const response = await axios.get(API_URL, {
-                    params: {
-                        operation: 'getById',
-                        json: JSON.stringify({ lab_request_id: id })
-                    }
-                });
-
-                if (response.data.success) {
-                    renderRequestDetails(response.data.data);
-                }
-            } catch (error) {
-                document.getElementById('viewModalBody').innerHTML = '<p class="text-danger">Error loading request details</p>';
-            }
-        }
-
-        // Render Request Details
-        function renderRequestDetails(req) {
-            const html = `
-                <div class="row">
-                    <div class="col-md-6">
-                        <h6>Request Information</h6>
-                        <table class="table table-sm">
-                            <tr><th>Request #:</th><td>${escapeHtml(req.request_no)}</td></tr>
-                            <tr><th>Status:</th><td><span class="badge badge-${req.status}">${req.status}</span></td></tr>
-                            <tr><th>Priority:</th><td><span class="badge ${req.priority === 'urgent' ? 'badge-urgent' : 'badge-secondary'}">${req.priority}</span></td></tr>
-                            <tr><th>Payment:</th><td><span class="badge ${req.payment_status === 'paid' ? 'bg-success' : 'bg-warning'}">${req.payment_status}</span></td></tr>
-                            <tr><th>Total Cost:</th><td><strong>₱${parseFloat(req.total_cost).toFixed(2)}</strong></td></tr>
-                            <tr><th>Date Requested:</th><td>${formatDateTime(req.date_requested)}</td></tr>
-                            ${req.date_completed ? `<tr><th>Date Completed:</th><td>${formatDateTime(req.date_completed)}</td></tr>` : ''}
-                        </table>
-                    </div>
-                    <div class="col-md-6">
-                        <h6>Patient Information</h6>
-                        <table class="table table-sm">
-                            <tr><th>Name:</th><td>${escapeHtml(req.patient_name)}</td></tr>
-                            <tr><th>Code:</th><td>${escapeHtml(req.patient_code)}</td></tr>
-                            <tr><th>Gender:</th><td>${escapeHtml(req.gender)}</td></tr>
-                            <tr><th>DOB:</th><td>${req.date_of_birth}</td></tr>
-                        </table>
-                        <h6>Doctor</h6>
-                        <p><strong>${escapeHtml(req.doctor_name)}</strong><br>
-                        <small>${escapeHtml(req.specialization || '')}</small></p>
-                        ${req.requested_by_name ? `<p><small>Requested by: ${escapeHtml(req.requested_by_name)}</small></p>` : ''}
-                    </div>
-                </div>
-                ${req.remarks ? `<div class="alert alert-info"><strong>Remarks:</strong> ${escapeHtml(req.remarks)}</div>` : ''}
-                <h6 class="mt-3">Lab Tests</h6>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Test Code</th>
-                            <th>Test Name</th>
-                            <th>Status</th>
-                            <th>Result</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${req.items.map(item => `
-                            <tr>
-                                <td>${escapeHtml(item.test_code)}</td>
-                                <td>${escapeHtml(item.test_name)}</td>
-                                <td><span class="badge badge-${item.status}">${item.status}</span></td>
-                                <td>${item.result ? escapeHtml(item.result) : '-'}</td>
-                                <td>₱${parseFloat(item.price).toFixed(2)}</td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
+        function renderRequestsTable(requests) {
+          var tbody = document.getElementById("requestsTableBody");
+          
+          if (requests.length === 0) {
+            tbody.innerHTML = `
+              <tr>
+                <td colspan="8" class="text-center">
+                  <p class="text-muted my-4">No lab requests found</p>
+                </td>
+              </tr>
             `;
-            
-            document.getElementById('viewModalBody').innerHTML = html;
-        }
+            return;
+          }
 
-        // Show Update Modal
-        function showUpdateModal(id, status, payment, priority) {
-            document.getElementById('updateRequestId').value = id;
-            document.getElementById('updateStatus').value = status;
-            document.getElementById('updatePayment').value = payment;
-            document.getElementById('updatePriority').value = priority;
-            new bootstrap.Modal(document.getElementById('updateModal')).show();
-        }
-
-        // Update Request Status
-        async function updateRequestStatus() {
-            const id = document.getElementById('updateRequestId').value;
-            const data = {
-                admin_user_id: user.user_id,
-                lab_request_id: id,
-                status: document.getElementById('updateStatus').value,
-                payment_status: document.getElementById('updatePayment').value,
-                priority: document.getElementById('updatePriority').value
-            };
-
-            try {
-                const response = await axios.post(API_URL, null, {
-                    params: {
-                        operation: 'update',
-                        json: JSON.stringify(data)
-                    }
-                });
-
-                if (response.data.success) {
-                    showAlert(response.data.message, 'success');
-                    bootstrap.Modal.getInstance(document.getElementById('updateModal')).hide();
-                    loadRequests();
-                    loadStatistics();
-                } else {
-                    showAlert(response.data.error, 'danger');
-                }
-            } catch (error) {
-                showAlert('Error updating request: ' + error.message, 'danger');
+          tbody.innerHTML = requests.map(request => {
+            var statusBadge = '';
+            switch(request.status) {
+              case 'pending':
+                statusBadge = '<span class="badge bg-label-warning">Pending</span>';
+                break;
+              case 'in_progress':
+                statusBadge = '<span class="badge bg-label-info">In Progress</span>';
+                break;
+              case 'completed':
+                statusBadge = '<span class="badge bg-label-success">Completed</span>';
+                break;
+              case 'cancelled':
+                statusBadge = '<span class="badge bg-label-danger">Cancelled</span>';
+                break;
+              default:
+                statusBadge = '<span class="badge bg-label-secondary">Unknown</span>';
             }
+
+            const testCount = request.items ? request.items.length : 0;
+            const date = new Date(request.created_at).toLocaleDateString();
+
+            return `
+              <tr>
+                <td><strong>${escapeHtml(request.request_number)}</strong></td>
+                <td>${escapeHtml(request.patient_name || '-')}</td>
+                <td>${escapeHtml(request.doctor_name || '-')}</td>
+                <td><span class="badge bg-label-primary">${testCount} test(s)</span></td>
+                <td><strong>₱${parseFloat(request.total_cost || 0).toFixed(2)}</strong></td>
+                <td>${statusBadge}</td>
+                <td>${date}</td>
+                <td>
+                  <div class="dropdown">
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item view-request" href="javascript:void(0);" data-id="${request.lab_request_id}">
+                        <i class="bx bx-show me-1"></i> View Details
+                      </a>
+                      <a class="dropdown-item update-status" href="javascript:void(0);" data-id="${request.lab_request_id}">
+                        <i class="bx bx-edit me-1"></i> Update Status
+                      </a>
+                      <a class="dropdown-item delete-request" href="javascript:void(0);" data-id="${request.lab_request_id}" data-number="${escapeHtml(request.request_number)}">
+                        <i class="bx bx-trash me-1"></i> Delete
+                      </a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            `;
+          }).join('');
         }
 
-        // Delete Request
-        async function deleteRequest(id, requestNo) {
-            if (!confirm(`Delete request ${requestNo}?`)) return;
-
-            try {
-                const response = await axios.post(API_URL, null, {
-                    params: {
-                        operation: 'delete',
-                        json: JSON.stringify({
-                            lab_request_id: id,
-                            admin_user_id: user.user_id
-                        })
-                    }
-                });
-
-                if (response.data.success) {
-                    showAlert(response.data.message, 'success');
-                    loadRequests();
-                    loadStatistics();
-                } else {
-                    showAlert(response.data.error, 'danger');
-                }
-            } catch (error) {
-                showAlert('Error deleting request: ' + error.message, 'danger');
-            }
-        }
-
-        // Render Pagination
         function renderPagination(total, page, limit) {
-            const totalPages = Math.ceil(total / limit);
-            const pagination = document.getElementById('pagination');
-            
-            if (totalPages <= 1) {
-                pagination.innerHTML = '';
-                return;
+          const totalPages = Math.ceil(total / limit);
+          const pagination = document.getElementById("pagination");
+          
+          if (totalPages <= 1) {
+            pagination.innerHTML = '';
+            return;
+          }
+
+          let html = '';
+          
+          html += `<li class="page-item ${page <= 1 ? 'disabled' : ''}">
+            <a class="page-link" href="javascript:void(0);" data-page="${page - 1}">Previous</a>
+          </li>`;
+
+          for (let i = 1; i <= totalPages; i++) {
+            if (i === 1 || i === totalPages || (i >= page - 2 && i <= page + 2)) {
+              html += `<li class="page-item ${i === page ? 'active' : ''}">
+                <a class="page-link" href="javascript:void(0);" data-page="${i}">${i}</a>
+              </li>`;
+            } else if (i === page - 3 || i === page + 3) {
+              html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
             }
+          }
 
-            let html = `<li class="page-item ${page === 1 ? 'disabled' : ''}">
-                <a class="page-link" href="#" onclick="changePage(${page - 1}); return false;">Previous</a>
-            </li>`;
+          html += `<li class="page-item ${page >= totalPages ? 'disabled' : ''}">
+            <a class="page-link" href="javascript:void(0);" data-page="${page + 1}">Next</a>
+          </li>`;
 
-            for (let i = 1; i <= totalPages; i++) {
-                if (i === 1 || i === totalPages || (i >= page - 2 && i <= page + 2)) {
-                    html += `<li class="page-item ${i === page ? 'active' : ''}">
-                        <a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a>
-                    </li>`;
-                } else if (i === page - 3 || i === page + 3) {
-                    html += '<li class="page-item disabled"><span class="page-link">...</span></li>';
-                }
-            }
+          pagination.innerHTML = html;
 
-            html += `<li class="page-item ${page === totalPages ? 'disabled' : ''}">
-                <a class="page-link" href="#" onclick="changePage(${page + 1}); return false;">Next</a>
-            </li>`;
-
-            pagination.innerHTML = html;
-        }
-
-        function changePage(page) {
-            currentPage = page;
-            loadRequests();
-        }
-
-        // Utility Functions
-        function formatDateTime(dateString) {
-            if (!dateString) return '-';
-            const date = new Date(dateString);
-            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        }
-
-        function showAlert(message, type) {
-            const alertDiv = document.createElement('div');
-            alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3`;
-            alertDiv.style.zIndex = '9999';
-            alertDiv.innerHTML = `${message}<button type="button" class="btn-close" data-bs-dismiss="alert"></button>`;
-            document.body.appendChild(alertDiv);
-            setTimeout(() => alertDiv.remove(), 5000);
+          pagination.querySelectorAll('a.page-link').forEach(link => {
+            link.addEventListener('click', function() {
+              const newPage = parseInt(this.getAttribute('data-page'));
+              if (newPage > 0 && newPage <= totalPages) {
+                currentPage = newPage;
+                loadLabRequests();
+              }
+            });
+          });
         }
 
         function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+          if (!text) return '';
+          const div = document.createElement('div');
+          div.textContent = text;
+          return div.innerHTML;
         }
 
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func(...args), wait);
+        // Search and filter event listeners
+        document.getElementById("searchInput").addEventListener("input", function() {
+          currentPage = 1;
+          loadLabRequests();
+        });
+
+        document.getElementById("statusFilter").addEventListener("change", function() {
+          currentPage = 1;
+          loadLabRequests();
+        });
+
+        document.getElementById("limitSelect").addEventListener("change", function() {
+          currentLimit = parseInt(this.value);
+          currentPage = 1;
+          loadLabRequests();
+        });
+
+        document.getElementById("resetFilters").addEventListener("click", function() {
+          document.getElementById("searchInput").value = "";
+          document.getElementById("statusFilter").value = "";
+          document.getElementById("limitSelect").value = "10";
+          currentLimit = 10;
+          currentPage = 1;
+          loadLabRequests();
+        });
+
+        // Add Request Form Submit
+        document.getElementById("addRequestForm").addEventListener("submit", async function(e) {
+          e.preventDefault();
+          
+          if (selectedTests.length === 0) {
+            alert('Please select at least one lab test');
+            return;
+          }
+
+          try {
+            const formData = new FormData(this);
+            const jsonData = {
+              patient_id: formData.get('patient_id'),
+              doctor_id: formData.get('doctor_id'),
+              notes: formData.get('notes') || null,
+              tests: selectedTests
             };
-        }
+
+            const params = new URLSearchParams();
+            params.append('operation', 'create');
+            params.append('json', JSON.stringify(jsonData));
+
+            const response = await axios.post('../../backend/lab-requests.php', params);
+            
+            if (response.data.success) {
+              alert('Lab request created successfully!');
+              bootstrap.Modal.getInstance(document.getElementById('addRequestModal')).hide();
+              this.reset();
+              selectedTests = [];
+              document.querySelectorAll('.lab-test-checkbox').forEach(cb => cb.checked = false);
+              updateSelectedTests();
+              loadLabRequests();
+              loadStatistics();
+            } else {
+              alert('Error creating lab request: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error creating lab request:', error);
+            alert('Error creating lab request. Please try again.');
+          }
+        });
+
+        // View Request
+        document.addEventListener("click", async function(e) {
+          if (e.target.closest(".view-request")) {
+            const requestId = e.target.closest(".view-request").getAttribute("data-id");
+            
+            try {
+              const params = new URLSearchParams();
+              params.append('operation', 'getById');
+              params.append('json', JSON.stringify({ lab_request_id: requestId }));
+
+              const response = await axios.post('../../backend/lab-requests.php', params);
+              
+              if (response.data.success) {
+                const request = response.data.data;
+                
+                document.getElementById("view_request_number").textContent = request.request_number || '-';
+                document.getElementById("view_patient_name").textContent = request.patient_name || '-';
+                document.getElementById("view_doctor_name").textContent = request.doctor_name || '-';
+                document.getElementById("view_total_cost").textContent = `₱${parseFloat(request.total_cost || 0).toFixed(2)}`;
+                document.getElementById("view_notes").textContent = request.notes || 'No notes';
+                document.getElementById("view_created_at").textContent = request.created_at ? new Date(request.created_at).toLocaleString() : '-';
+                document.getElementById("view_updated_at").textContent = request.updated_at ? new Date(request.updated_at).toLocaleString() : '-';
+                
+                let statusBadge = '';
+                switch(request.status) {
+                  case 'pending':
+                    statusBadge = '<span class="badge bg-label-warning">Pending</span>';
+                    break;
+                  case 'in_progress':
+                    statusBadge = '<span class="badge bg-label-info">In Progress</span>';
+                    break;
+                  case 'completed':
+                    statusBadge = '<span class="badge bg-label-success">Completed</span>';
+                    break;
+                  case 'cancelled':
+                    statusBadge = '<span class="badge bg-label-danger">Cancelled</span>';
+                    break;
+                }
+                document.getElementById("view_status").innerHTML = statusBadge;
+
+                // Render tests list
+                const testsList = document.getElementById("view_tests_list");
+                if (request.items && request.items.length > 0) {
+                  testsList.innerHTML = request.items.map(item => `
+                    <tr>
+                      <td>${escapeHtml(item.test_code || '-')}</td>
+                      <td>${escapeHtml(item.test_name || '-')}</td>
+                      <td>₱${parseFloat(item.price || 0).toFixed(2)}</td>
+                      <td><span class="badge bg-label-${item.status === 'completed' ? 'success' : 'warning'}">${item.status || 'pending'}</span></td>
+                    </tr>
+                  `).join('');
+                } else {
+                  testsList.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No tests</td></tr>';
+                }
+                
+                new bootstrap.Modal(document.getElementById("viewRequestModal")).show();
+              }
+            } catch (error) {
+              console.error('Error loading request details:', error);
+              alert('Error loading request details');
+            }
+          }
+        });
+
+        // Update Status
+        document.addEventListener("click", function(e) {
+          if (e.target.closest(".update-status")) {
+            const requestId = e.target.closest(".update-status").getAttribute("data-id");
+            document.getElementById("update_request_id").value = requestId;
+            new bootstrap.Modal(document.getElementById("updateStatusModal")).show();
+          }
+        });
+
+        document.getElementById("updateStatusForm").addEventListener("submit", async function(e) {
+          e.preventDefault();
+          
+          try {
+            const formData = new FormData(this);
+            const jsonData = {
+              lab_request_id: formData.get('lab_request_id'),
+              status: formData.get('status')
+            };
+
+            const params = new URLSearchParams();
+            params.append('operation', 'update');
+            params.append('json', JSON.stringify(jsonData));
+
+            const response = await axios.post('../../backend/lab-requests.php', params);
+            
+            if (response.data.success) {
+              alert('Request status updated successfully!');
+              bootstrap.Modal.getInstance(document.getElementById('updateStatusModal')).hide();
+              loadLabRequests();
+              loadStatistics();
+            } else {
+              alert('Error updating status: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error updating status:', error);
+            alert('Error updating status. Please try again.');
+          }
+        });
+
+        // Delete Request
+        document.addEventListener("click", async function(e) {
+          if (e.target.closest(".delete-request")) {
+            const requestId = e.target.closest(".delete-request").getAttribute("data-id");
+            const requestNumber = e.target.closest(".delete-request").getAttribute("data-number");
+            
+            if (!confirm(`Are you sure you want to delete request "${requestNumber}"? This action cannot be undone.`)) {
+              return;
+            }
+
+            try {
+              const params = new URLSearchParams();
+              params.append('operation', 'delete');
+              params.append('json', JSON.stringify({
+                lab_request_id: requestId
+              }));
+
+              const response = await axios.post('../../backend/lab-requests.php', params);
+              
+              if (response.data.success) {
+                alert('Lab request deleted successfully!');
+                loadLabRequests();
+                loadStatistics();
+              } else {
+                alert('Error deleting lab request: ' + response.data.error);
+              }
+            } catch (error) {
+              console.error('Error deleting lab request:', error);
+              alert('Error deleting lab request. Please try again.');
+            }
+          }
+        });
+
+        console.log("Lab Requests page loaded");
+      })();
     </script>
-</body>
+  </body>
 </html>

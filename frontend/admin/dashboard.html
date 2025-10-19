@@ -15,6 +15,35 @@
     
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+    <style>
+      /* Make sidebar scrollable */
+      .layout-menu {
+        overflow-y: auto !important;
+        max-height: 100vh;
+      }
+      .layout-menu .menu-inner {
+        overflow-y: auto;
+        max-height: calc(100vh - 70px);
+      }
+      /* Custom scrollbar for sidebar */
+      .layout-menu::-webkit-scrollbar,
+      .layout-menu .menu-inner::-webkit-scrollbar {
+        width: 6px;
+      }
+      .layout-menu::-webkit-scrollbar-track,
+      .layout-menu .menu-inner::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .layout-menu::-webkit-scrollbar-thumb,
+      .layout-menu .menu-inner::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+      }
+      .layout-menu::-webkit-scrollbar-thumb:hover,
+      .layout-menu .menu-inner::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }
+    </style>
   </head>
 
   <body>
@@ -81,6 +110,25 @@
               <a href="patients.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-group"></i>
                 <div data-i18n="Patients">Patients</div>
+              </a>
+            </li>
+
+            <!-- Laboratory -->
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Laboratory</span>
+            </li>
+
+            <li class="menu-item">
+              <a href="lab-tests.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-test-tube"></i>
+                <div data-i18n="Lab Tests">Lab Tests</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="lab-requests.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-clipboard-plus"></i>
+                <div data-i18n="Lab Requests">Lab Requests</div>
               </a>
             </li>
 
