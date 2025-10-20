@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <title>Patients - My Clinic</title>
+    <meta name="description" content="View Patients" />
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css"
+    />
+    <style>
+      /* Make sidebar scrollable */
+      .layout-menu {
+        overflow-y: auto !important;
+        max-height: 100vh;
+      }
+      .layout-menu .menu-inner {
+        overflow-y: auto;
+        max-height: calc(100vh - 70px);
+      }
+      /* Custom scrollbar for sidebar */
+      .layout-menu::-webkit-scrollbar,
+      .layout-menu .menu-inner::-webkit-scrollbar {
+        width: 6px;
+      }
+      .layout-menu::-webkit-scrollbar-track,
+      .layout-menu .menu-inner::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .layout-menu::-webkit-scrollbar-thumb,
+      .layout-menu .menu-inner::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+      }
+      .layout-menu::-webkit-scrollbar-thumb:hover,
+      .layout-menu .menu-inner::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        
+        <!-- Menu (Sidebar) -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="dashboard.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <img src="../assets/img/favicon/logo.png" alt="Logo" width="32" />
+              </span>
+              <span class="app-brand-text demo menu-text fw-bold ms-2">My Clinic</span>
+            </a>
+          </div>
+
+          <div class="menu-inner-shadow"></div>
+
+          <ul class="menu-inner py-1">
+            <!-- Dashboard -->
+            <li class="menu-item">
+              <a href="dashboard.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Dashboard">Dashboard</div>
+              </a>
+            </li>
+
+            <!-- Receptionist Modules -->
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Modules</span>
+            </li>
+            
+            <li class="menu-item">
+              <a href="appointments.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                <div>Appointments</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="queue.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ol"></i>
+                <div>Queue</div>
+              </a>
+            </li>
+
+            <li class="menu-item active">
+              <a href="patients.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-group"></i>
+                <div>Patients</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="billing.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-receipt"></i>
+                <div>Billing</div>
+              </a>
+            </li>
+          </ul>
+        </aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          
+          <!-- Navbar -->
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <!-- Search -->
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input
+                    type="text"
+                    class="form-control border-0 shadow-none"
+                    placeholder="Search..."
+                    aria-label="Search..."
+                    id="searchInput"
+                  />
+                </div>
+              </div>
+              <!-- /Search -->
+
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <!-- Notifications -->
+                <li class="nav-item navbar-dropdown dropdown-notifications dropdown me-3 me-xl-2">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);">
+                    <i class="bx bx-bell bx-sm"></i>
+                    <span class="badge bg-danger rounded-pill badge-notifications" id="notificationBadge">0</span>
+                  </a>
+                </li>
+                <!-- / Notifications -->
+
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatar">R</span>
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatarDropdown">R</span>
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block" id="userFullName">Receptionist</span>
+                            <small class="text-muted" id="userRole">Receptionist</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);" id="logoutBtn">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!-- / User -->
+              </ul>
+            </div>
+          </nav>
+          <!-- / Navbar -->
+
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Modules /</span> Patients</h4>
+
+              <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0">Patient List</h5>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive text-nowrap">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Patient ID</th>
+                          <th>Name</th>
+                          <th>Contact</th>
+                          <th>Email</th>
+                          <th>Date of Birth</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="patientsTableBody">
+                        <tr>
+                          <td colspan="6" class="text-center">Loading...</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  © <script>document.write(new Date().getFullYear());</script> My Clinic CMS
+                </div>
+              </div>
+            </footer>
+            <div class="content-backdrop fade"></div>
+          </div>
+        </div>
+      </div>
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+    <!-- Patient Details Modal -->
+    <div class="modal fade" id="patientModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Patient Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <h6 class="text-muted">Personal Information</h6>
+                <p><strong>Name:</strong> <span id="modalFullName"></span></p>
+                <p><strong>Date of Birth:</strong> <span id="modalDOB"></span></p>
+                <p><strong>Gender:</strong> <span id="modalGender"></span></p>
+                <p><strong>Blood Type:</strong> <span id="modalBloodType"></span></p>
+              </div>
+              <div class="col-md-6">
+                <h6 class="text-muted">Contact Information</h6>
+                <p><strong>Phone:</strong> <span id="modalPhone"></span></p>
+                <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+                <p><strong>Address:</strong> <span id="modalAddress"></span></p>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <h6 class="text-muted">Emergency Contact</h6>
+              <p><strong>Name:</strong> <span id="modalEmergencyName"></span></p>
+              <p><strong>Phone:</strong> <span id="modalEmergencyPhone"></span></p>
+            </div>
+
+            <div class="mb-3">
+              <h6 class="text-muted">Appointment History</h6>
+              <div id="appointmentHistory">
+                <p class="text-center">Loading...</p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/js/session-handler.js"></script>
+    
+    <script>
+      (function () {
+        "use strict";
+        if (!SessionHandler.requireUserType(4)) return;
+
+        var user = SessionHandler.getUser();
+        var fullName = SessionHandler.getUserFullName();
+        var initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        
+        document.getElementById("userFullName").textContent = fullName;
+        document.getElementById("userRole").textContent = SessionHandler.getUserRole();
+        document.getElementById("userAvatar").textContent = initials;
+        document.getElementById("userAvatarDropdown").textContent = initials;
+
+        var notifCount = SessionHandler.getUnreadNotificationsCount();
+        document.getElementById("notificationBadge").textContent = notifCount;
+        if (notifCount === 0) document.getElementById("notificationBadge").style.display = "none";
+
+        document.getElementById("logoutBtn").addEventListener("click", function(e) {
+          e.preventDefault();
+          if (confirm("Are you sure you want to logout?")) SessionHandler.logout();
+        });
+
+        var menuToggle = document.querySelector('.layout-menu-toggle');
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function() {
+            document.querySelector('.layout-wrapper').classList.toggle('layout-menu-expanded');
+          });
+        }
+
+        const API_BASE = '../../backend/';
+        let allPatients = [];
+        const patientModal = new bootstrap.Modal(document.getElementById('patientModal'));
+
+        loadPatients();
+
+        document.getElementById('searchInput').addEventListener('input', handleSearch);
+
+        async function loadPatients() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getAll');
+            
+            const response = await axios.post(API_BASE + 'patients.php', params);
+            
+            if (response.data.success) {
+              allPatients = response.data.data || [];
+              renderPatients(allPatients);
+            }
+          } catch (error) {
+            console.error('Error loading patients:', error);
+            document.getElementById('patientsTableBody').innerHTML = 
+              '<tr><td colspan="6" class="text-center text-danger">Error loading patients</td></tr>';
+          }
+        }
+
+        function handleSearch(e) {
+          const searchTerm = e.target.value.toLowerCase();
+          const filtered = allPatients.filter(patient => {
+            return patient.first_name.toLowerCase().includes(searchTerm) ||
+                   patient.last_name.toLowerCase().includes(searchTerm) ||
+                   (patient.phone_number && patient.phone_number.includes(searchTerm)) ||
+                   (patient.email && patient.email.toLowerCase().includes(searchTerm));
+          });
+          renderPatients(filtered);
+        }
+
+        function renderPatients(patients) {
+          const tbody = document.getElementById('patientsTableBody');
+          
+          if (patients.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">No patients found</td></tr>';
+            return;
+          }
+
+          const html = patients.map(patient => `
+            <tr>
+              <td><strong>${patient.patient_id}</strong></td>
+              <td>${patient.first_name} ${patient.last_name}</td>
+              <td>${patient.phone_number || 'N/A'}</td>
+              <td>${patient.email || 'N/A'}</td>
+              <td>${patient.date_of_birth || 'N/A'}</td>
+              <td>
+                <button type="button" class="btn btn-sm btn-primary" onclick="viewPatient(${patient.patient_id})">
+                  <i class="bx bx-show"></i> View
+                </button>
+              </td>
+            </tr>
+          `).join('');
+
+          tbody.innerHTML = html;
+        }
+
+        window.viewPatient = async function(patientId) {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getById');
+            params.append('json', JSON.stringify({ patient_id: patientId }));
+            
+            const response = await axios.post(API_BASE + 'patients.php', params);
+            
+            if (response.data.success && response.data.data) {
+              const patient = response.data.data;
+              
+              document.getElementById('modalFullName').textContent = 
+                `${patient.first_name} ${patient.last_name}`;
+              document.getElementById('modalDOB').textContent = patient.date_of_birth || 'N/A';
+              document.getElementById('modalGender').textContent = patient.gender || 'N/A';
+              document.getElementById('modalBloodType').textContent = patient.blood_type || 'N/A';
+              document.getElementById('modalPhone').textContent = patient.phone_number || 'N/A';
+              document.getElementById('modalEmail').textContent = patient.email || 'N/A';
+              document.getElementById('modalAddress').textContent = patient.address || 'N/A';
+              document.getElementById('modalEmergencyName').textContent = 
+                patient.emergency_contact_name || 'N/A';
+              document.getElementById('modalEmergencyPhone').textContent = 
+                patient.emergency_contact_phone || 'N/A';
+              
+              // Load appointment history
+              loadAppointmentHistory(patientId);
+              
+              patientModal.show();
+            }
+          } catch (error) {
+            console.error('Error loading patient details:', error);
+            alert('Failed to load patient details');
+          }
+        };
+
+        async function loadAppointmentHistory(patientId) {
+          const historyDiv = document.getElementById('appointmentHistory');
+          historyDiv.innerHTML = '<p class="text-center">Loading...</p>';
+          
+          try {
+            const response = await axios.post(API_BASE + 'appointments.php', {
+              action: 'getByPatient',
+              patient_id: patientId
+            });
+            
+            if (response.data.success) {
+              const appointments = response.data.appointments || [];
+              
+              if (appointments.length === 0) {
+                historyDiv.innerHTML = '<p class="text-center text-muted">No appointment history</p>';
+                return;
+              }
+
+              const html = `
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Doctor</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${appointments.map(apt => `
+                        <tr>
+                          <td>${apt.appointment_date}</td>
+                          <td>${apt.appointment_time.substring(0, 5)}</td>
+                          <td>${apt.doctor_name}</td>
+                          <td><span class="badge ${getStatusClass(apt.status)}">${apt.status}</span></td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>
+              `;
+              
+              historyDiv.innerHTML = html;
+            }
+          } catch (error) {
+            console.error('Error loading appointment history:', error);
+            historyDiv.innerHTML = '<p class="text-center text-danger">Error loading history</p>';
+          }
+        }
+
+        function getStatusClass(status) {
+          const classes = {
+            'pending': 'bg-label-warning',
+            'confirmed': 'bg-label-primary',
+            'completed': 'bg-label-success',
+            'cancelled': 'bg-label-danger'
+          };
+          return classes[status] || 'bg-label-secondary';
+        }
+
+        console.log("Receptionist patients page loaded");
+      })();
+    </script>
+  </body>
+</html>
