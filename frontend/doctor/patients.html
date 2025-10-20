@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>My Patients - My Clinic</title>
+    <meta name="description" content="Doctor Patients List" />
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+    <style>
+      .layout-menu {
+        overflow-y: auto !important;
+        max-height: 100vh;
+      }
+      .layout-menu .menu-inner {
+        overflow-y: auto;
+        max-height: calc(100vh - 70px);
+      }
+      .layout-menu::-webkit-scrollbar,
+      .layout-menu .menu-inner::-webkit-scrollbar {
+        width: 6px;
+      }
+      .layout-menu::-webkit-scrollbar-track,
+      .layout-menu .menu-inner::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .layout-menu::-webkit-scrollbar-thumb,
+      .layout-menu .menu-inner::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+      }
+      .layout-menu::-webkit-scrollbar-thumb:hover,
+      .layout-menu .menu-inner::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="dashboard.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <img src="../assets/img/favicon/logo.png" alt="Logo" width="32" />
+              </span>
+              <span class="app-brand-text demo menu-text fw-bold ms-2">My Clinic</span>
+            </a>
+          </div>
+          <div class="menu-inner-shadow"></div>
+          <ul class="menu-inner py-1">
+            <li class="menu-item">
+              <a href="dashboard.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div>Dashboard</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Clinical</span></li>
+            <li class="menu-item">
+              <a href="appointments.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                <div>My Appointments</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="queue.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ol"></i>
+                <div>Patient Queue</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="medical-records.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file-find"></i>
+                <div>Medical Records</div>
+              </a>
+            </li>
+            <li class="menu-item active">
+              <a href="patients.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-group"></i>
+                <div>My Patients</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Account</span></li>
+            <li class="menu-item">
+              <a href="profile.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div>My Profile</div>
+              </a>
+            </li>
+          </ul>
+        </aside>
+
+        <div class="layout-page">
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input type="text" class="form-control border-0 shadow-none" placeholder="Search patients..." id="navSearchPatient" />
+                </div>
+              </div>
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <li class="nav-item navbar-dropdown dropdown-notifications dropdown me-3 me-xl-2">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);">
+                    <i class="bx bx-bell bx-sm"></i>
+                    <span class="badge bg-danger rounded-pill badge-notifications" id="notificationBadge">0</span>
+                  </a>
+                </li>
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatar">D</span>
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatarDropdown">D</span>
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block" id="userFullName">Doctor</span>
+                            <small class="text-muted" id="userRole">Doctor</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);" id="logoutBtn">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              
+              <h4 class="fw-bold py-3 mb-4">
+                <span class="text-muted fw-light">Clinical /</span> My Patients
+              </h4>
+
+              <div class="card mb-4">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="card bg-label-primary">
+                        <div class="card-body text-center">
+                          <h3 class="mb-0" id="totalCount">0</h3>
+                          <p class="mb-0">Total Patients</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="card bg-label-success">
+                        <div class="card-body text-center">
+                          <h3 class="mb-0" id="thisMonthCount">0</h3>
+                          <p class="mb-0">This Month</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="card bg-label-info">
+                        <div class="card-body text-center">
+                          <h3 class="mb-0" id="todayCount">0</h3>
+                          <p class="mb-0">Seen Today</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="mb-0">Patient List</h5>
+                </div>
+                
+                <div class="card-body">
+                  <div class="row mb-3">
+                    <div class="col-md-8">
+                      <input type="text" class="form-control" id="searchPatient" placeholder="Search by name, contact, or email...">
+                    </div>
+                    <div class="col-md-4">
+                      <button type="button" class="btn btn-outline-secondary w-100" id="resetFilters">
+                        <i class="bx bx-reset me-1"></i> Reset
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="table-responsive text-nowrap">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Patient Name</th>
+                          <th>Contact</th>
+                          <th>Email</th>
+                          <th>Last Visit</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table-border-bottom-0" id="patientsTableBody">
+                        <tr>
+                          <td colspan="5" class="text-center py-4">
+                            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  © <script>document.write(new Date().getFullYear());</script> My Clinic CMS
+                </div>
+              </div>
+            </footer>
+            <div class="content-backdrop fade"></div>
+          </div>
+        </div>
+      </div>
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+    <!-- View Patient Modal -->
+    <div class="modal fade" id="viewPatientModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Patient Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <h6>Personal Information</h6>
+                <p class="mb-1"><strong>Name:</strong> <span id="view_name"></span></p>
+                <p class="mb-1"><strong>Date of Birth:</strong> <span id="view_dob"></span></p>
+                <p class="mb-1"><strong>Gender:</strong> <span id="view_gender"></span></p>
+                <p class="mb-1"><strong>Blood Type:</strong> <span id="view_blood_type"></span></p>
+              </div>
+              <div class="col-md-6">
+                <h6>Contact Information</h6>
+                <p class="mb-1"><strong>Phone:</strong> <span id="view_contact"></span></p>
+                <p class="mb-1"><strong>Email:</strong> <span id="view_email"></span></p>
+                <p class="mb-1"><strong>Address:</strong> <span id="view_address"></span></p>
+              </div>
+            </div>
+            <hr>
+            <h6>Emergency Contact</h6>
+            <p class="mb-1"><strong>Name:</strong> <span id="view_emergency_contact"></span></p>
+            <p class="mb-1"><strong>Phone:</strong> <span id="view_emergency_phone"></span></p>
+            <hr>
+            <h6>Medical History</h6>
+            <p id="view_medical_history"></p>
+            <hr>
+            <h6>Allergies</h6>
+            <p id="view_allergies"></p>
+            <hr>
+            <h6>Current Medications</h6>
+            <p id="view_medications"></p>
+            <hr>
+            <h6>Appointment History</h6>
+            <div id="appointmentHistory" class="table-responsive">
+              <div class="text-center py-3">
+                <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/js/session-handler.js"></script>
+    
+    <script>
+      (function () {
+        "use strict";
+        if (!SessionHandler.requireUserType(2)) return;
+
+        var user = SessionHandler.getUser();
+        var fullName = SessionHandler.getUserFullName();
+        var initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        
+        document.getElementById("userFullName").textContent = fullName;
+        document.getElementById("userRole").textContent = SessionHandler.getUserRole();
+        document.getElementById("userAvatar").textContent = initials;
+        document.getElementById("userAvatarDropdown").textContent = initials;
+
+        var notifCount = SessionHandler.getUnreadNotificationsCount();
+        document.getElementById("notificationBadge").textContent = notifCount;
+        if (notifCount === 0) document.getElementById("notificationBadge").style.display = "none";
+
+        document.getElementById("logoutBtn").addEventListener("click", function(e) {
+          e.preventDefault();
+          if (confirm("Are you sure you want to logout?")) SessionHandler.logout();
+        });
+
+        var menuToggle = document.querySelector('.layout-menu-toggle');
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function() {
+            document.querySelector('.layout-wrapper').classList.toggle('layout-menu-expanded');
+          });
+        }
+
+        const API_BASE = '../../backend/';
+        var currentPatientId = null;
+
+        loadPatients();
+        loadStatistics();
+
+        async function loadStatistics() {
+          try {
+            const response = await axios.post(API_BASE + 'appointments.php', {
+              action: 'getStatistics',
+              doctor_id: user.user_id
+            });
+            
+            if (response.data.success) {
+              const stats = response.data.data;
+              document.getElementById("todayCount").textContent = stats.today || 0;
+              
+              // Get unique patients from all appointments
+              const allResponse = await axios.post(API_BASE + 'appointments.php', {
+                action: 'getByDoctor',
+                doctor_id: user.user_id
+              });
+              if (allResponse.data.success) {
+                const uniquePatients = [...new Set(allResponse.data.data.map(a => a.patient_id))];
+                document.getElementById("totalCount").textContent = uniquePatients.length;
+                
+                // This month
+                const thisMonth = new Date();
+                const thisMonthStart = new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1).toISOString().split('T')[0];
+                const thisMonthPatients = allResponse.data.data.filter(a => a.appointment_date >= thisMonthStart);
+                const uniqueThisMonth = [...new Set(thisMonthPatients.map(a => a.patient_id))];
+                document.getElementById("thisMonthCount").textContent = uniqueThisMonth.length;
+              }
+            }
+          } catch (error) {
+            console.error('Error loading statistics:', error);
+          }
+        }
+
+        async function loadPatients() {
+          try {
+            const searchTerm = document.getElementById("searchPatient").value;
+
+            // Get all appointments for this doctor to find their patients
+            const response = await axios.post(API_BASE + 'appointments.php', {
+              action: 'getByDoctor',
+              doctor_id: user.user_id
+            });
+            
+            if (response.data.success) {
+              // Get unique patients
+              const appointments = response.data.appointments || [];
+              const patientMap = new Map();
+              
+              appointments.forEach(apt => {
+                if (!patientMap.has(apt.patient_id)) {
+                  patientMap.set(apt.patient_id, {
+                    patient_id: apt.patient_id,
+                    patient_name: apt.patient_name,
+                    patient_contact: apt.patient_phone,  // backend returns patient_phone
+                    patient_email: apt.patient_email,
+                    last_visit: apt.appointment_date
+                  });
+                } else {
+                  // Update last visit if this appointment is more recent
+                  const existing = patientMap.get(apt.patient_id);
+                  if (apt.appointment_date > existing.last_visit) {
+                    existing.last_visit = apt.appointment_date;
+                  }
+                }
+              });
+
+              let patients = Array.from(patientMap.values());
+              
+              // Filter by search term
+              if (searchTerm) {
+                patients = patients.filter(p => 
+                  p.patient_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  (p.patient_contact && p.patient_contact.includes(searchTerm)) ||
+                  (p.patient_email && p.patient_email.toLowerCase().includes(searchTerm.toLowerCase()))
+                );
+              }
+              
+              renderPatientsTable(patients);
+            }
+          } catch (error) {
+            console.error('Error loading patients:', error);
+          }
+        }
+
+        function renderPatientsTable(patients) {
+          var tbody = document.getElementById("patientsTableBody");
+          
+          if (patients.length === 0) {
+            tbody.innerHTML = `
+              <tr>
+                <td colspan="5" class="text-center py-4">
+                  <i class="bx bx-group bx-lg text-muted"></i>
+                  <p class="mt-2 mb-0">No patients found</p>
+                </td>
+              </tr>
+            `;
+            return;
+          }
+
+          tbody.innerHTML = patients.map(patient => `
+            <tr>
+              <td>${patient.patient_name}</td>
+              <td>${patient.patient_contact || 'N/A'}</td>
+              <td>${patient.patient_email || 'N/A'}</td>
+              <td>${patient.last_visit}</td>
+              <td>
+                <button type="button" class="btn btn-sm btn-outline-primary view-patient" data-patient-id="${patient.patient_id}">
+                  <i class="bx bx-show"></i> View
+                </button>
+              </td>
+            </tr>
+          `).join('');
+
+          document.querySelectorAll('.view-patient').forEach(btn => {
+            btn.addEventListener('click', function() {
+              const patientId = this.getAttribute('data-patient-id');
+              viewPatient(patientId);
+            });
+          });
+        }
+
+        async function viewPatient(patientId) {
+          currentPatientId = patientId;
+          
+          try {
+            // Load patient details
+            const params = new URLSearchParams();
+            params.append('operation', 'getById');
+            params.append('json', JSON.stringify({ patient_id: patientId }));
+
+            const response = await axios.post(API_BASE + 'patients.php', params);
+            
+            if (response.data.success) {
+              const patient = response.data.data;
+              
+              document.getElementById('view_name').textContent = patient.first_name + ' ' + patient.last_name;
+              document.getElementById('view_dob').textContent = patient.date_of_birth || 'N/A';
+              document.getElementById('view_gender').textContent = patient.gender || 'N/A';
+              document.getElementById('view_blood_type').textContent = patient.blood_type || 'N/A';
+              document.getElementById('view_contact').textContent = patient.contact_number || 'N/A';
+              document.getElementById('view_email').textContent = patient.email || 'N/A';
+              document.getElementById('view_address').textContent = patient.address || 'N/A';
+              document.getElementById('view_emergency_contact').textContent = patient.emergency_contact_name || 'N/A';
+              document.getElementById('view_emergency_phone').textContent = patient.emergency_contact_number || 'N/A';
+              document.getElementById('view_medical_history').textContent = patient.medical_history || 'No medical history recorded';
+              document.getElementById('view_allergies').textContent = patient.allergies || 'No known allergies';
+              document.getElementById('view_medications').textContent = patient.current_medications || 'No current medications';
+              
+              // Load appointment history
+              loadAppointmentHistory(patientId);
+              
+              new bootstrap.Modal(document.getElementById('viewPatientModal')).show();
+            }
+          } catch (error) {
+            console.error('Error loading patient:', error);
+          }
+        }
+
+        async function loadAppointmentHistory(patientId) {
+          try {
+            const response = await axios.post(API_BASE + 'appointments.php', {
+              action: 'getByPatient',
+              patient_id: patientId
+            });
+            
+            if (response.data.success) {
+              const appointments = (response.data.appointments || []).filter(a => a.doctor_id == user.user_id);
+              const historyDiv = document.getElementById('appointmentHistory');
+              
+              if (appointments.length === 0) {
+                historyDiv.innerHTML = '<p class="text-muted">No appointment history</p>';
+                return;
+              }
+              
+              historyDiv.innerHTML = `
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Reason</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${appointments.map(apt => {
+                      let statusBadge = '';
+                      switch(apt.status) {
+                        case 'completed':
+                          statusBadge = '<span class="badge bg-label-success">Completed</span>';
+                          break;
+                        case 'cancelled':
+                          statusBadge = '<span class="badge bg-label-danger">Cancelled</span>';
+                          break;
+                        default:
+                          statusBadge = '<span class="badge bg-label-info">' + apt.status + '</span>';
+                      }
+                      return `
+                        <tr>
+                          <td>${apt.appointment_date}</td>
+                          <td>${apt.appointment_time}</td>
+                          <td>${apt.reason || 'General Checkup'}</td>
+                          <td>${statusBadge}</td>
+                        </tr>
+                      `;
+                    }).join('')}
+                  </tbody>
+                </table>
+              `;
+            }
+          } catch (error) {
+            console.error('Error loading appointment history:', error);
+          }
+        }
+
+        document.getElementById("resetFilters").addEventListener("click", function() {
+          document.getElementById("searchPatient").value = "";
+          loadPatients();
+        });
+
+        document.getElementById("searchPatient").addEventListener("input", loadPatients);
+        document.getElementById("navSearchPatient").addEventListener("input", function() {
+          document.getElementById("searchPatient").value = this.value;
+          loadPatients();
+        });
+
+        console.log("Doctor patients page loaded");
+      })();
+    </script>
+  </body>
+</html>

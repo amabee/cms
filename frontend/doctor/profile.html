@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>My Profile - My Clinic</title>
+    <meta name="description" content="Doctor Profile" />
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+    <style>
+      .layout-menu {
+        overflow-y: auto !important;
+        max-height: 100vh;
+      }
+      .layout-menu .menu-inner {
+        overflow-y: auto;
+        max-height: calc(100vh - 70px);
+      }
+      .layout-menu::-webkit-scrollbar,
+      .layout-menu .menu-inner::-webkit-scrollbar {
+        width: 6px;
+      }
+      .layout-menu::-webkit-scrollbar-track,
+      .layout-menu .menu-inner::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .layout-menu::-webkit-scrollbar-thumb,
+      .layout-menu .menu-inner::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+      }
+      .layout-menu::-webkit-scrollbar-thumb:hover,
+      .layout-menu .menu-inner::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="dashboard.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <img src="../assets/img/favicon/logo.png" alt="Logo" width="32" />
+              </span>
+              <span class="app-brand-text demo menu-text fw-bold ms-2">My Clinic</span>
+            </a>
+          </div>
+          <div class="menu-inner-shadow"></div>
+          <ul class="menu-inner py-1">
+            <li class="menu-item">
+              <a href="dashboard.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div>Dashboard</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Clinical</span></li>
+            <li class="menu-item">
+              <a href="appointments.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                <div>My Appointments</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="queue.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ol"></i>
+                <div>Patient Queue</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="medical-records.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file-find"></i>
+                <div>Medical Records</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="patients.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-group"></i>
+                <div>My Patients</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Account</span></li>
+            <li class="menu-item active">
+              <a href="profile.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div>My Profile</div>
+              </a>
+            </li>
+          </ul>
+        </aside>
+
+        <div class="layout-page">
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input type="text" class="form-control border-0 shadow-none" placeholder="Search patients..." />
+                </div>
+              </div>
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <li class="nav-item navbar-dropdown dropdown-notifications dropdown me-3 me-xl-2">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);">
+                    <i class="bx bx-bell bx-sm"></i>
+                    <span class="badge bg-danger rounded-pill badge-notifications" id="notificationBadge">0</span>
+                  </a>
+                </li>
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatar">D</span>
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatarDropdown">D</span>
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block" id="userFullName">Doctor</span>
+                            <small class="text-muted" id="userRole">Doctor</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);" id="logoutBtn">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              
+              <h4 class="fw-bold py-3 mb-4">
+                <span class="text-muted fw-light">Account /</span> My Profile
+              </h4>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <ul class="nav nav-pills flex-column flex-md-row mb-3">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="javascript:void(0);" id="accountTab">
+                        <i class="bx bx-user me-1"></i> Account
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="javascript:void(0);" id="securityTab">
+                        <i class="bx bx-lock-alt me-1"></i> Security
+                      </a>
+                    </li>
+                  </ul>
+
+                  <!-- Account Settings -->
+                  <div class="card mb-4" id="accountSection">
+                    <h5 class="card-header">Profile Details</h5>
+                    <div class="card-body">
+                      <form id="accountForm">
+                        <div class="row">
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" readonly>
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" readonly>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label">First Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="first_name" required>
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label">Last Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="last_name" required>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label">Contact Number</label>
+                            <input type="tel" class="form-control" id="contact_number">
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label">Email (Professional)</label>
+                            <input type="email" class="form-control" id="doctor_email">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label">Specialization</label>
+                            <input type="text" class="form-control" id="specialization">
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label">Department</label>
+                            <select class="form-select" id="department_id">
+                              <option value="">Select Department</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-4 mb-3">
+                            <label class="form-label">License Number</label>
+                            <input type="text" class="form-control" id="license_no">
+                          </div>
+                          <div class="col-md-4 mb-3">
+                            <label class="form-label">PTR Number</label>
+                            <input type="text" class="form-control" id="ptr_no">
+                          </div>
+                          <div class="col-md-4 mb-3">
+                            <label class="form-label">S2 License Number</label>
+                            <input type="text" class="form-control" id="s2_license_no">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-4 mb-3">
+                            <label class="form-label">Years of Experience</label>
+                            <input type="number" class="form-control" id="years_of_experience" min="0">
+                          </div>
+                          <div class="col-md-4 mb-3">
+                            <label class="form-label">Room Number</label>
+                            <input type="text" class="form-control" id="room_number">
+                          </div>
+                          <div class="col-md-4 mb-3">
+                            <label class="form-label">Consultation Fee</label>
+                            <input type="number" class="form-control" id="consultation_fee" min="0" step="0.01">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-4 mb-3">
+                            <label class="form-label">Schedule Days</label>
+                            <input type="text" class="form-control" id="schedule_days" placeholder="e.g., Mon-Fri">
+                          </div>
+                          <div class="col-md-4 mb-3">
+                            <label class="form-label">Schedule Start</label>
+                            <input type="time" class="form-control" id="schedule_start">
+                          </div>
+                          <div class="col-md-4 mb-3">
+                            <label class="form-label">Schedule End</label>
+                            <input type="time" class="form-control" id="schedule_end">
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Address</label>
+                          <textarea class="form-control" id="address" rows="2"></textarea>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Biography</label>
+                          <textarea class="form-control" id="biography" rows="3" placeholder="Professional background and qualifications..."></textarea>
+                        </div>
+                        <div class="mt-3">
+                          <button type="submit" class="btn btn-primary me-2">
+                            <i class="bx bx-save me-1"></i> Save Changes
+                          </button>
+                          <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                  <!-- Security Settings -->
+                  <div class="card mb-4" id="securitySection" style="display: none;">
+                    <h5 class="card-header">Change Password</h5>
+                    <div class="card-body">
+                      <form id="passwordForm">
+                        <div class="row">
+                          <div class="col-md-12 mb-3">
+                            <label class="form-label">Current Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="current_password" required>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label">New Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="new_password" required minlength="6">
+                            <small class="text-muted">Minimum 6 characters</small>
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label">Confirm New Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="confirm_password" required minlength="6">
+                          </div>
+                        </div>
+                        <div class="mt-3">
+                          <button type="submit" class="btn btn-primary me-2">
+                            <i class="bx bx-lock me-1"></i> Change Password
+                          </button>
+                          <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  © <script>document.write(new Date().getFullYear());</script> My Clinic CMS
+                </div>
+              </div>
+            </footer>
+            <div class="content-backdrop fade"></div>
+          </div>
+        </div>
+      </div>
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/js/session-handler.js"></script>
+    
+    <script>
+      (function () {
+        "use strict";
+        if (!SessionHandler.requireUserType(2)) return;
+
+        var user = SessionHandler.getUser();
+        var fullName = SessionHandler.getUserFullName();
+        var initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        
+        document.getElementById("userFullName").textContent = fullName;
+        document.getElementById("userRole").textContent = SessionHandler.getUserRole();
+        document.getElementById("userAvatar").textContent = initials;
+        document.getElementById("userAvatarDropdown").textContent = initials;
+
+        var notifCount = SessionHandler.getUnreadNotificationsCount();
+        document.getElementById("notificationBadge").textContent = notifCount;
+        if (notifCount === 0) document.getElementById("notificationBadge").style.display = "none";
+
+        document.getElementById("logoutBtn").addEventListener("click", function(e) {
+          e.preventDefault();
+          if (confirm("Are you sure you want to logout?")) SessionHandler.logout();
+        });
+
+        var menuToggle = document.querySelector('.layout-menu-toggle');
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function() {
+            document.querySelector('.layout-wrapper').classList.toggle('layout-menu-expanded');
+          });
+        }
+
+        const API_BASE = '../../backend/';
+
+        // Load departments first, then profile to set the selected value
+        loadDepartments().then(() => {
+          loadProfile();
+        });
+
+        // Tab switching
+        document.getElementById("accountTab").addEventListener("click", function() {
+          document.getElementById("accountTab").classList.add("active");
+          document.getElementById("securityTab").classList.remove("active");
+          document.getElementById("accountSection").style.display = "block";
+          document.getElementById("securitySection").style.display = "none";
+        });
+
+        document.getElementById("securityTab").addEventListener("click", function() {
+          document.getElementById("securityTab").classList.add("active");
+          document.getElementById("accountTab").classList.remove("active");
+          document.getElementById("securitySection").style.display = "block";
+          document.getElementById("accountSection").style.display = "none";
+        });
+
+        async function loadProfile() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getById');
+            params.append('json', JSON.stringify({ doctor_id: user.extra.doctor_id }));
+
+            const response = await axios.post(API_BASE + 'doctors.php', params);
+            
+            if (response.data.success) {
+              const doctor = response.data.data;
+              
+              document.getElementById('username').value = user.username;
+              document.getElementById('email').value = user.email;
+              document.getElementById('first_name').value = doctor.first_name || '';
+              document.getElementById('last_name').value = doctor.last_name || '';
+              document.getElementById('contact_number').value = doctor.phone || doctor.contact_number || '';
+              document.getElementById('doctor_email').value = doctor.email || '';
+              document.getElementById('specialization').value = doctor.specialization || '';
+              document.getElementById('department_id').value = doctor.department_id || '';
+              document.getElementById('license_no').value = doctor.license_no || '';
+              document.getElementById('ptr_no').value = doctor.ptr_no || '';
+              document.getElementById('s2_license_no').value = doctor.s2_license_no || '';
+              document.getElementById('years_of_experience').value = doctor.years_of_experience || '0';
+              document.getElementById('room_number').value = doctor.room_number || '';
+              document.getElementById('consultation_fee').value = doctor.consultation_fee || '0';
+              document.getElementById('schedule_days').value = doctor.schedule_days || '';
+              document.getElementById('schedule_start').value = doctor.schedule_start || '';
+              document.getElementById('schedule_end').value = doctor.schedule_end || '';
+              document.getElementById('address').value = doctor.address || '';
+              document.getElementById('biography').value = doctor.biography || '';
+            }
+          } catch (error) {
+            console.error('Error loading profile:', error);
+          }
+        }
+
+        async function loadDepartments() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getAll');
+            params.append('json', JSON.stringify({}));
+
+            const response = await axios.post(API_BASE + 'departments.php', params);
+            
+            if (response.data.success) {
+              const select = document.getElementById('department_id');
+              response.data.data.forEach(dept => {
+                const option = document.createElement('option');
+                option.value = dept.department_id;
+                option.textContent = dept.name;  // Changed from dept.department_name to dept.name
+                select.appendChild(option);
+              });
+            }
+          } catch (error) {
+            console.error('Error loading departments:', error);
+          }
+        }
+
+        document.getElementById("accountForm").addEventListener("submit", async function(e) {
+          e.preventDefault();
+          
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'update');
+            params.append('json', JSON.stringify({
+              doctor_id: user.extra.doctor_id,
+              first_name: document.getElementById('first_name').value,
+              last_name: document.getElementById('last_name').value,
+              contact_number: document.getElementById('contact_number').value,
+              doctor_email: document.getElementById('doctor_email').value,
+              specialization: document.getElementById('specialization').value,
+              license_no: document.getElementById('license_no').value,
+              ptr_no: document.getElementById('ptr_no').value,
+              s2_license_no: document.getElementById('s2_license_no').value,
+              years_of_experience: document.getElementById('years_of_experience').value,
+              room_number: document.getElementById('room_number').value,
+              consultation_fee: document.getElementById('consultation_fee').value,
+              schedule_days: document.getElementById('schedule_days').value,
+              schedule_start: document.getElementById('schedule_start').value,
+              schedule_end: document.getElementById('schedule_end').value,
+              department_id: document.getElementById('department_id').value,
+              address: document.getElementById('address').value,
+              biography: document.getElementById('biography').value,
+              admin_user_id: user.user_id
+            }));
+
+            const response = await axios.post(API_BASE + 'doctors.php', params);
+            
+            if (response.data.success) {
+              alert('Profile updated successfully!');
+              
+              // Update session storage
+              const updatedUser = {
+                ...user,
+                profile: {
+                  ...user.profile,
+                  first_name: document.getElementById('first_name').value,
+                  last_name: document.getElementById('last_name').value
+                }
+              };
+              sessionStorage.setItem('user', JSON.stringify(updatedUser));
+              
+              // Reload page to update navbar
+              location.reload();
+            } else {
+              alert('Error: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error updating profile:', error);
+            alert('Error updating profile');
+          }
+        });
+
+        document.getElementById("passwordForm").addEventListener("submit", async function(e) {
+          e.preventDefault();
+          
+          const newPassword = document.getElementById('new_password').value;
+          const confirmPassword = document.getElementById('confirm_password').value;
+          
+          if (newPassword !== confirmPassword) {
+            alert('New passwords do not match!');
+            return;
+          }
+          
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'changePassword');
+            params.append('json', JSON.stringify({
+              user_id: user.user_id,
+              current_password: document.getElementById('current_password').value,
+              new_password: newPassword
+            }));
+
+            const response = await axios.post(API_BASE + 'users.php', params);
+            
+            if (response.data.success) {
+              alert('Password changed successfully!');
+              document.getElementById('passwordForm').reset();
+            } else {
+              alert('Error: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error changing password:', error);
+            alert('Error changing password');
+          }
+        });
+
+        console.log("Doctor profile page loaded");
+      })();
+    </script>
+  </body>
+</html>

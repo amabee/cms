@@ -224,15 +224,17 @@ class Doctors
 
       $user_id = $result['user_id'];
 
-      // Update user account
-      $stmt = $this->conn->prepare("UPDATE users SET
-                                      email = :email,
-                                      updated_at = CURRENT_TIMESTAMP
-                                      WHERE user_id = :user_id");
-      $stmt->execute([
-        ':user_id' => $user_id,
-        ':email' => $data['email']
-      ]);
+      // Update user account (if email is provided)
+      if (isset($data['email']) && !empty($data['email'])) {
+        $stmt = $this->conn->prepare("UPDATE users SET
+                                        email = :email,
+                                        updated_at = CURRENT_TIMESTAMP
+                                        WHERE user_id = :user_id");
+        $stmt->execute([
+          ':user_id' => $user_id,
+          ':email' => $data['email']
+        ]);
+      }
 
       // Update user profile
       $stmt = $this->conn->prepare("UPDATE user_profiles SET
@@ -249,7 +251,7 @@ class Doctors
         ':last_name' => $data['last_name'],
         ':gender' => $data['gender'] ?? null,
         ':birth_date' => $data['birth_date'] ?? null,
-        ':phone' => $data['phone'] ?? null,
+        ':phone' => $data['contact_number'] ?? $data['phone'] ?? null,
         ':address' => $data['address'] ?? null
       ]);
 
@@ -273,7 +275,7 @@ class Doctors
                                       WHERE doctor_id = :doctor_id");
       $stmt->execute([
         ':doctor_id' => $data['doctor_id'],
-        ':department_id' => $data['department_id'] ?? null,
+        ':department_id' => (!empty($data['department_id']) ? $data['department_id'] : null),
         ':specialization' => $data['specialization'] ?? null,
         ':license_no' => $data['license_no'] ?? null,
         ':ptr_no' => $data['ptr_no'] ?? null,
@@ -285,7 +287,7 @@ class Doctors
         ':schedule_start' => $data['schedule_start'] ?? null,
         ':schedule_end' => $data['schedule_end'] ?? null,
         ':contact_number' => $data['contact_number'] ?? null,
-        ':email' => $data['email'] ?? null,
+        ':email' => $data['doctor_email'] ?? null,
         ':status' => $data['status'] ?? 'active',
         ':biography' => $data['biography'] ?? null
       ]);

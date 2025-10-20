@@ -199,7 +199,8 @@ class AppointmentsAPI {
 
             $sql = "SELECT a.*, 
                            CONCAT(pup.first_name, ' ', pup.last_name) as patient_name,
-                           pup.phone as patient_phone
+                           pup.phone as patient_phone,
+                           pu.email as patient_email
                     FROM appointments a
                     LEFT JOIN patients p ON a.patient_id = p.patient_id
                     LEFT JOIN users pu ON p.user_id = pu.user_id
@@ -436,34 +437,68 @@ class AppointmentsAPI {
     private function getStatistics($data) {
         try {
             $stats = [];
+            
+            // Check if filtering by doctor
+            $doctorFilter = "";
+            $params = [];
+            if (isset($data['doctor_id'])) {
+                $doctorFilter = " WHERE doctor_id = :doctor_id";
+                $params = [':doctor_id' => $data['doctor_id']];
+            }
 
             // Total appointments
-            $stmt = $this->conn->query("SELECT COUNT(*) as total FROM appointments");
+            $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM appointments" . $doctorFilter);
+            $stmt->execute($params);
             $stats['total_appointments'] = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
             // Today's appointments
-            $stmt = $this->conn->query("SELECT COUNT(*) as total FROM appointments 
-                                       WHERE DATE(appointment_date) = CURDATE()");
+            $whereClause = isset($data['doctor_id']) ? " WHERE DATE(appointment_date) = CURDATE() AND doctor_id = :doctor_id" : " WHERE DATE(appointment_date) = CURDATE()";
+            $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM appointments" . $whereClause);
+            if (isset($data['doctor_id'])) {
+                $stmt->execute($params);
+            } else {
+                $stmt->execute();
+            }
             $stats['today_appointments'] = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
             // Pending appointments
-            $stmt = $this->conn->query("SELECT COUNT(*) as total FROM appointments 
-                                       WHERE status = 'pending'");
+            $whereClause = isset($data['doctor_id']) ? " WHERE status = 'pending' AND doctor_id = :doctor_id" : " WHERE status = 'pending'";
+            $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM appointments" . $whereClause);
+            if (isset($data['doctor_id'])) {
+                $stmt->execute($params);
+            } else {
+                $stmt->execute();
+            }
             $stats['pending_appointments'] = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
             // Confirmed appointments
-            $stmt = $this->conn->query("SELECT COUNT(*) as total FROM appointments 
-                                       WHERE status = 'confirmed'");
+            $whereClause = isset($data['doctor_id']) ? " WHERE status = 'confirmed' AND doctor_id = :doctor_id" : " WHERE status = 'confirmed'";
+            $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM appointments" . $whereClause);
+            if (isset($data['doctor_id'])) {
+                $stmt->execute($params);
+            } else {
+                $stmt->execute();
+            }
             $stats['confirmed_appointments'] = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
             // Completed appointments
-            $stmt = $this->conn->query("SELECT COUNT(*) as total FROM appointments 
-                                       WHERE status = 'completed'");
+            $whereClause = isset($data['doctor_id']) ? " WHERE status = 'completed' AND doctor_id = :doctor_id" : " WHERE status = 'completed'";
+            $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM appointments" . $whereClause);
+            if (isset($data['doctor_id'])) {
+                $stmt->execute($params);
+            } else {
+                $stmt->execute();
+            }
             $stats['completed_appointments'] = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
             // Cancelled appointments
-            $stmt = $this->conn->query("SELECT COUNT(*) as total FROM appointments 
-                                       WHERE status = 'cancelled'");
+            $whereClause = isset($data['doctor_id']) ? " WHERE status = 'cancelled' AND doctor_id = :doctor_id" : " WHERE status = 'cancelled'";
+            $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM appointments" . $whereClause);
+            if (isset($data['doctor_id'])) {
+                $stmt->execute($params);
+            } else {
+                $stmt->execute();
+            }
             $stats['cancelled_appointments'] = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
             // Return stats directly in the response, not through the response() method

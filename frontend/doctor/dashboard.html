@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Doctor Dashboard - My Clinic</title>
+    <meta name="description" content="Doctor Dashboard" />
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+    <style>
+      /* Make sidebar scrollable */
+      .layout-menu {
+        overflow-y: auto !important;
+        max-height: 100vh;
+      }
+      .layout-menu .menu-inner {
+        overflow-y: auto;
+        max-height: calc(100vh - 70px);
+      }
+      /* Custom scrollbar for sidebar */
+      .layout-menu::-webkit-scrollbar,
+      .layout-menu .menu-inner::-webkit-scrollbar {
+        width: 6px;
+      }
+      .layout-menu::-webkit-scrollbar-track,
+      .layout-menu .menu-inner::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .layout-menu::-webkit-scrollbar-thumb,
+      .layout-menu .menu-inner::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+      }
+      .layout-menu::-webkit-scrollbar-thumb:hover,
+      .layout-menu .menu-inner::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }
+      
+      .timeline {
+        position: relative;
+        padding-left: 30px;
+      }
+      .timeline::before {
+        content: '';
+        position: absolute;
+        left: 8px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #e0e0e0;
+      }
+      .timeline-item {
+        position: relative;
+        padding-bottom: 20px;
+      }
+      .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -26px;
+        top: 5px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #fff;
+        border: 2px solid #696cff;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        
+        <!-- Menu (Sidebar) -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="dashboard.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <img src="../assets/img/favicon/logo.png" alt="Logo" width="32" />
+              </span>
+              <span class="app-brand-text demo menu-text fw-bold ms-2">My Clinic</span>
+            </a>
+          </div>
+          <div class="menu-inner-shadow"></div>
+          <ul class="menu-inner py-1">
+            <li class="menu-item active">
+              <a href="dashboard.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div>Dashboard</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Clinical</span></li>
+            <li class="menu-item">
+              <a href="appointments.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                <div>My Appointments</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="queue.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ol"></i>
+                <div>Patient Queue</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="medical-records.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file-find"></i>
+                <div>Medical Records</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="patients.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-group"></i>
+                <div>My Patients</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Account</span></li>
+            <li class="menu-item">
+              <a href="profile.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div>My Profile</div>
+              </a>
+            </li>
+          </ul>
+        </aside>
+
+        <div class="layout-page">
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input type="text" class="form-control border-0 shadow-none" placeholder="Search patients..." />
+                </div>
+              </div>
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <li class="nav-item navbar-dropdown dropdown-notifications dropdown me-3 me-xl-2">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);">
+                    <i class="bx bx-bell bx-sm"></i>
+                    <span class="badge bg-danger rounded-pill badge-notifications" id="notificationBadge">0</span>
+                  </a>
+                </li>
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatar">D</span>
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatarDropdown">D</span>
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block" id="userFullName">Doctor</span>
+                            <small class="text-muted" id="userRole">Doctor</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);" id="logoutBtn">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              
+              <div class="row mb-4">
+                <div class="col-lg-8 mb-4 order-0">
+                  <div class="card">
+                    <div class="d-flex align-items-end row">
+                      <div class="col-sm-7">
+                        <div class="card-body">
+                          <h5 class="card-title text-primary" id="welcomeMessage">Welcome Dr. Smith! 🎉</h5>
+                          <p class="mb-4" id="currentDate">Today is Monday, October 20, 2025</p>
+                          <p class="mb-4">You have <span class="fw-bold" id="todayAppointmentCount">0</span> appointments scheduled today.</p>
+                          <a href="appointments.html" class="btn btn-sm btn-outline-primary">View Appointments</a>
+                        </div>
+                      </div>
+                      <div class="col-sm-5 text-center text-sm-left">
+                        <div class="card-body pb-0 px-0 px-md-4">
+                          <img src="../assets/img/illustrations/man-with-laptop-light.png" height="140" alt="View Badge User" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-4 order-1">
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-6 mb-4">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="card-title d-flex align-items-start justify-content-between">
+                            <div class="avatar flex-shrink-0">
+                              <i class="menu-icon tf-icons bx bx-user-check bx-md"></i>
+                            </div>
+                          </div>
+                          <span class="fw-semibold d-block mb-1">Patients Seen</span>
+                          <h3 class="card-title mb-2" id="patientsSeen">0</h3>
+                          <small class="text-success fw-semibold">Today</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-6 mb-4">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="card-title d-flex align-items-start justify-content-between">
+                            <div class="avatar flex-shrink-0">
+                              <i class="menu-icon tf-icons bx bx-time bx-md"></i>
+                            </div>
+                          </div>
+                          <span class="fw-semibold d-block mb-1">Waiting</span>
+                          <h3 class="card-title mb-2" id="patientsWaiting">0</h3>
+                          <small class="text-warning fw-semibold">In Queue</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Today's Schedule -->
+                <div class="col-md-6 col-lg-6 order-2 mb-4">
+                  <div class="card h-100">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                      <h5 class="card-title m-0 me-2">Today's Schedule</h5>
+                      <div class="dropdown">
+                        <button class="btn p-0" type="button" id="scheduleDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="scheduleDropdown">
+                          <a class="dropdown-item" href="appointments.html">View All</a>
+                          <a class="dropdown-item" href="javascript:void(0);" onclick="loadSchedule()">Refresh</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="timeline" id="scheduleTimeline">
+                        <div class="text-center py-4">
+                          <div class="spinner-border spinner-border-sm text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Patient Queue -->
+                <div class="col-md-6 col-lg-6 order-2 mb-4">
+                  <div class="card h-100">
+                    <div class="card-header d-flex align-items-center justify-content-between pb-0">
+                      <h5 class="card-title m-0 me-2">Patient Queue</h5>
+                      <div class="dropdown">
+                        <button class="btn p-0" type="button" id="queueDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="queueDropdown">
+                          <a class="dropdown-item" href="queue.html">View All</a>
+                          <a class="dropdown-item" href="javascript:void(0);" onclick="loadQueue()">Refresh</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div id="queueList">
+                        <div class="text-center py-4">
+                          <div class="spinner-border spinner-border-sm text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Recent Medical Records -->
+                <div class="col-md-12 col-lg-12 order-3 mb-4">
+                  <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                      <h5 class="card-title m-0 me-2">Recent Medical Records</h5>
+                      <a href="medical-records.html" class="btn btn-sm btn-primary">View All</a>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive text-nowrap">
+                        <table class="table table-hover">
+                          <thead>
+                            <tr>
+                              <th>Patient</th>
+                              <th>Date</th>
+                              <th>Diagnosis</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody id="recentRecordsBody">
+                            <tr>
+                              <td colspan="4" class="text-center py-4">
+                                <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                  <span class="visually-hidden">Loading...</span>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  © <script>document.write(new Date().getFullYear());</script> My Clinic CMS
+                </div>
+              </div>
+            </footer>
+            <div class="content-backdrop fade"></div>
+          </div>
+        </div>
+      </div>
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/js/session-handler.js"></script>
+    
+    <script>
+      (function () {
+        "use strict";
+        // Require doctor user type (assuming type 2 is for doctors)
+        if (!SessionHandler.requireUserType(2)) return;
+
+        var user = SessionHandler.getUser();
+        var fullName = SessionHandler.getUserFullName();
+        var initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        
+        document.getElementById("userFullName").textContent = fullName;
+        document.getElementById("userRole").textContent = SessionHandler.getUserRole();
+        document.getElementById("userAvatar").textContent = initials;
+        document.getElementById("userAvatarDropdown").textContent = initials;
+
+        var notifCount = SessionHandler.getUnreadNotificationsCount();
+        document.getElementById("notificationBadge").textContent = notifCount;
+        if (notifCount === 0) document.getElementById("notificationBadge").style.display = "none";
+
+        // Welcome message
+        document.getElementById("welcomeMessage").textContent = `Welcome Dr. ${fullName.split(' ').pop()}! 🎉`;
+        
+        // Current date
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById("currentDate").textContent = `Today is ${new Date().toLocaleDateString('en-US', options)}`;
+
+        document.getElementById("logoutBtn").addEventListener("click", function(e) {
+          e.preventDefault();
+          if (confirm("Are you sure you want to logout?")) SessionHandler.logout();
+        });
+
+        var menuToggle = document.querySelector('.layout-menu-toggle');
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function() {
+            document.querySelector('.layout-wrapper').classList.toggle('layout-menu-expanded');
+          });
+        }
+
+        const API_BASE = '../../backend/';
+
+        // Load all dashboard data
+        loadStatistics();
+        loadSchedule();
+        loadQueue();
+        loadRecentRecords();
+
+        // Auto-refresh queue every 30 seconds
+        setInterval(loadQueue, 30000);
+
+        async function loadStatistics() {
+          try {
+            // Get doctor's appointments for today
+            const response = await axios.post(API_BASE + 'appointments.php', {
+              action: 'getByDoctor',
+              doctor_id: user.user_id,
+              date: new Date().toISOString().split('T')[0]
+            });
+            
+            if (response.data.success) {
+              const appointments = response.data.appointments || [];
+              document.getElementById("todayAppointmentCount").textContent = appointments.length;
+              
+              // Count completed appointments (patients seen)
+              const seenCount = appointments.filter(a => a.status === 'completed').length;
+              document.getElementById("patientsSeen").textContent = seenCount;
+            }
+
+            // Get queue statistics
+            const queueResponse = await axios.post(API_BASE + 'queue.php', {
+              action: 'getAll',
+              doctor_id: user.user_id,
+              date: new Date().toISOString().split('T')[0],
+              status: 'waiting'
+            });
+            
+            if (queueResponse.data.success) {
+              const queue = queueResponse.data.queues || [];
+              document.getElementById("patientsWaiting").textContent = queue.length;
+            }
+          } catch (error) {
+            console.error('Error loading statistics:', error);
+          }
+        }
+
+        async function loadSchedule() {
+          try {
+            const response = await axios.post(API_BASE + 'appointments.php', {
+              action: 'getByDoctor',
+              doctor_id: user.user_id,
+              date: new Date().toISOString().split('T')[0]
+            });
+            
+            if (response.data.success) {
+              renderSchedule(response.data.appointments || []);
+            }
+          } catch (error) {
+            console.error('Error loading schedule:', error);
+            document.getElementById('scheduleTimeline').innerHTML = '<p class="text-danger">Error loading schedule</p>';
+          }
+        }
+
+        function renderSchedule(appointments) {
+          const timeline = document.getElementById('scheduleTimeline');
+          
+          if (appointments.length === 0) {
+            timeline.innerHTML = '<p class="text-muted">No appointments scheduled for today.</p>';
+            return;
+          }
+
+          // Sort by time
+          appointments.sort((a, b) => a.appointment_time.localeCompare(b.appointment_time));
+
+          const html = appointments.map(apt => {
+            let statusBadge = '';
+            switch(apt.status) {
+              case 'scheduled':
+                statusBadge = '<span class="badge bg-label-primary">Scheduled</span>';
+                break;
+              case 'confirmed':
+                statusBadge = '<span class="badge bg-label-info">Confirmed</span>';
+                break;
+              case 'in_progress':
+                statusBadge = '<span class="badge bg-label-warning">In Progress</span>';
+                break;
+              case 'completed':
+                statusBadge = '<span class="badge bg-label-success">Completed</span>';
+                break;
+              case 'cancelled':
+                statusBadge = '<span class="badge bg-label-danger">Cancelled</span>';
+                break;
+            }
+
+            return `
+              <div class="timeline-item">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <h6 class="mb-1">${apt.appointment_time} - ${apt.patient_name}</h6>
+                    <p class="mb-1"><small class="text-muted">${apt.reason || 'General Checkup'}</small></p>
+                    ${statusBadge}
+                  </div>
+                  <a href="appointments.html" class="btn btn-sm btn-outline-primary">View</a>
+                </div>
+              </div>
+            `;
+          }).join('');
+
+          timeline.innerHTML = html;
+        }
+
+        async function loadQueue() {
+          try {
+            const response = await axios.post(API_BASE + 'queue.php', {
+              action: 'getAll',
+              doctor_id: user.user_id,
+              date: new Date().toISOString().split('T')[0]
+            });
+            
+            if (response.data.success) {
+              renderQueue(response.data.queues || []);
+            }
+          } catch (error) {
+            console.error('Error loading queue:', error);
+            document.getElementById('queueList').innerHTML = '<p class="text-danger">Error loading queue</p>';
+          }
+        }
+
+        function renderQueue(queue) {
+          const queueList = document.getElementById('queueList');
+          
+          // Filter waiting and called status
+          const activeQueue = queue.filter(q => q.status === 'waiting' || q.status === 'called');
+          
+          if (activeQueue.length === 0) {
+            queueList.innerHTML = '<p class="text-muted">No patients in queue.</p>';
+            return;
+          }
+
+          const html = activeQueue.map(item => {
+            const statusBadge = item.status === 'called' 
+              ? '<span class="badge bg-label-success">Called</span>'
+              : '<span class="badge bg-label-warning">Waiting</span>';
+
+            return `
+              <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
+                <div>
+                  <h6 class="mb-1">Queue #${item.queue_number}</h6>
+                  <p class="mb-1">${item.patient_name}</p>
+                  ${statusBadge}
+                </div>
+                <a href="queue.html" class="btn btn-sm btn-outline-primary">Manage</a>
+              </div>
+            `;
+          }).join('');
+
+          queueList.innerHTML = html;
+        }
+
+        async function loadRecentRecords() {
+          try {
+            const response = await axios.post(API_BASE + 'medical-records.php', {
+              action: 'getAll',
+              doctor_id: user.user_id,
+              limit: 5
+            });
+            
+            if (response.data.success) {
+              renderRecentRecords(response.data.data);
+            }
+          } catch (error) {
+            console.error('Error loading recent records:', error);
+            document.getElementById('recentRecordsBody').innerHTML = '<tr><td colspan="4" class="text-center text-danger">Error loading records</td></tr>';
+          }
+        }
+
+        function renderRecentRecords(records) {
+          const tbody = document.getElementById('recentRecordsBody');
+          
+          if (records.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No recent medical records</td></tr>';
+            return;
+          }
+
+          const html = records.map(record => `
+            <tr>
+              <td>${record.patient_name || 'N/A'}</td>
+              <td>${new Date(record.record_date).toLocaleDateString()}</td>
+              <td>${record.diagnosis || 'N/A'}</td>
+              <td>
+                <a href="medical-records.html" class="btn btn-sm btn-outline-primary">View</a>
+              </td>
+            </tr>
+          `).join('');
+
+          tbody.innerHTML = html;
+        }
+
+        // Expose functions globally for onclick handlers
+        window.loadSchedule = loadSchedule;
+        window.loadQueue = loadQueue;
+
+        console.log("Doctor dashboard loaded");
+      })();
+    </script>
+  </body>
+</html>

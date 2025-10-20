@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Billing & Invoices - My Clinic</title>
+    <meta name="description" content="Manage Billing & Invoices" />
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+    <style>
+      /* Make sidebar scrollable */
+      .layout-menu {
+        overflow-y: auto !important;
+        max-height: 100vh;
+      }
+      .layout-menu .menu-inner {
+        overflow-y: auto;
+        max-height: calc(100vh - 70px);
+      }
+      /* Custom scrollbar for sidebar */
+      .layout-menu::-webkit-scrollbar,
+      .layout-menu .menu-inner::-webkit-scrollbar {
+        width: 6px;
+      }
+      .layout-menu::-webkit-scrollbar-track,
+      .layout-menu .menu-inner::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .layout-menu::-webkit-scrollbar-thumb,
+      .layout-menu .menu-inner::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+      }
+      .layout-menu::-webkit-scrollbar-thumb:hover,
+      .layout-menu .menu-inner::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }
+      
+      @media print {
+        body * {
+          visibility: hidden;
+        }
+        #printArea, #printArea * {
+          visibility: visible;
+        }
+        #printArea {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          display: block;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        
+        <!-- Menu (Sidebar) -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="dashboard.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <img src="../assets/img/favicon/logo.png" alt="Logo" width="32" />
+              </span>
+              <span class="app-brand-text demo menu-text fw-bold ms-2">My Clinic</span>
+            </a>
+          </div>
+          <div class="menu-inner-shadow"></div>
+          <ul class="menu-inner py-1">
+            <li class="menu-item">
+              <a href="dashboard.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div>Dashboard</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Management</span></li>
+            <li class="menu-item">
+              <a href="users.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div>Users</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="doctors.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-plus-medical"></i>
+                <div>Doctors</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="departments.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-building"></i>
+                <div>Departments</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="staff.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-briefcase"></i>
+                <div>Staff</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="patients.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-group"></i>
+                <div>Patients</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Clinical</span></li>
+            <li class="menu-item">
+              <a href="medical-records.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file-find"></i>
+                <div>Medical Records</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="appointments.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                <div>Appointments</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="queue.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ol"></i>
+                <div>Queue</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Financial</span></li>
+            <li class="menu-item active">
+              <a href="billing.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-receipt"></i>
+                <div>Billing & Invoices</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Laboratory</span></li>
+            <li class="menu-item">
+              <a href="lab-tests.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-test-tube"></i>
+                <div>Lab Tests</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="lab-requests.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-clipboard-plus"></i>
+                <div>Lab Requests</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">System</span></li>
+            <li class="menu-item">
+              <a href="settings.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-cog"></i>
+                <div>Settings</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="audit-logs.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                <div>Audit Logs</div>
+              </a>
+            </li>
+          </ul>
+        </aside>
+
+        <div class="layout-page">
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input type="text" class="form-control border-0 shadow-none" placeholder="Search..." />
+                </div>
+              </div>
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <li class="nav-item navbar-dropdown dropdown-notifications dropdown me-3 me-xl-2">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);">
+                    <i class="bx bx-bell bx-sm"></i>
+                    <span class="badge bg-danger rounded-pill badge-notifications" id="notificationBadge">0</span>
+                  </a>
+                </li>
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatar">A</span>
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatarDropdown">A</span>
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block" id="userFullName">Admin User</span>
+                            <small class="text-muted" id="userRole">Administrator</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="settings.html">
+                        <i class="bx bx-cog me-2"></i>
+                        <span class="align-middle">Settings</span>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);" id="logoutBtn">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              
+              <h4 class="fw-bold py-3 mb-4">
+                <span class="text-muted fw-light">Financial /</span> Billing & Invoices
+              </h4>
+
+              <!-- Statistics Row -->
+              <div class="row mb-4">
+                <div class="col-lg-3 col-md-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">Total Revenue</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="totalRevenue">₱0.00</h4>
+                          </div>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-success rounded p-2">
+                            <i class="bx bx-money bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">Unpaid Bills</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="unpaidBills">0</h4>
+                          </div>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-danger rounded p-2">
+                            <i class="bx bx-error-circle bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">Paid Bills</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="paidBills">0</h4>
+                          </div>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-success rounded p-2">
+                            <i class="bx bx-check-circle bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="card-info">
+                          <p class="card-text">Today's Revenue</p>
+                          <div class="d-flex align-items-end mb-2">
+                            <h4 class="card-title mb-0 me-2" id="todayRevenue">₱0.00</h4>
+                          </div>
+                        </div>
+                        <div class="card-icon">
+                          <span class="badge bg-label-primary rounded p-2">
+                            <i class="bx bx-calendar bx-sm"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Billing List -->
+              <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0">Invoice Management</h5>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createBillingModal">
+                    <i class="bx bx-plus me-1"></i> Create Invoice
+                  </button>
+                </div>
+                
+                <div class="card-body">
+                  <!-- Filter and Search -->
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <input type="text" class="form-control" id="searchBilling" placeholder="Search by patient name, invoice number...">
+                    </div>
+                    <div class="col-md-3">
+                      <select class="form-select" id="filterStatus">
+                        <option value="">All Status</option>
+                        <option value="unpaid">Unpaid</option>
+                        <option value="paid">Paid</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <button type="button" class="btn btn-outline-secondary w-100" id="resetFilters">
+                        <i class="bx bx-reset me-1"></i> Reset
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Billing Table -->
+                  <div class="table-responsive text-nowrap">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Invoice #</th>
+                          <th>Patient</th>
+                          <th>Date</th>
+                          <th>Amount</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table-border-bottom-0" id="billingsTableBody">
+                        <tr>
+                          <td colspan="6" class="text-center py-4">
+                            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  © <script>document.write(new Date().getFullYear());</script> My Clinic CMS
+                </div>
+              </div>
+            </footer>
+            <div class="content-backdrop fade"></div>
+          </div>
+        </div>
+      </div>
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+    <!-- Create Billing Modal -->
+    <div class="modal fade" id="createBillingModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Create New Invoice</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="createBillingForm">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Select Appointment <span class="text-danger">*</span></label>
+                  <select class="form-select" name="appointment_id" id="appointmentSelect" required>
+                    <option value="">Choose an appointment...</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Discount (%)</label>
+                  <input type="number" class="form-control" name="discount" id="discountInput" value="0" min="0" max="100" step="0.01">
+                </div>
+              </div>
+
+              <hr>
+              <h6 class="mb-3">Invoice Items</h6>
+              <div id="itemsContainer">
+                <div class="row item-row mb-2">
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" placeholder="Item description" name="items[]" required>
+                  </div>
+                  <div class="col-md-4">
+                    <input type="number" class="form-control item-amount" placeholder="Amount" name="amounts[]" min="0" step="0.01" required>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-sm btn-outline-primary" id="addItemBtn">
+                <i class="bx bx-plus"></i> Add Item
+              </button>
+
+              <hr>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="d-flex justify-content-between">
+                    <h6>Total Amount:</h6>
+                    <h6 id="totalAmountDisplay">₱0.00</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Create Invoice</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- View Billing Modal -->
+    <div class="modal fade" id="viewBillingModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Invoice Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="printArea">
+            <div class="text-center mb-4">
+              <h4>MY CLINIC</h4>
+              <p class="mb-0">Invoice #<span id="view_billing_id"></span></p>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <h6>Patient Information</h6>
+                <p class="mb-1"><strong>Name:</strong> <span id="view_patient_name"></span></p>
+                <p class="mb-1"><strong>Contact:</strong> <span id="view_patient_contact"></span></p>
+              </div>
+              <div class="col-md-6 text-end">
+                <h6>Invoice Information</h6>
+                <p class="mb-1"><strong>Date:</strong> <span id="view_created_at"></span></p>
+                <p class="mb-1"><strong>Status:</strong> <span id="view_status_badge"></span></p>
+              </div>
+            </div>
+
+            <hr>
+            <h6 class="mb-3">Invoice Items</h6>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th class="text-end">Amount</th>
+                </tr>
+              </thead>
+              <tbody id="view_items">
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Subtotal:</th>
+                  <th class="text-end" id="view_subtotal">₱0.00</th>
+                </tr>
+                <tr>
+                  <th>Discount (<span id="view_discount_percent">0</span>%):</th>
+                  <th class="text-end" id="view_discount_amount">₱0.00</th>
+                </tr>
+                <tr>
+                  <th>Total:</th>
+                  <th class="text-end" id="view_net_amount">₱0.00</th>
+                </tr>
+              </tfoot>
+            </table>
+
+            <hr>
+            <h6 class="mb-3">Payment History</h6>
+            <div id="view_payments">
+              <p class="text-muted">No payments recorded yet.</p>
+            </div>
+            <div class="alert alert-info" role="alert">
+              <strong>Balance Due:</strong> <span id="view_balance">₱0.00</span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-info" onclick="window.print()">
+              <i class="bx bx-printer me-1"></i> Print
+            </button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPaymentModal" id="addPaymentBtn">
+              <i class="bx bx-plus me-1"></i> Add Payment
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Payment Modal -->
+    <div class="modal fade" id="addPaymentModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Payment</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="addPaymentForm">
+            <input type="hidden" id="payment_billing_id" name="billing_id">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Amount Paid <span class="text-danger">*</span></label>
+                <input type="number" class="form-control" name="amount_paid" id="amountPaidInput" min="0" step="0.01" required>
+                <small class="text-muted">Balance: <span id="payment_balance">₱0.00</span></small>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Payment Method <span class="text-danger">*</span></label>
+                <select class="form-select" name="payment_method" required>
+                  <option value="">Select method...</option>
+                  <option value="cash">Cash</option>
+                  <option value="card">Card</option>
+                  <option value="bank_transfer">Bank Transfer</option>
+                  <option value="gcash">GCash</option>
+                  <option value="paymaya">PayMaya</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Reference Number</label>
+                <input type="text" class="form-control" name="reference_no" placeholder="Optional">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Record Payment</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/js/session-handler.js"></script>
+    
+    <script>
+      (function () {
+        "use strict";
+        if (!SessionHandler.requireUserType(1)) return;
+
+        var user = SessionHandler.getUser();
+        var fullName = SessionHandler.getUserFullName();
+        var initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        
+        document.getElementById("userFullName").textContent = fullName;
+        document.getElementById("userRole").textContent = SessionHandler.getUserRole();
+        document.getElementById("userAvatar").textContent = initials;
+        document.getElementById("userAvatarDropdown").textContent = initials;
+
+        var notifCount = SessionHandler.getUnreadNotificationsCount();
+        document.getElementById("notificationBadge").textContent = notifCount;
+        if (notifCount === 0) document.getElementById("notificationBadge").style.display = "none";
+
+        document.getElementById("logoutBtn").addEventListener("click", function(e) {
+          e.preventDefault();
+          if (confirm("Are you sure you want to logout?")) SessionHandler.logout();
+        });
+
+        var menuToggle = document.querySelector('.layout-menu-toggle');
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function() {
+            document.querySelector('.layout-wrapper').classList.toggle('layout-menu-expanded');
+          });
+        }
+
+        const API_BASE = '../../backend/';
+        var currentBillingId = null;
+
+        // Load initial data
+        loadBillings();
+        loadStatistics();
+        loadAppointments();
+
+        // Add item button
+        document.getElementById('addItemBtn').addEventListener('click', function() {
+          const container = document.getElementById('itemsContainer');
+          const newRow = document.createElement('div');
+          newRow.className = 'row item-row mb-2';
+          newRow.innerHTML = `
+            <div class="col-md-8">
+              <input type="text" class="form-control" placeholder="Item description" name="items[]" required>
+            </div>
+            <div class="col-md-4">
+              <div class="input-group">
+                <input type="number" class="form-control item-amount" placeholder="Amount" name="amounts[]" min="0" step="0.01" required>
+                <button type="button" class="btn btn-outline-danger remove-item-btn"><i class="bx bx-trash"></i></button>
+              </div>
+            </div>
+          `;
+          container.appendChild(newRow);
+          attachRemoveListener(newRow.querySelector('.remove-item-btn'));
+          attachAmountListener(newRow.querySelector('.item-amount'));
+        });
+
+        function attachRemoveListener(btn) {
+          btn.addEventListener('click', function() {
+            this.closest('.item-row').remove();
+            calculateTotal();
+          });
+        }
+
+        function attachAmountListener(input) {
+          input.addEventListener('input', calculateTotal);
+        }
+
+        // Attach to initial amount input
+        document.querySelectorAll('.item-amount').forEach(input => {
+          attachAmountListener(input);
+        });
+
+        document.getElementById('discountInput').addEventListener('input', calculateTotal);
+
+        function calculateTotal() {
+          let subtotal = 0;
+          document.querySelectorAll('.item-amount').forEach(input => {
+            subtotal += parseFloat(input.value) || 0;
+          });
+          
+          const discount = parseFloat(document.getElementById('discountInput').value) || 0;
+          const discountAmount = subtotal * (discount / 100);
+          const total = subtotal - discountAmount;
+          
+          document.getElementById('totalAmountDisplay').textContent = '₱' + total.toFixed(2);
+        }
+
+        async function loadAppointments() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getAll');
+            params.append('json', JSON.stringify({ status: 'completed' }));
+
+            const response = await axios.post(API_BASE + 'appointments.php', params);
+            
+            if (response.data.success) {
+              const select = document.getElementById('appointmentSelect');
+              select.innerHTML = '<option value="">Choose an appointment...</option>';
+              
+              response.data.data.forEach(apt => {
+                const option = document.createElement('option');
+                option.value = apt.appointment_id;
+                option.textContent = `#${apt.appointment_id} - ${apt.patient_name} - ${apt.appointment_date}`;
+                option.dataset.patientId = apt.patient_id;
+                select.appendChild(option);
+              });
+            }
+          } catch (error) {
+            console.error('Error loading appointments:', error);
+          }
+        }
+
+        async function loadStatistics() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getStatistics');
+            params.append('json', JSON.stringify({}));
+
+            const response = await axios.post(API_BASE + 'billing.php', params);
+            
+            if (response.data.success) {
+              const stats = response.data.data;
+              document.getElementById("totalRevenue").textContent = '₱' + (parseFloat(stats.total_revenue) || 0).toFixed(2);
+              document.getElementById("unpaidBills").textContent = stats.unpaid_count || 0;
+              document.getElementById("paidBills").textContent = stats.paid_count || 0;
+              document.getElementById("todayRevenue").textContent = '₱' + (parseFloat(stats.today_revenue) || 0).toFixed(2);
+            }
+          } catch (error) {
+            console.error('Error loading statistics:', error);
+          }
+        }
+
+        async function loadBillings() {
+          try {
+            const searchTerm = document.getElementById("searchBilling").value;
+            const status = document.getElementById("filterStatus").value;
+
+            const params = new URLSearchParams();
+            params.append('operation', 'getAll');
+            params.append('json', JSON.stringify({
+              search: searchTerm,
+              status: status
+            }));
+
+            const response = await axios.post(API_BASE + 'billing.php', params);
+            
+            if (response.data.success) {
+              renderBillingsTable(response.data.data);
+            } else {
+              console.error('Error loading billings:', response.data.error);
+              alert('Error loading billings: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error loading billings:', error);
+            alert('Error loading billings. Please check your connection.');
+          }
+        }
+
+        function renderBillingsTable(billings) {
+          var tbody = document.getElementById("billingsTableBody");
+          
+          if (billings.length === 0) {
+            tbody.innerHTML = `
+              <tr>
+                <td colspan="6" class="text-center py-4">
+                  <i class="bx bx-receipt bx-lg text-muted"></i>
+                  <p class="mt-2 mb-0">No invoices found</p>
+                </td>
+              </tr>
+            `;
+            return;
+          }
+
+          tbody.innerHTML = billings.map(billing => {
+            var statusBadge = billing.status === 'paid' 
+              ? '<span class="badge bg-label-success">Paid</span>' 
+              : '<span class="badge bg-label-danger">Unpaid</span>';
+
+            return `
+              <tr>
+                <td><strong>#${billing.billing_id}</strong></td>
+                <td>${billing.patient_name || 'N/A'}</td>
+                <td>${new Date(billing.created_at).toLocaleDateString()}</td>
+                <td>₱${parseFloat(billing.net_amount).toFixed(2)}</td>
+                <td>${statusBadge}</td>
+                <td>
+                  <div class="dropdown">
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item view-billing" href="javascript:void(0);" data-billing='${JSON.stringify(billing)}'>
+                        <i class="bx bx-show me-1"></i> View
+                      </a>
+                      <a class="dropdown-item delete-billing" href="javascript:void(0);" data-id="${billing.billing_id}">
+                        <i class="bx bx-trash me-1"></i> Delete
+                      </a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        }
+
+        // Create Billing Form Submit
+        document.getElementById("createBillingForm").addEventListener("submit", async function(e) {
+          e.preventDefault();
+          
+          try {
+            const formData = new FormData(this);
+            const appointmentSelect = document.getElementById('appointmentSelect');
+            const selectedOption = appointmentSelect.options[appointmentSelect.selectedIndex];
+            
+            const items = [];
+            const descriptions = formData.getAll('items[]');
+            const amounts = formData.getAll('amounts[]');
+            
+            for (let i = 0; i < descriptions.length; i++) {
+              if (descriptions[i] && amounts[i]) {
+                items.push({
+                  description: descriptions[i],
+                  amount: parseFloat(amounts[i])
+                });
+              }
+            }
+
+            const jsonData = {
+              appointment_id: formData.get('appointment_id'),
+              patient_id: selectedOption.dataset.patientId,
+              discount: parseFloat(formData.get('discount')) || 0,
+              items: items,
+              admin_user_id: user.user_id
+            };
+
+            const params = new URLSearchParams();
+            params.append('operation', 'create');
+            params.append('json', JSON.stringify(jsonData));
+
+            const response = await axios.post(API_BASE + 'billing.php', params);
+            
+            if (response.data.success) {
+              alert('Invoice created successfully!');
+              bootstrap.Modal.getInstance(document.getElementById("createBillingModal")).hide();
+              this.reset();
+              document.getElementById('itemsContainer').innerHTML = `
+                <div class="row item-row mb-2">
+                  <div class="col-md-8">
+                    <input type="text" class="form-control" placeholder="Item description" name="items[]" required>
+                  </div>
+                  <div class="col-md-4">
+                    <input type="number" class="form-control item-amount" placeholder="Amount" name="amounts[]" min="0" step="0.01" required>
+                  </div>
+                </div>
+              `;
+              document.querySelectorAll('.item-amount').forEach(input => {
+                attachAmountListener(input);
+              });
+              calculateTotal();
+              loadBillings();
+              loadStatistics();
+            } else {
+              alert('Error: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error creating billing:', error);
+            alert('Error creating invoice. Please try again.');
+          }
+        });
+
+        // View Billing
+        document.addEventListener("click", async function(e) {
+          if (e.target.closest(".view-billing")) {
+            const billingData = JSON.parse(e.target.closest(".view-billing").getAttribute("data-billing"));
+            currentBillingId = billingData.billing_id;
+            
+            // Basic info
+            document.getElementById("view_billing_id").textContent = billingData.billing_id;
+            document.getElementById("view_patient_name").textContent = billingData.patient_name || 'N/A';
+            document.getElementById("view_patient_contact").textContent = billingData.patient_contact || 'N/A';
+            document.getElementById("view_created_at").textContent = new Date(billingData.created_at).toLocaleString();
+            
+            // Status badge
+            let statusBadge = billingData.status === 'paid' 
+              ? '<span class="badge bg-label-success">Paid</span>' 
+              : '<span class="badge bg-label-danger">Unpaid</span>';
+            document.getElementById("view_status_badge").innerHTML = statusBadge;
+            
+            // Load items
+            try {
+              const params = new URLSearchParams();
+              params.append('operation', 'getById');
+              params.append('json', JSON.stringify({ billing_id: billingData.billing_id }));
+
+              const response = await axios.post(API_BASE + 'billing.php', params);
+              
+              if (response.data.success && response.data.data.items) {
+                const itemsHtml = response.data.data.items.map(item => `
+                  <tr>
+                    <td>${item.description}</td>
+                    <td class="text-end">₱${parseFloat(item.amount).toFixed(2)}</td>
+                  </tr>
+                `).join('');
+                document.getElementById('view_items').innerHTML = itemsHtml;
+              }
+            } catch (error) {
+              console.error('Error loading items:', error);
+            }
+            
+            // Amounts
+            const subtotal = parseFloat(billingData.total_amount);
+            const discount = parseFloat(billingData.discount) || 0;
+            const discountAmount = subtotal * (discount / 100);
+            const netAmount = parseFloat(billingData.net_amount);
+            
+            document.getElementById('view_subtotal').textContent = '₱' + subtotal.toFixed(2);
+            document.getElementById('view_discount_percent').textContent = discount.toFixed(2);
+            document.getElementById('view_discount_amount').textContent = '₱' + discountAmount.toFixed(2);
+            document.getElementById('view_net_amount').textContent = '₱' + netAmount.toFixed(2);
+            
+            // Load payments
+            try {
+              const params = new URLSearchParams();
+              params.append('operation', 'getPayments');
+              params.append('json', JSON.stringify({ billing_id: billingData.billing_id }));
+
+              const response = await axios.post(API_BASE + 'billing.php', params);
+              
+              if (response.data.success && response.data.data.length > 0) {
+                let totalPaid = 0;
+                const paymentsHtml = response.data.data.map(payment => {
+                  totalPaid += parseFloat(payment.amount_paid);
+                  return `
+                    <div class="d-flex justify-content-between mb-2">
+                      <div>
+                        <strong>${payment.payment_method}</strong>
+                        <br><small>${new Date(payment.payment_date).toLocaleString()}</small>
+                        ${payment.reference_no ? `<br><small>Ref: ${payment.reference_no}</small>` : ''}
+                      </div>
+                      <div><strong>₱${parseFloat(payment.amount_paid).toFixed(2)}</strong></div>
+                    </div>
+                  `;
+                }).join('');
+                document.getElementById('view_payments').innerHTML = paymentsHtml;
+                
+                const balance = netAmount - totalPaid;
+                document.getElementById('view_balance').textContent = '₱' + balance.toFixed(2);
+                
+                // Store balance for payment modal
+                document.getElementById('payment_balance').textContent = '₱' + balance.toFixed(2);
+              } else {
+                document.getElementById('view_payments').innerHTML = '<p class="text-muted">No payments recorded yet.</p>';
+                document.getElementById('view_balance').textContent = '₱' + netAmount.toFixed(2);
+                document.getElementById('payment_balance').textContent = '₱' + netAmount.toFixed(2);
+              }
+            } catch (error) {
+              console.error('Error loading payments:', error);
+            }
+            
+            document.getElementById('payment_billing_id').value = billingData.billing_id;
+            new bootstrap.Modal(document.getElementById("viewBillingModal")).show();
+          }
+        });
+
+        // Add Payment Form Submit
+        document.getElementById("addPaymentForm").addEventListener("submit", async function(e) {
+          e.preventDefault();
+          
+          try {
+            const formData = new FormData(this);
+            const jsonData = {
+              billing_id: formData.get('billing_id'),
+              amount_paid: parseFloat(formData.get('amount_paid')),
+              payment_method: formData.get('payment_method'),
+              reference_no: formData.get('reference_no') || null,
+              admin_user_id: user.user_id
+            };
+
+            const params = new URLSearchParams();
+            params.append('operation', 'addPayment');
+            params.append('json', JSON.stringify(jsonData));
+
+            const response = await axios.post(API_BASE + 'billing.php', params);
+            
+            if (response.data.success) {
+              alert('Payment recorded successfully!');
+              bootstrap.Modal.getInstance(document.getElementById("addPaymentModal")).hide();
+              this.reset();
+              loadBillings();
+              loadStatistics();
+              
+              // Reload view modal
+              if (currentBillingId) {
+                const viewBtn = document.querySelector(`[data-billing*='"billing_id":${currentBillingId}']`);
+                if (viewBtn) viewBtn.click();
+              }
+            } else {
+              alert('Error: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error adding payment:', error);
+            alert('Error recording payment. Please try again.');
+          }
+        });
+
+        // Delete Billing
+        document.addEventListener("click", async function(e) {
+          if (e.target.closest(".delete-billing")) {
+            const billingId = e.target.closest(".delete-billing").getAttribute("data-id");
+            
+            if (!confirm(`Are you sure you want to delete Invoice #${billingId}?`)) {
+              return;
+            }
+
+            try {
+              const params = new URLSearchParams();
+              params.append('operation', 'delete');
+              params.append('json', JSON.stringify({
+                billing_id: billingId,
+                admin_user_id: user.user_id
+              }));
+
+              const response = await axios.post(API_BASE + 'billing.php', params);
+              
+              if (response.data.success) {
+                alert('Invoice deleted successfully!');
+                loadBillings();
+                loadStatistics();
+              } else {
+                alert('Error: ' + response.data.error);
+              }
+            } catch (error) {
+              console.error('Error deleting billing:', error);
+              alert('Error deleting invoice. Please try again.');
+            }
+          }
+        });
+
+        document.getElementById("resetFilters").addEventListener("click", function() {
+          document.getElementById("searchBilling").value = "";
+          document.getElementById("filterStatus").value = "";
+          loadBillings();
+        });
+
+        document.getElementById("searchBilling").addEventListener("input", loadBillings);
+        document.getElementById("filterStatus").addEventListener("change", loadBillings);
+
+        console.log("Billing page loaded");
+      })();
+    </script>
+  </body>
+</html>

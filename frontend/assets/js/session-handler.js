@@ -166,7 +166,7 @@ const SessionHandler = (function () {
    */
   function logout() {
     clearSession();
-    window.location.href = 'login.html';
+    window.location.href = '/login.html';
   }
 
   /**
@@ -193,7 +193,7 @@ const SessionHandler = (function () {
    */
   function requireAuth() {
     if (!isAuthenticated()) {
-      window.location.href = '../login.html';
+      window.location.href = '/login.html';
       return false;
     }
     return true;

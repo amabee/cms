@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Medical Records - My Clinic</title>
+    <meta name="description" content="Doctor Medical Records" />
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+    <style>
+      .layout-menu {
+        overflow-y: auto !important;
+        max-height: 100vh;
+      }
+      .layout-menu .menu-inner {
+        overflow-y: auto;
+        max-height: calc(100vh - 70px);
+      }
+      .layout-menu::-webkit-scrollbar,
+      .layout-menu .menu-inner::-webkit-scrollbar {
+        width: 6px;
+      }
+      .layout-menu::-webkit-scrollbar-track,
+      .layout-menu .menu-inner::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .layout-menu::-webkit-scrollbar-thumb,
+      .layout-menu .menu-inner::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+      }
+      .layout-menu::-webkit-scrollbar-thumb:hover,
+      .layout-menu .menu-inner::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="dashboard.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <img src="../assets/img/favicon/logo.png" alt="Logo" width="32" />
+              </span>
+              <span class="app-brand-text demo menu-text fw-bold ms-2">My Clinic</span>
+            </a>
+          </div>
+          <div class="menu-inner-shadow"></div>
+          <ul class="menu-inner py-1">
+            <li class="menu-item">
+              <a href="dashboard.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div>Dashboard</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Clinical</span></li>
+            <li class="menu-item">
+              <a href="appointments.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                <div>My Appointments</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="queue.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ol"></i>
+                <div>Patient Queue</div>
+              </a>
+            </li>
+            <li class="menu-item active">
+              <a href="medical-records.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file-find"></i>
+                <div>Medical Records</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="patients.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-group"></i>
+                <div>My Patients</div>
+              </a>
+            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Account</span></li>
+            <li class="menu-item">
+              <a href="profile.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div>My Profile</div>
+              </a>
+            </li>
+          </ul>
+        </aside>
+
+        <div class="layout-page">
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input type="text" class="form-control border-0 shadow-none" placeholder="Search patients..." />
+                </div>
+              </div>
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <li class="nav-item navbar-dropdown dropdown-notifications dropdown me-3 me-xl-2">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);">
+                    <i class="bx bx-bell bx-sm"></i>
+                    <span class="badge bg-danger rounded-pill badge-notifications" id="notificationBadge">0</span>
+                  </a>
+                </li>
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatar">D</span>
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatarDropdown">D</span>
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block" id="userFullName">Doctor</span>
+                            <small class="text-muted" id="userRole">Doctor</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
+                      </a>
+                    </li>
+                    <li><div class="dropdown-divider"></div></li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);" id="logoutBtn">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              
+              <h4 class="fw-bold py-3 mb-4">
+                <span class="text-muted fw-light">Clinical /</span> Medical Records
+              </h4>
+
+              <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0">Medical Records</h5>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createRecordModal">
+                    <i class="bx bx-plus me-1"></i> Create Record
+                  </button>
+                </div>
+                
+                <div class="card-body">
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <input type="text" class="form-control" id="searchRecord" placeholder="Search patient or diagnosis...">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="date" class="form-control" id="filterDate">
+                    </div>
+                    <div class="col-md-3">
+                      <button type="button" class="btn btn-outline-secondary w-100" id="resetFilters">
+                        <i class="bx bx-reset me-1"></i> Reset
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="table-responsive text-nowrap">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Patient</th>
+                          <th>Diagnosis</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table-border-bottom-0" id="recordsTableBody">
+                        <tr>
+                          <td colspan="4" class="text-center py-4">
+                            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  © <script>document.write(new Date().getFullYear());</script> My Clinic CMS
+                </div>
+              </div>
+            </footer>
+            <div class="content-backdrop fade"></div>
+          </div>
+        </div>
+      </div>
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+    <!-- Create Record Modal -->
+    <div class="modal fade" id="createRecordModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Create Medical Record</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="createRecordForm">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Patient <span class="text-danger">*</span></label>
+                  <select class="form-select" id="create_patient_id" required>
+                    <option value="">Select Patient</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Appointment (Optional)</label>
+                  <select class="form-select" id="create_appointment_id">
+                    <option value="">No Appointment</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Record Date <span class="text-danger">*</span></label>
+                  <input type="date" class="form-control" id="create_record_date" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Doctor</label>
+                  <input type="text" class="form-control" id="create_doctor_name" readonly style="background-color: #f8f9fa;">
+                  <input type="hidden" id="create_doctor_id">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Diagnosis <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="create_diagnosis" rows="3" placeholder="Enter diagnosis..." required></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Treatment <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="create_treatment" rows="3" placeholder="Enter treatment plan..." required></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Notes</label>
+                <textarea class="form-control" id="create_notes" rows="2" placeholder="Additional notes..."></textarea>
+              </div>
+              
+              <!-- Prescriptions Section -->
+              <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <h6 class="mb-0">Prescriptions</h6>
+                  <button type="button" class="btn btn-sm btn-outline-primary" onclick="addPrescriptionRow()">
+                    <i class="bx bx-plus me-1"></i> Add Medicine
+                  </button>
+                </div>
+                <div id="prescriptionsContainer">
+                  <!-- Prescription rows will be added here -->
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="saveRecord()">
+              <i class="bx bx-save me-1"></i> Save Record
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- View Record Modal -->
+    <div class="modal fade" id="viewRecordModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Medical Record Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <h6>Patient</h6>
+                <p id="view_patient_name"></p>
+              </div>
+              <div class="col-md-6">
+                <h6>Record Date</h6>
+                <p id="view_record_date"></p>
+              </div>
+            </div>
+            <hr>
+            <h6>Chief Complaint</h6>
+            <p id="view_chief_complaint"></p>
+            <hr>
+            <h6>History of Present Illness</h6>
+            <p id="view_history"></p>
+            <hr>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <h6>Physical Examination</h6>
+                <p id="view_physical_exam"></p>
+              </div>
+              <div class="col-md-6">
+                <h6>Vital Signs</h6>
+                <p id="view_vital_signs"></p>
+              </div>
+            </div>
+            <hr>
+            <h6>Diagnosis</h6>
+            <p id="view_diagnosis"></p>
+            <hr>
+            <h6>Treatment Plan</h6>
+            <p id="view_treatment"></p>
+            <hr>
+            <h6>Prescriptions</h6>
+            <p id="view_prescriptions" style="white-space: pre-line;"></p>
+            <hr>
+            <h6>Follow-up Instructions</h6>
+            <p id="view_followup"></p>
+            <hr>
+            <h6>Additional Notes</h6>
+            <p id="view_notes"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/js/session-handler.js"></script>
+    
+    <script>
+      (function () {
+        "use strict";
+        if (!SessionHandler.requireUserType(2)) return;
+
+        var user = SessionHandler.getUser();
+        var fullName = SessionHandler.getUserFullName();
+        var initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        
+        document.getElementById("userFullName").textContent = fullName;
+        document.getElementById("userRole").textContent = SessionHandler.getUserRole();
+        document.getElementById("userAvatar").textContent = initials;
+        document.getElementById("userAvatarDropdown").textContent = initials;
+
+        var notifCount = SessionHandler.getUnreadNotificationsCount();
+        document.getElementById("notificationBadge").textContent = notifCount;
+        if (notifCount === 0) document.getElementById("notificationBadge").style.display = "none";
+
+        document.getElementById("logoutBtn").addEventListener("click", function(e) {
+          e.preventDefault();
+          if (confirm("Are you sure you want to logout?")) SessionHandler.logout();
+        });
+
+        var menuToggle = document.querySelector('.layout-menu-toggle');
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function() {
+            document.querySelector('.layout-wrapper').classList.toggle('layout-menu-expanded');
+          });
+        }
+
+        const API_BASE = '../../backend/';
+
+        loadRecords();
+        loadPatients();
+        loadDoctorName();
+
+        // Set today's date as default and doctor info
+        document.getElementById('create_record_date').valueAsDate = new Date();
+        document.getElementById('create_doctor_id').value = user.extra.doctor_id;
+        
+        // Prescription counter
+        let prescriptionCounter = 0;
+
+        async function loadDoctorName() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getById');
+            params.append('json', JSON.stringify({ doctor_id: user.extra.doctor_id }));
+
+            const response = await axios.post(API_BASE + 'doctors.php', params);
+            
+            if (response.data.success && response.data.data) {
+              const doctor = response.data.data;
+              const fullName = `Dr. ${doctor.first_name} ${doctor.last_name}`;
+              document.getElementById('create_doctor_name').value = fullName;
+            }
+          } catch (error) {
+            console.error('Error loading doctor name:', error);
+            document.getElementById('create_doctor_name').value = user.username;
+          }
+        }
+
+        async function loadPatients() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getAll');
+            params.append('json', JSON.stringify({}));
+
+            const response = await axios.post(API_BASE + 'patients.php', params);
+            
+            if (response.data.success) {
+              const select = document.getElementById('create_patient_id');
+              response.data.data.forEach(patient => {
+                const option = document.createElement('option');
+                option.value = patient.patient_id;
+                option.textContent = patient.first_name + ' ' + patient.last_name;
+                select.appendChild(option);
+              });
+            }
+          } catch (error) {
+            console.error('Error loading patients:', error);
+          }
+        }
+
+        async function loadRecords() {
+          try {
+            const searchTerm = document.getElementById("searchRecord").value;
+            const date = document.getElementById("filterDate").value;
+
+            const response = await axios.post(API_BASE + 'medical-records.php', {
+              action: 'getAll',
+              doctor_id: user.extra.doctor_id,
+              search: searchTerm,
+              date: date
+            });
+            
+            if (response.data.success) {
+              renderRecordsTable(response.data.data);
+            }
+          } catch (error) {
+            console.error('Error loading records:', error);
+          }
+        }
+
+        function renderRecordsTable(records) {
+          var tbody = document.getElementById("recordsTableBody");
+          
+          if (records.length === 0) {
+            tbody.innerHTML = `
+              <tr>
+                <td colspan="4" class="text-center py-4">
+                  <i class="bx bx-file-blank bx-lg text-muted"></i>
+                  <p class="mt-2 mb-0">No medical records found</p>
+                </td>
+              </tr>
+            `;
+            return;
+          }
+
+          tbody.innerHTML = records.map(rec => `
+            <tr>
+              <td>${rec.record_date}</td>
+              <td>${rec.patient_name}</td>
+              <td>${rec.diagnosis || 'N/A'}</td>
+              <td>
+                <button type="button" class="btn btn-sm btn-outline-primary view-record" data-record='${JSON.stringify(rec)}'>
+                  <i class="bx bx-show"></i> View
+                </button>
+              </td>
+            </tr>
+          `).join('');
+
+          document.querySelectorAll('.view-record').forEach(btn => {
+            btn.addEventListener('click', function() {
+              const rec = JSON.parse(this.getAttribute('data-record'));
+              viewRecord(rec);
+            });
+          });
+        }
+
+        // Prescription Management Functions
+        function addPrescriptionRow() {
+          prescriptionCounter++;
+          const container = document.getElementById('prescriptionsContainer');
+          const row = document.createElement('div');
+          row.className = 'prescription-row card mb-2 p-3';
+          row.id = `prescription-${prescriptionCounter}`;
+          row.innerHTML = `
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h6 class="mb-0">Medicine #${prescriptionCounter}</h6>
+              <button type="button" class="btn btn-sm btn-outline-danger" onclick="removePrescriptionRow(${prescriptionCounter})">
+                <i class="bx bx-trash"></i>
+              </button>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <label class="form-label">Medicine Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="medicine_name[]" required>
+              </div>
+              <div class="col-md-6 mb-2">
+                <label class="form-label">Dosage <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="dosage[]" placeholder="e.g., 500mg" required>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 mb-2">
+                <label class="form-label">Frequency <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="frequency[]" placeholder="e.g., Twice daily" required>
+              </div>
+              <div class="col-md-4 mb-2">
+                <label class="form-label">Duration <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="duration[]" placeholder="e.g., 7 days" required>
+              </div>
+              <div class="col-md-4 mb-2">
+                <label class="form-label">Instructions</label>
+                <input type="text" class="form-control" name="instructions[]" placeholder="After meals">
+              </div>
+            </div>
+          `;
+          container.appendChild(row);
+        }
+
+        function removePrescriptionRow(id) {
+          const row = document.getElementById(`prescription-${id}`);
+          if (row) row.remove();
+        }
+
+        function collectPrescriptions() {
+          const prescriptions = [];
+          const medicineNames = document.getElementsByName('medicine_name[]');
+          const dosages = document.getElementsByName('dosage[]');
+          const frequencies = document.getElementsByName('frequency[]');
+          const durations = document.getElementsByName('duration[]');
+          const instructions = document.getElementsByName('instructions[]');
+          
+          for (let i = 0; i < medicineNames.length; i++) {
+            if (medicineNames[i].value.trim()) {
+              prescriptions.push({
+                medicine_name: medicineNames[i].value,
+                dosage: dosages[i].value,
+                frequency: frequencies[i].value,
+                duration: durations[i].value,
+                instructions: instructions[i].value
+              });
+            }
+          }
+          
+          return prescriptions;
+        }
+
+        async function saveRecord() {
+          const form = document.getElementById('createRecordForm');
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
+          
+          try {
+            const prescriptions = collectPrescriptions();
+            
+            const recordData = {
+              action: 'create',
+              patient_id: document.getElementById('create_patient_id').value,
+              doctor_id: document.getElementById('create_doctor_id').value,
+              appointment_id: document.getElementById('create_appointment_id').value || null,
+              record_date: document.getElementById('create_record_date').value,
+              diagnosis: document.getElementById('create_diagnosis').value,
+              treatment: document.getElementById('create_treatment').value,
+              notes: document.getElementById('create_notes').value,
+              prescriptions: prescriptions,
+              admin_user_id: user.user_id
+            };
+
+            const response = await axios.post(API_BASE + 'medical-records.php', recordData);
+            
+            if (response.data.success) {
+              alert('Medical record created successfully!');
+              bootstrap.Modal.getInstance(document.getElementById('createRecordModal')).hide();
+              form.reset();
+              document.getElementById('create_record_date').valueAsDate = new Date();
+              document.getElementById('create_doctor_id').value = user.extra.doctor_id;
+              loadDoctorName(); // Reload doctor name
+              document.getElementById('prescriptionsContainer').innerHTML = '';
+              prescriptionCounter = 0;
+              loadRecords();
+            } else {
+              alert('Error: ' + response.data.error);
+            }
+          } catch (error) {
+            console.error('Error creating record:', error);
+            alert('Error creating medical record');
+          }
+        }
+
+        // Expose functions to global scope
+        window.addPrescriptionRow = addPrescriptionRow;
+        window.removePrescriptionRow = removePrescriptionRow;
+        window.saveRecord = saveRecord;
+        window.viewRecord = viewRecord;
+
+        function viewRecord(rec) {
+          document.getElementById('view_patient_name').textContent = rec.patient_name;
+          document.getElementById('view_record_date').textContent = rec.record_date;
+          document.getElementById('view_chief_complaint').textContent = rec.chief_complaint || 'N/A';
+          document.getElementById('view_history').textContent = rec.history || 'N/A';
+          document.getElementById('view_physical_exam').textContent = rec.physical_exam || 'N/A';
+          document.getElementById('view_vital_signs').textContent = rec.vital_signs || 'N/A';
+          document.getElementById('view_diagnosis').textContent = rec.diagnosis || 'N/A';
+          document.getElementById('view_treatment').textContent = rec.treatment || 'N/A';
+          document.getElementById('view_prescriptions').textContent = rec.prescriptions || 'N/A';
+          document.getElementById('view_followup').textContent = rec.followup_instructions || 'N/A';
+          document.getElementById('view_notes').textContent = rec.notes || 'N/A';
+          
+          new bootstrap.Modal(document.getElementById('viewRecordModal')).show();
+        }
+
+        document.getElementById("resetFilters").addEventListener("click", function() {
+          document.getElementById("searchRecord").value = "";
+          document.getElementById("filterDate").value = "";
+          loadRecords();
+        });
+
+        document.getElementById("searchRecord").addEventListener("input", loadRecords);
+        document.getElementById("filterDate").addEventListener("change", loadRecords);
+
+        console.log("Doctor medical records page loaded");
+      })();
+    </script>
+  </body>
+</html>
