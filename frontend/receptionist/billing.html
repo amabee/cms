@@ -245,6 +245,9 @@
               <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                   <h5 class="mb-0">Billing Records</h5>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#billingModal" id="addNewBtn">
+                    <i class="bx bx-plus"></i> Create New Billing
+                  </button>
                 </div>
                 <div class="card-body">
                   <div class="row mb-3">
@@ -308,6 +311,93 @@
         </div>
       </div>
       <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+    <!-- Create/Edit Billing Modal -->
+    <div class="modal fade" id="billingModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="billingModalTitle">Create New Billing</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="billingForm">
+              <input type="hidden" id="billing_id" />
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Patient <span class="text-danger">*</span></label>
+                  <select class="form-select" id="patient_id" required>
+                    <option value="">Select Patient</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Appointment (Optional)</label>
+                  <select class="form-select" id="appointment_id">
+                    <option value="">No Appointment</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Invoice Number</label>
+                  <input type="text" class="form-control" id="invoice_number" placeholder="Auto-generated" readonly />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Billing Date <span class="text-danger">*</span></label>
+                  <input type="date" class="form-control" id="billing_date" required />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Due Date</label>
+                  <input type="date" class="form-control" id="due_date" />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Doctor</label>
+                  <input type="text" class="form-control" id="doctor_name" readonly placeholder="From appointment" />
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Description <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="description" rows="2" required placeholder="e.g., Consultation Fee, Laboratory Tests"></textarea>
+              </div>
+
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Total Amount <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" id="total_amount" min="0" step="0.01" required />
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Discount</label>
+                  <input type="number" class="form-control" id="discount" min="0" step="0.01" value="0" />
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Payment Status <span class="text-danger">*</span></label>
+                  <select class="form-select" id="payment_status" required>
+                    <option value="unpaid">Unpaid</option>
+                    <option value="partial">Partial</option>
+                    <option value="paid">Paid</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Notes</label>
+                <textarea class="form-control" id="notes" rows="2" placeholder="Additional notes..."></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="saveBillingBtn">Save Billing</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Payment Modal -->
@@ -396,16 +486,166 @@
 
         const API_BASE = '../../backend/';
         let allBillings = [];
+        let allAppointments = [];
         let currentFilters = { status: '', date: '' };
         const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+        const billingModal = new bootstrap.Modal(document.getElementById('billingModal'));
 
         loadStatistics();
         loadBillings();
+        loadPatients();
+        loadAppointments();
 
+        // Set today's date as default
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('billing_date').value = today;
+
+        document.getElementById('addNewBtn').addEventListener('click', openAddModal);
+        document.getElementById('saveBillingBtn').addEventListener('click', saveBilling);
         document.getElementById('filterBtn').addEventListener('click', applyFilters);
         document.getElementById('resetFilterBtn').addEventListener('click', resetFilters);
         document.getElementById('searchInput').addEventListener('input', handleSearch);
         document.getElementById('processPaymentBtn').addEventListener('click', processPayment);
+        
+        // Listen to appointment selection changes
+        document.getElementById('appointment_id').addEventListener('change', handleAppointmentChange);
+        document.getElementById('patient_id').addEventListener('change', filterAppointmentsByPatient);
+
+        async function loadPatients() {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getAll');
+            
+            const response = await axios.post(API_BASE + 'patients.php', params);
+            
+            if (response.data.success) {
+              const patients = response.data.data || [];
+              const select = document.getElementById('patient_id');
+              
+              patients.forEach(patient => {
+                const option = document.createElement('option');
+                option.value = patient.patient_id;
+                option.textContent = `${patient.first_name} ${patient.last_name}`;
+                select.appendChild(option);
+              });
+            }
+          } catch (error) {
+            console.error('Error loading patients:', error);
+          }
+        }
+
+        async function loadAppointments() {
+          try {
+            const response = await axios.post(API_BASE + 'appointments.php', {
+              action: 'getAll'
+            });
+            
+            if (response.data.success) {
+              allAppointments = response.data.appointments || [];
+            }
+          } catch (error) {
+            console.error('Error loading appointments:', error);
+            allAppointments = [];
+          }
+        }
+
+        function filterAppointmentsByPatient() {
+          const patientId = document.getElementById('patient_id').value;
+          const appointmentSelect = document.getElementById('appointment_id');
+          
+          // Clear current options
+          appointmentSelect.innerHTML = '<option value="">No Appointment</option>';
+          
+          if (!patientId) {
+            document.getElementById('doctor_name').value = '';
+            return;
+          }
+          
+          // Filter appointments for selected patient
+          const patientAppointments = allAppointments.filter(apt => apt.patient_id == patientId);
+          
+          patientAppointments.forEach(apt => {
+            const option = document.createElement('option');
+            option.value = apt.appointment_id;
+            option.setAttribute('data-doctor', apt.doctor_name);
+            option.setAttribute('data-date', apt.appointment_date);
+            option.textContent = `${apt.appointment_date} ${apt.appointment_time.substring(0,5)} - Dr. ${apt.doctor_name} (${apt.status})`;
+            appointmentSelect.appendChild(option);
+          });
+        }
+
+        function handleAppointmentChange() {
+          const select = document.getElementById('appointment_id');
+          const selectedOption = select.options[select.selectedIndex];
+          
+          if (select.value) {
+            const doctorName = selectedOption.getAttribute('data-doctor');
+            const appointmentDate = selectedOption.getAttribute('data-date');
+            
+            document.getElementById('doctor_name').value = 'Dr. ' + doctorName;
+            
+            // Optionally set billing date to appointment date
+            if (!document.getElementById('billing_date').value) {
+              document.getElementById('billing_date').value = appointmentDate;
+            }
+          } else {
+            document.getElementById('doctor_name').value = '';
+          }
+        }
+
+        function openAddModal() {
+          document.getElementById('billingModalTitle').textContent = 'Create New Billing';
+          document.getElementById('billingForm').reset();
+          document.getElementById('billing_id').value = '';
+          document.getElementById('billing_date').value = today;
+          document.getElementById('payment_status').value = 'unpaid';
+          document.getElementById('discount').value = '0';
+          document.getElementById('appointment_id').innerHTML = '<option value="">No Appointment</option>';
+          document.getElementById('doctor_name').value = '';
+        }
+
+        async function saveBilling() {
+          const form = document.getElementById('billingForm');
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
+
+          const billingId = document.getElementById('billing_id').value;
+          const appointmentId = document.getElementById('appointment_id').value;
+          
+          const data = {
+            patient_id: document.getElementById('patient_id').value,
+            appointment_id: appointmentId || null,
+            billing_date: document.getElementById('billing_date').value,
+            due_date: document.getElementById('due_date').value || null,
+            description: document.getElementById('description').value,
+            total_amount: document.getElementById('total_amount').value,
+            discount: document.getElementById('discount').value || 0,
+            payment_status: document.getElementById('payment_status').value,
+            notes: document.getElementById('notes').value || null
+          };
+
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', billingId ? 'update' : 'create');
+            params.append('json', JSON.stringify(billingId ? { ...data, billing_id: billingId } : data));
+
+            const response = await axios.post(API_BASE + 'billing.php', params);
+            
+            if (response.data.success) {
+              alert(billingId ? 'Billing updated successfully' : 'Billing created successfully');
+              billingModal.hide();
+              loadBillings();
+              loadStatistics();
+            } else {
+              alert('Error: ' + (response.data.message || 'Failed to save billing'));
+            }
+          } catch (error) {
+            console.error('Error saving billing:', error);
+            alert('Failed to save billing');
+          }
+        }
 
         async function loadStatistics() {
           try {
@@ -500,11 +740,6 @@
               'partial': 'bg-label-warning'
             }[bill.payment_status] || 'bg-label-secondary';
 
-            const payButton = bill.payment_status !== 'paid' ? 
-              `<button type="button" class="btn btn-sm btn-success" onclick="openPaymentModal(${bill.billing_id})">
-                <i class="bx bx-money"></i> Pay
-              </button>` : '';
-
             return `
               <tr>
                 <td><strong>${bill.invoice_number || 'N/A'}</strong></td>
@@ -514,7 +749,20 @@
                 <td>₱${amountPaid.toFixed(2)}</td>
                 <td>₱${balance.toFixed(2)}</td>
                 <td><span class="badge ${statusClass}">${bill.payment_status}</span></td>
-                <td>${payButton}</td>
+                <td>
+                  <div class="btn-group" role="group">
+                    ${bill.payment_status !== 'paid' ? 
+                      `<button type="button" class="btn btn-sm btn-success" onclick="openPaymentModal(${bill.billing_id})" title="Process Payment">
+                        <i class="bx bx-money"></i>
+                      </button>` : ''}
+                    <button type="button" class="btn btn-sm btn-primary" onclick="editBilling(${bill.billing_id})" title="Edit">
+                      <i class="bx bx-edit"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="deleteBilling(${bill.billing_id})" title="Delete">
+                      <i class="bx bx-trash"></i>
+                    </button>
+                  </div>
+                </td>
               </tr>
             `;
           }).join('');
@@ -581,6 +829,86 @@
             alert('Failed to process payment');
           }
         }
+
+        window.editBilling = async function(billingId) {
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'getById');
+            params.append('json', JSON.stringify({ billing_id: billingId }));
+            
+            const response = await axios.post(API_BASE + 'billing.php', params);
+            
+            if (response.data.success && response.data.data) {
+              const bill = response.data.data;
+              
+              document.getElementById('billingModalTitle').textContent = 'Edit Billing';
+              document.getElementById('billing_id').value = bill.billing_id;
+              document.getElementById('patient_id').value = bill.patient_id;
+              
+              // Filter appointments for the selected patient
+              const patientAppointments = allAppointments.filter(apt => apt.patient_id == bill.patient_id);
+              const appointmentSelect = document.getElementById('appointment_id');
+              appointmentSelect.innerHTML = '<option value="">No Appointment</option>';
+              
+              patientAppointments.forEach(apt => {
+                const option = document.createElement('option');
+                option.value = apt.appointment_id;
+                option.textContent = `${apt.appointment_date} ${apt.appointment_time} - Dr. ${apt.doctor_name} (${apt.status})`;
+                option.setAttribute('data-doctor', apt.doctor_name);
+                option.setAttribute('data-date', apt.appointment_date);
+                appointmentSelect.appendChild(option);
+              });
+              
+              // Set appointment and doctor if available
+              if (bill.appointment_id) {
+                document.getElementById('appointment_id').value = bill.appointment_id;
+                const selectedOption = appointmentSelect.options[appointmentSelect.selectedIndex];
+                if (selectedOption && selectedOption.getAttribute('data-doctor')) {
+                  document.getElementById('doctor_name').value = 'Dr. ' + selectedOption.getAttribute('data-doctor');
+                }
+              } else {
+                document.getElementById('doctor_name').value = '';
+              }
+              
+              document.getElementById('invoice_number').value = bill.invoice_number || '';
+              document.getElementById('billing_date').value = bill.billing_date;
+              document.getElementById('due_date').value = bill.due_date || '';
+              document.getElementById('description').value = bill.description || '';
+              document.getElementById('total_amount').value = bill.total_amount;
+              document.getElementById('discount').value = bill.discount || 0;
+              document.getElementById('payment_status').value = bill.payment_status;
+              document.getElementById('notes').value = bill.notes || '';
+              
+              billingModal.show();
+            }
+          } catch (error) {
+            console.error('Error loading billing:', error);
+            alert('Failed to load billing details');
+          }
+        };
+
+        window.deleteBilling = async function(billingId) {
+          if (!confirm('Are you sure you want to delete this billing record?')) return;
+
+          try {
+            const params = new URLSearchParams();
+            params.append('operation', 'delete');
+            params.append('json', JSON.stringify({ billing_id: billingId }));
+
+            const response = await axios.post(API_BASE + 'billing.php', params);
+            
+            if (response.data.success) {
+              alert('Billing deleted successfully');
+              loadBillings();
+              loadStatistics();
+            } else {
+              alert('Error: ' + (response.data.message || 'Failed to delete billing'));
+            }
+          } catch (error) {
+            console.error('Error deleting billing:', error);
+            alert('Failed to delete billing');
+          }
+        };
 
         console.log("Receptionist billing page loaded");
       })();
