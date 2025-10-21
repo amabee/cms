@@ -248,6 +248,17 @@ class Patients
       return json_encode(['error' => 'Patient ID is required']);
     }
 
+    // Convert user_id to patient_id if needed
+    $patientCheckSql = "SELECT patient_id, user_id FROM patients WHERE user_id = :user_id";
+    $patientCheckStmt = $this->conn->prepare($patientCheckSql);
+    $patientCheckStmt->execute([':user_id' => $data['patient_id']]);
+    $patientRecord = $patientCheckStmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($patientRecord) {
+      // It's a user_id, convert to patient_id
+      $data['patient_id'] = $patientRecord['patient_id'];
+    }
+
     $this->conn->beginTransaction();
 
     try {

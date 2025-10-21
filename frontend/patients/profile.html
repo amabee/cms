@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <title>My Profile - Patient Portal</title>
+    <meta name="description" content="Patient Profile" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+  </head>
+
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        
+        <!-- Menu (Sidebar) -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="dashboard.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <img src="../assets/img/favicon/logo.png" alt="Logo" width="32" />
+              </span>
+              <span class="app-brand-text demo menu-text fw-bold ms-2">Patient Portal</span>
+            </a>
+          </div>
+
+          <div class="menu-inner-shadow"></div>
+
+          <ul class="menu-inner py-1">
+            <li class="menu-item">
+              <a href="dashboard.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Dashboard">Dashboard</div>
+              </a>
+            </li>
+
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">My Portal</span>
+            </li>
+
+            <li class="menu-item">
+              <a href="appointments.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                <div data-i18n="Appointments">My Appointments</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="medical-records.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file"></i>
+                <div data-i18n="Medical Records">Medical Records</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="billing.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-receipt"></i>
+                <div data-i18n="Billing">Billing & Payments</div>
+              </a>
+            </li>
+
+            <li class="menu-item active">
+              <a href="profile.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Profile">My Profile</div>
+              </a>
+            </li>
+
+          </ul>
+        </aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          
+          <!-- Navbar -->
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input
+                    type="text"
+                    class="form-control border-0 shadow-none"
+                    placeholder="Search..."
+                    aria-label="Search..."
+                  />
+                </div>
+              </div>
+
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatar">P</span>
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatarDropdown">P</span>
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block" id="userFullName">Patient User</span>
+                            <small class="text-muted">Patient</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);" id="logoutBtn">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <!-- / Navbar -->
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+            <div class="container-xxl flex-grow-1 container-p-y">
+              
+              <h4 class="fw-bold py-3 mb-4">
+                <span class="text-muted fw-light">Patient Portal /</span> My Profile
+              </h4>
+
+              <div class="row">
+                <!-- Profile Overview -->
+                <div class="col-xl-4 col-lg-5 col-md-5 order-1 order-md-0">
+                  <div class="card mb-4">
+                    <div class="card-body">
+                      <div class="user-avatar-section">
+                        <div class="d-flex align-items-center flex-column">
+                          <div class="avatar avatar-xl mb-3">
+                            <span class="avatar-initial rounded-circle bg-label-primary" id="profileAvatar" style="font-size: 2rem;">P</span>
+                          </div>
+                          <div class="user-info text-center">
+                            <h5 class="mb-2" id="profileName">Patient Name</h5>
+                            <span class="badge bg-label-secondary">Patient</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="info-container">
+                        <ul class="list-unstyled mt-4">
+                          <li class="mb-3">
+                            <span class="fw-bold me-2">Email:</span>
+                            <span id="profileEmail">-</span>
+                          </li>
+                          <li class="mb-3">
+                            <span class="fw-bold me-2">Phone:</span>
+                            <span id="profilePhone">-</span>
+                          </li>
+                          <li class="mb-3">
+                            <span class="fw-bold me-2">Date of Birth:</span>
+                            <span id="profileDOB">-</span>
+                          </li>
+                          <li class="mb-3">
+                            <span class="fw-bold me-2">Gender:</span>
+                            <span id="profileGender">-</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Profile Details -->
+                <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
+                  <!-- Personal Information -->
+                  <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                      <h5 class="mb-0">Personal Information</h5>
+                      <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editPersonalInfoModal">
+                        <i class="bx bx-edit"></i> Edit
+                      </button>
+                    </div>
+                    <div class="card-body">
+                      <div class="row mb-3">
+                        <div class="col-md-6">
+                          <label class="form-label fw-bold">First Name</label>
+                          <p id="displayFirstName">-</p>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label fw-bold">Last Name</label>
+                          <p id="displayLastName">-</p>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col-md-6">
+                          <label class="form-label fw-bold">Email</label>
+                          <p id="displayEmail">-</p>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label fw-bold">Phone</label>
+                          <p id="displayPhone">-</p>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col-md-6">
+                          <label class="form-label fw-bold">Date of Birth</label>
+                          <p id="displayDOB">-</p>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label fw-bold">Gender</label>
+                          <p id="displayGender">-</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <label class="form-label fw-bold">Address</label>
+                          <p id="displayAddress">-</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Emergency Contact -->
+                  <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                      <h5 class="mb-0">Emergency Contact</h5>
+                      <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editEmergencyContactModal">
+                        <i class="bx bx-edit"></i> Edit
+                      </button>
+                    </div>
+                    <div class="card-body">
+                      <div class="row mb-3">
+                        <div class="col-md-6">
+                          <label class="form-label fw-bold">Contact Name</label>
+                          <p id="displayEmergencyName">-</p>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label fw-bold">Relationship</label>
+                          <p id="displayEmergencyRelation">-</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label class="form-label fw-bold">Phone Number</label>
+                          <p id="displayEmergencyPhone">-</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Change Password -->
+                  <div class="card mb-4">
+                    <div class="card-header">
+                      <h5 class="mb-0">Change Password</h5>
+                    </div>
+                    <div class="card-body">
+                      <form id="changePasswordForm">
+                        <div class="row">
+                          <div class="col-md-12 mb-3">
+                            <label for="currentPassword" class="form-label">Current Password</label>
+                            <input type="password" class="form-control" id="currentPassword" required />
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label for="newPassword" class="form-label">New Password</label>
+                            <input type="password" class="form-control" id="newPassword" minlength="6" required />
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" minlength="6" required />
+                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Change Password</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!-- / Content -->
+
+            <!-- Footer -->
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  ©
+                  <script>
+                    document.write(new Date().getFullYear());
+                  </script>
+                  , My Clinic Patient Portal
+                </div>
+              </div>
+            </footer>
+            <!-- / Footer -->
+
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <!-- Edit Personal Info Modal -->
+    <div class="modal fade" id="editPersonalInfoModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Personal Information</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="editPersonalInfoForm">
+            <div class="modal-body">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="editFirstName" class="form-label">First Name</label>
+                  <input type="text" class="form-control" id="editFirstName" required />
+                </div>
+                <div class="col-md-6">
+                  <label for="editLastName" class="form-label">Last Name</label>
+                  <input type="text" class="form-control" id="editLastName" required />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="editEmail" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="editEmail" required />
+                </div>
+                <div class="col-md-6">
+                  <label for="editPhone" class="form-label">Phone</label>
+                  <input type="text" class="form-control" id="editPhone" required />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="editDOB" class="form-label">Date of Birth</label>
+                  <input type="date" class="form-control" id="editDOB" required />
+                </div>
+                <div class="col-md-6">
+                  <label for="editGender" class="form-label">Gender</label>
+                  <select class="form-select" id="editGender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="editAddress" class="form-label">Address</label>
+                <textarea class="form-control" id="editAddress" rows="2"></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Emergency Contact Modal -->
+    <div class="modal fade" id="editEmergencyContactModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Emergency Contact</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="editEmergencyContactForm">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="editEmergencyName" class="form-label">Contact Name</label>
+                <input type="text" class="form-control" id="editEmergencyName" required />
+              </div>
+              <div class="mb-3">
+                <label for="editEmergencyRelation" class="form-label">Relationship</label>
+                <input type="text" class="form-control" id="editEmergencyRelation" required />
+              </div>
+              <div class="mb-3">
+                <label for="editEmergencyPhone" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" id="editEmergencyPhone" required />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Core JS -->
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/js/session-handler.js"></script>
+    <script>
+      const API_BASE = '../../backend/';
+      let patientData = null;
+      
+      // Menu toggle for mobile
+      document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.layout-menu-toggle');
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function() {
+            document.querySelector('.layout-wrapper').classList.toggle('layout-menu-expanded');
+          });
+        }
+      });
+      
+      document.addEventListener('DOMContentLoaded', function() {
+        if (!SessionHandler.requireUserType(5)) { // 5 = Patient
+          return;
+        }
+
+        const userData = SessionHandler.getUser();
+        displayUserInfo(userData);
+        loadPatientProfile();
+
+        // Form handlers
+        document.getElementById('editPersonalInfoForm').addEventListener('submit', handlePersonalInfoUpdate);
+        document.getElementById('editEmergencyContactForm').addEventListener('submit', handleEmergencyContactUpdate);
+        document.getElementById('changePasswordForm').addEventListener('submit', handlePasswordChange);
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+          SessionHandler.logout();
+          window.location.href = '../index.html';
+        });
+      });
+
+      function displayUserInfo(userData) {
+        const firstName = userData.profile?.first_name || userData.first_name || 'Patient';
+        const lastName = userData.profile?.last_name || userData.last_name || '';
+        const patientName = firstName + ' ' + lastName;
+        
+        document.getElementById('userFullName').textContent = patientName;
+        
+        const initials = firstName.charAt(0) + lastName.charAt(0);
+        document.getElementById('userAvatar').textContent = initials.toUpperCase();
+        document.getElementById('userAvatarDropdown').textContent = initials.toUpperCase();
+      }
+
+      async function loadPatientProfile() {
+        try {
+          const userData = SessionHandler.getUser();
+          const params = new URLSearchParams();
+          params.append('operation', 'getPatientProfile');
+          params.append('json', JSON.stringify({ patient_id: userData.user_id }));
+
+          const response = await axios.post(API_BASE + 'patients.php', params);
+
+          if (response.data.success && response.data.data) {
+            patientData = response.data.data;
+            displayProfile(patientData);
+          } else {
+            // Use session data if patient profile not found
+            displayProfile(userData);
+          }
+        } catch (error) {
+          console.error('Error loading profile:', error);
+          displayProfile(SessionHandler.getUser());
+        }
+      }
+
+      function displayProfile(data) {
+        // Handle both nested profile data and flat data structure
+        const firstName = data.profile?.first_name || data.first_name || 'Patient';
+        const lastName = data.profile?.last_name || data.last_name || '';
+        const email = data.profile?.email || data.email || '';
+        const phone = data.profile?.phone || data.phone || '';
+        const dob = data.profile?.date_of_birth || data.date_of_birth || '';
+        const gender = data.profile?.gender || data.gender || '';
+        const address = data.profile?.address || data.address || '';
+        
+        const fullName = firstName + ' ' + lastName;
+        const initials = (firstName.charAt(0) || 'P') + (lastName.charAt(0) || '');
+        
+        // Profile overview
+        document.getElementById('profileAvatar').textContent = initials.toUpperCase();
+        document.getElementById('profileName').textContent = fullName;
+        document.getElementById('profileEmail').textContent = email || '-';
+        document.getElementById('profilePhone').textContent = phone || '-';
+        document.getElementById('profileDOB').textContent = dob ? 
+          new Date(dob).toLocaleDateString('en-US', { 
+            month: 'long', 
+            day: 'numeric', 
+            year: 'numeric' 
+          }) : '-';
+        document.getElementById('profileGender').textContent = gender || '-';
+
+        // Personal information
+        document.getElementById('displayFirstName').textContent = firstName;
+        document.getElementById('displayLastName').textContent = lastName;
+        document.getElementById('displayEmail').textContent = email || '-';
+        document.getElementById('displayPhone').textContent = phone || '-';
+        document.getElementById('displayDOB').textContent = dob ? 
+          new Date(dob).toLocaleDateString('en-US', { 
+            month: 'long', 
+            day: 'numeric', 
+            year: 'numeric' 
+          }) : '-';
+        document.getElementById('displayGender').textContent = gender || '-';
+        document.getElementById('displayAddress').textContent = address || '-';
+
+        // Emergency contact
+        document.getElementById('displayEmergencyName').textContent = data.emergency_contact_name || '-';
+        document.getElementById('displayEmergencyRelation').textContent = data.emergency_contact_relation || '-';
+        document.getElementById('displayEmergencyPhone').textContent = data.emergency_contact_phone || '-';
+
+        // Populate edit forms
+        document.getElementById('editFirstName').value = firstName;
+        document.getElementById('editLastName').value = lastName;
+        document.getElementById('editEmail').value = email || '';
+        document.getElementById('editPhone').value = phone || '';
+        document.getElementById('editDOB').value = dob || '';
+        document.getElementById('editGender').value = gender || '';
+        document.getElementById('editAddress').value = address || '';
+
+        document.getElementById('editEmergencyName').value = data.emergency_contact_name || '';
+        document.getElementById('editEmergencyRelation').value = data.emergency_contact_relation || '';
+        document.getElementById('editEmergencyPhone').value = data.emergency_contact_phone || '';
+      }
+
+      async function handlePersonalInfoUpdate(e) {
+        e.preventDefault();
+
+        const userData = SessionHandler.getUser();
+        console.log('Updating personal info for user:', userData.user_id);
+        
+        const params = new URLSearchParams();
+        params.append('operation', 'update');
+        params.append('json', JSON.stringify({
+          patient_id: userData.user_id,
+          first_name: document.getElementById('editFirstName').value,
+          last_name: document.getElementById('editLastName').value,
+          email: document.getElementById('editEmail').value,
+          phone: document.getElementById('editPhone').value,
+          date_of_birth: document.getElementById('editDOB').value,
+          gender: document.getElementById('editGender').value,
+          address: document.getElementById('editAddress').value
+        }));
+
+        try {
+          const response = await axios.post(API_BASE + 'patients.php', params);
+
+          if (response.data.success) {
+            alert('Personal information updated successfully!');
+            bootstrap.Modal.getInstance(document.getElementById('editPersonalInfoModal')).hide();
+            loadPatientProfile();
+            
+            // Note: Session data will be refreshed on next page load
+          } else {
+            alert('Failed to update information: ' + (response.data.message || 'Unknown error'));
+          }
+        } catch (error) {
+          console.error('Error updating personal info:', error);
+          alert('Error updating information. Please try again.');
+        }
+      }
+
+      async function handleEmergencyContactUpdate(e) {
+        e.preventDefault();
+
+        const userData = SessionHandler.getUser();
+        console.log('Updating emergency contact for user:', userData.user_id);
+        
+        const params = new URLSearchParams();
+        params.append('operation', 'update');
+        params.append('json', JSON.stringify({
+          patient_id: userData.user_id,
+          emergency_contact_name: document.getElementById('editEmergencyName').value,
+          emergency_contact_relation: document.getElementById('editEmergencyRelation').value,
+          emergency_contact_phone: document.getElementById('editEmergencyPhone').value
+        }));
+
+        try {
+          const response = await axios.post(API_BASE + 'patients.php', params);
+
+          if (response.data.success) {
+            alert('Emergency contact updated successfully!');
+            bootstrap.Modal.getInstance(document.getElementById('editEmergencyContactModal')).hide();
+            loadPatientProfile();
+          } else {
+            alert('Failed to update emergency contact: ' + (response.data.message || 'Unknown error'));
+          }
+        } catch (error) {
+          console.error('Error updating emergency contact:', error);
+          alert('Error updating emergency contact. Please try again.');
+        }
+      }
+
+      async function handlePasswordChange(e) {
+        e.preventDefault();
+
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (newPassword !== confirmPassword) {
+          alert('New passwords do not match!');
+          return;
+        }
+
+        const userData = SessionHandler.getUser();
+        console.log('Changing password for user:', userData.user_id);
+        
+        const params = new URLSearchParams();
+        params.append('operation', 'update');
+        params.append('json', JSON.stringify({
+          user_id: userData.user_id,
+          password: newPassword
+        }));
+
+        try {
+          const response = await axios.post(API_BASE + 'users.php', params);
+
+          if (response.data.success) {
+            alert('Password changed successfully!');
+            document.getElementById('changePasswordForm').reset();
+          } else {
+            alert('Failed to change password: ' + (response.data.message || 'Unknown error'));
+          }
+        } catch (error) {
+          console.error('Error changing password:', error);
+          alert('Error changing password. Please try again.');
+        }
+      }
+    </script>
+  </body>
+</html>

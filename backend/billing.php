@@ -194,6 +194,17 @@ class Billing
         return $this->response(false, 'Patient ID is required', null);
       }
 
+      // Convert user_id to patient_id if needed
+      $patientCheckSql = "SELECT patient_id FROM patients WHERE user_id = :user_id";
+      $patientCheckStmt = $this->conn->prepare($patientCheckSql);
+      $patientCheckStmt->execute([':user_id' => $data['patient_id']]);
+      $patientRecord = $patientCheckStmt->fetch(PDO::FETCH_ASSOC);
+      
+      if ($patientRecord) {
+        // It's a user_id, convert to patient_id
+        $data['patient_id'] = $patientRecord['patient_id'];
+      }
+
       $sql = "SELECT b.*, 
                            a.appointment_date,
                            a.appointment_time
@@ -282,22 +293,35 @@ class Billing
 
       $this->conn->beginTransaction();
 
-      // Update billing record
-      $sql = "UPDATE billing 
-                    SET total_amount = :total_amount,
-                        discount = :discount,
-                        net_amount = :net_amount,
-                        status = :status
-                    WHERE billing_id = :billing_id";
+      // Build update query dynamically based on provided fields
+      $updates = [];
+      $params = [':billing_id' => $data['billing_id']];
 
+      if (isset($data['total_amount'])) {
+        $updates[] = "total_amount = :total_amount";
+        $params[':total_amount'] = $data['total_amount'];
+      }
+      if (isset($data['discount'])) {
+        $updates[] = "discount = :discount";
+        $params[':discount'] = $data['discount'];
+      }
+      if (isset($data['net_amount'])) {
+        $updates[] = "net_amount = :net_amount";
+        $params[':net_amount'] = $data['net_amount'];
+      }
+      if (isset($data['status'])) {
+        $updates[] = "status = :status";
+        $params[':status'] = $data['status'];
+      }
+
+      if (empty($updates)) {
+        return $this->response(false, 'No fields to update', null);
+      }
+
+      // Update billing record
+      $sql = "UPDATE billing SET " . implode(', ', $updates) . " WHERE billing_id = :billing_id";
       $stmt = $this->conn->prepare($sql);
-      $stmt->execute([
-        ':billing_id' => $data['billing_id'],
-        ':total_amount' => $data['total_amount'],
-        ':discount' => $data['discount'] ?? 0.00,
-        ':net_amount' => $data['net_amount'],
-        ':status' => $data['status']
-      ]);
+      $stmt->execute($params);
 
       // Update billing items - delete old ones and insert new
       if (isset($data['items']) && is_array($data['items'])) {

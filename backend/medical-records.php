@@ -164,6 +164,17 @@ class MedicalRecordsAPI {
     private function getByPatient($data) {
         $patient_id = $data['patient_id'] ?? 0;
 
+        // Convert user_id to patient_id if needed
+        $patientCheckSql = "SELECT patient_id FROM patients WHERE user_id = :user_id";
+        $patientCheckStmt = $this->conn->prepare($patientCheckSql);
+        $patientCheckStmt->execute([':user_id' => $patient_id]);
+        $patientRecord = $patientCheckStmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($patientRecord) {
+            // It's a user_id, convert to patient_id
+            $patient_id = $patientRecord['patient_id'];
+        }
+
         $sql = "SELECT 
                     mr.*,
                     CONCAT(p.first_name, ' ', p.last_name) as patient_name,

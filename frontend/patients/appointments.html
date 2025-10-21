@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <title>My Appointments - Patient Portal</title>
+    <meta name="description" content="Patient Appointments" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+  </head>
+
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        
+        <!-- Menu (Sidebar) -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="dashboard.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <img src="../assets/img/favicon/logo.png" alt="Logo" width="32" />
+              </span>
+              <span class="app-brand-text demo menu-text fw-bold ms-2">Patient Portal</span>
+            </a>
+          </div>
+
+          <div class="menu-inner-shadow"></div>
+
+          <ul class="menu-inner py-1">
+            <!-- Dashboard -->
+            <li class="menu-item">
+              <a href="dashboard.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Dashboard">Dashboard</div>
+              </a>
+            </li>
+
+            <!-- Patient Portal -->
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">My Portal</span>
+            </li>
+
+            <li class="menu-item active">
+              <a href="appointments.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                <div data-i18n="Appointments">My Appointments</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="medical-records.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file"></i>
+                <div data-i18n="Medical Records">Medical Records</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="billing.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-receipt"></i>
+                <div data-i18n="Billing">Billing & Payments</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="profile.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Profile">My Profile</div>
+              </a>
+            </li>
+
+          </ul>
+        </aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          
+          <!-- Navbar -->
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <!-- Search -->
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input
+                    type="text"
+                    class="form-control border-0 shadow-none"
+                    placeholder="Search..."
+                    aria-label="Search..."
+                  />
+                </div>
+              </div>
+              <!-- /Search -->
+
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatar">P</span>
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatarDropdown">P</span>
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block" id="userFullName">Patient User</span>
+                            <small class="text-muted">Patient</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);" id="logoutBtn">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!--/ User -->
+              </ul>
+            </div>
+          </nav>
+          <!-- / Navbar -->
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+            <div class="container-xxl flex-grow-1 container-p-y">
+              
+              <h4 class="fw-bold py-3 mb-4">
+                <span class="text-muted fw-light">Patient Portal /</span> My Appointments
+              </h4>
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                      <h5 class="mb-0">My Appointments</h5>
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookAppointmentModal">
+                        <i class="bx bx-plus"></i> Book Appointment
+                      </button>
+                    </div>
+                    <div class="card-body">
+                      <!-- Filter Tabs -->
+                      <ul class="nav nav-pills mb-3" role="tablist">
+                        <li class="nav-item">
+                          <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#all" onclick="filterAppointments('all')">
+                            All
+                          </button>
+                        </li>
+                        <li class="nav-item">
+                          <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#upcoming" onclick="filterAppointments('upcoming')">
+                            Upcoming
+                          </button>
+                        </li>
+                        <li class="nav-item">
+                          <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#confirmed" onclick="filterAppointments('confirmed')">
+                            Confirmed
+                          </button>
+                        </li>
+                        <li class="nav-item">
+                          <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#completed" onclick="filterAppointments('completed')">
+                            Completed
+                          </button>
+                        </li>
+                      </ul>
+
+                      <!-- Appointments List -->
+                      <div id="appointmentsList">
+                        <div class="text-center py-5">
+                          <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                          </div>
+                          <p class="mt-3 text-muted">Loading appointments...</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!-- / Content -->
+
+            <!-- Footer -->
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  ©
+                  <script>
+                    document.write(new Date().getFullYear());
+                  </script>
+                  , My Clinic Patient Portal
+                </div>
+              </div>
+            </footer>
+            <!-- / Footer -->
+
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <!-- Book Appointment Modal -->
+    <div class="modal fade" id="bookAppointmentModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Book Appointment</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="bookAppointmentForm">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="doctorSelect" class="form-label">Doctor</label>
+                <select class="form-select" id="doctorSelect" required>
+                  <option value="">Select Doctor</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="appointmentDate" class="form-label">Date</label>
+                <input type="date" class="form-control" id="appointmentDate" required />
+              </div>
+              <div class="mb-3">
+                <label for="appointmentTime" class="form-label">Time</label>
+                <input type="time" class="form-control" id="appointmentTime" required />
+              </div>
+              <div class="mb-3">
+                <label for="reason" class="form-label">Reason for Visit</label>
+                <textarea class="form-control" id="reason" rows="3" placeholder="Describe your symptoms or reason for visit..." required></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Book Appointment</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cancel Appointment Modal -->
+    <div class="modal fade" id="cancelAppointmentModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Cancel Appointment</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to cancel this appointment?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">No</button>
+            <button type="button" class="btn btn-danger" id="confirmCancelBtn">Yes, Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Core JS -->
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/js/session-handler.js"></script>
+    <script>
+      const API_BASE = '../../backend/';
+      let allAppointments = [];
+      let currentFilter = 'all';
+      let appointmentToCancel = null;
+      
+      // Menu toggle for mobile
+      document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.layout-menu-toggle');
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function() {
+            document.querySelector('.layout-wrapper').classList.toggle('layout-menu-expanded');
+          });
+        }
+      });
+      
+      // Check if user is logged in
+      document.addEventListener('DOMContentLoaded', function() {
+        if (!SessionHandler.requireUserType(5)) { // 5 = Patient
+          return;
+        }
+
+        const userData = SessionHandler.getUser();
+        displayUserInfo(userData);
+        loadAppointments();
+        loadDoctors();
+
+        // Set min date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('appointmentDate').min = today;
+
+        // Book appointment form
+        document.getElementById('bookAppointmentForm').addEventListener('submit', handleBookAppointment);
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+          SessionHandler.logout();
+          window.location.href = '../index.html';
+        });
+      });
+
+      function displayUserInfo(userData) {
+        const firstName = userData.profile?.first_name || userData.first_name || 'Patient';
+        const lastName = userData.profile?.last_name || userData.last_name || '';
+        const patientName = firstName + ' ' + lastName;
+        
+        document.getElementById('userFullName').textContent = patientName;
+        
+        const initials = firstName.charAt(0) + lastName.charAt(0);
+        document.getElementById('userAvatar').textContent = initials.toUpperCase();
+        document.getElementById('userAvatarDropdown').textContent = initials.toUpperCase();
+      }
+
+      async function loadDoctors() {
+        try {
+          const params = new URLSearchParams();
+          params.append('operation', 'getAll');
+          params.append('json', JSON.stringify({ 
+            usertype_id: 2, // 2 = Doctor
+            status: 'active' 
+          }));
+
+          const response = await axios.post(API_BASE + 'users.php', params);
+
+          if (response.data.success) {
+            const doctors = response.data.data || [];
+            const select = document.getElementById('doctorSelect');
+            
+            doctors.forEach(doctor => {
+              const option = document.createElement('option');
+              option.value = doctor.user_id;
+              option.textContent = `Dr. ${doctor.first_name} ${doctor.last_name}`;
+              if (doctor.specialization) {
+                option.textContent += ` - ${doctor.specialization}`;
+              } else if (doctor.department_name) {
+                option.textContent += ` - ${doctor.department_name}`;
+              }
+              select.appendChild(option);
+            });
+          } else {
+            console.error('Failed to load doctors:', response.data.error);
+          }
+        } catch (error) {
+          console.error('Error loading doctors:', error);
+        }
+      }
+
+      async function loadAppointments() {
+        try {
+          const userData = SessionHandler.getUser();
+          console.log('Loading appointments for user:', userData.user_id);
+          
+          const response = await axios.post(API_BASE + 'appointments.php', {
+            action: 'getByPatient',
+            patient_id: userData.user_id
+          });
+
+          console.log('Appointments response:', response.data);
+
+          if (response.data.success) {
+            allAppointments = response.data.appointments || response.data.data || [];
+            console.log('Loaded appointments:', allAppointments);
+            displayAppointments();
+          } else {
+            console.error('Failed to load appointments:', response.data);
+            showError('Unable to load appointments: ' + (response.data.message || 'Unknown error'));
+          }
+        } catch (error) {
+          console.error('Error loading appointments:', error);
+          showError('Error loading appointments');
+        }
+      }
+
+      function filterAppointments(filter) {
+        currentFilter = filter;
+        displayAppointments();
+      }
+
+      function displayAppointments() {
+        const appointmentsList = document.getElementById('appointmentsList');
+        
+        let filtered = allAppointments;
+        const now = new Date();
+
+        if (currentFilter === 'upcoming') {
+          filtered = allAppointments.filter(apt => {
+            const aptDate = new Date(apt.appointment_date);
+            return aptDate >= now && apt.status !== 'cancelled' && apt.status !== 'completed';
+          });
+        } else if (currentFilter !== 'all') {
+          filtered = allAppointments.filter(apt => apt.status === currentFilter);
+        }
+
+        if (filtered.length === 0) {
+          appointmentsList.innerHTML = `
+            <div class="text-center py-5">
+              <i class="bx bx-calendar-x" style="font-size: 64px; color: #ccc;"></i>
+              <p class="text-muted mt-3">No ${currentFilter === 'all' ? '' : currentFilter} appointments found</p>
+            </div>
+          `;
+          return;
+        }
+
+        // Sort by date (newest first)
+        filtered.sort((a, b) => new Date(b.appointment_date) - new Date(a.appointment_date));
+
+        let html = '<div class="table-responsive">';
+        html += '<table class="table table-hover">';
+        html += '<thead><tr><th>Doctor</th><th>Date & Time</th><th>Reason</th><th>Status</th><th>Actions</th></tr></thead>';
+        html += '<tbody>';
+
+        filtered.forEach(apt => {
+          const date = new Date(apt.appointment_date);
+          const formattedDate = date.toLocaleDateString('en-US', { 
+            month: 'short', 
+            day: 'numeric', 
+            year: 'numeric' 
+          });
+          
+          const statusClass = apt.status === 'confirmed' ? 'success' : 
+                             apt.status === 'pending' ? 'warning' : 
+                             apt.status === 'cancelled' ? 'danger' : 'info';
+
+          const canCancel = apt.status !== 'cancelled' && apt.status !== 'completed' && date >= now;
+
+          html += `
+            <tr>
+              <td>
+                <strong>Dr. ${apt.doctor_name}</strong>
+              </td>
+              <td>
+                <i class="bx bx-calendar"></i> ${formattedDate}<br>
+                <i class="bx bx-time"></i> ${apt.appointment_time}
+              </td>
+              <td>${apt.reason || 'N/A'}</td>
+              <td><span class="badge bg-label-${statusClass}">${apt.status}</span></td>
+              <td>
+                ${canCancel ? `<button class="btn btn-sm btn-outline-danger" onclick="showCancelModal(${apt.appointment_id})">
+                  <i class="bx bx-x"></i> Cancel
+                </button>` : '-'}
+              </td>
+            </tr>
+          `;
+        });
+
+        html += '</tbody></table></div>';
+        appointmentsList.innerHTML = html;
+      }
+
+      async function handleBookAppointment(e) {
+        e.preventDefault();
+        
+        const userData = SessionHandler.getUser();
+        const formData = {
+          action: 'create',
+          patient_id: userData.user_id,
+          doctor_id: document.getElementById('doctorSelect').value,
+          appointment_date: document.getElementById('appointmentDate').value,
+          appointment_time: document.getElementById('appointmentTime').value,
+          reason: document.getElementById('reason').value,
+          status: 'pending'
+        };
+
+        try {
+          const response = await axios.post(API_BASE + 'appointments.php', formData);
+
+          if (response.data.success) {
+            alert('Appointment booked successfully! Awaiting confirmation.');
+            bootstrap.Modal.getInstance(document.getElementById('bookAppointmentModal')).hide();
+            document.getElementById('bookAppointmentForm').reset();
+            loadAppointments();
+          } else {
+            alert('Failed to book appointment: ' + (response.data.message || 'Unknown error'));
+          }
+        } catch (error) {
+          console.error('Error booking appointment:', error);
+          alert('Error booking appointment. Please try again.');
+        }
+      }
+
+      function showCancelModal(appointmentId) {
+        appointmentToCancel = appointmentId;
+        new bootstrap.Modal(document.getElementById('cancelAppointmentModal')).show();
+      }
+
+      document.getElementById('confirmCancelBtn').addEventListener('click', async function() {
+        if (!appointmentToCancel) return;
+
+        try {
+          const response = await axios.post(API_BASE + 'appointments.php', {
+            action: 'update',
+            appointment_id: appointmentToCancel,
+            status: 'cancelled'
+          });
+
+          if (response.data.success) {
+            alert('Appointment cancelled successfully');
+            bootstrap.Modal.getInstance(document.getElementById('cancelAppointmentModal')).hide();
+            appointmentToCancel = null;
+            loadAppointments();
+          } else {
+            alert('Failed to cancel appointment');
+          }
+        } catch (error) {
+          console.error('Error cancelling appointment:', error);
+          alert('Error cancelling appointment');
+        }
+      });
+
+      function showError(message) {
+        document.getElementById('appointmentsList').innerHTML = `
+          <div class="alert alert-danger">
+            <i class="bx bx-error-circle"></i> ${message}
+          </div>
+        `;
+      }
+    </script>
+  </body>
+</html>

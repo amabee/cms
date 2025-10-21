@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <title>Billing & Payments - Patient Portal</title>
+    <meta name="description" content="Patient Billing" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+  </head>
+
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        
+        <!-- Menu (Sidebar) -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="dashboard.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <img src="../assets/img/favicon/logo.png" alt="Logo" width="32" />
+              </span>
+              <span class="app-brand-text demo menu-text fw-bold ms-2">Patient Portal</span>
+            </a>
+          </div>
+
+          <div class="menu-inner-shadow"></div>
+
+          <ul class="menu-inner py-1">
+            <li class="menu-item">
+              <a href="dashboard.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Dashboard">Dashboard</div>
+              </a>
+            </li>
+
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">My Portal</span>
+            </li>
+
+            <li class="menu-item">
+              <a href="appointments.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-calendar"></i>
+                <div data-i18n="Appointments">My Appointments</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="medical-records.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file"></i>
+                <div data-i18n="Medical Records">Medical Records</div>
+              </a>
+            </li>
+
+            <li class="menu-item active">
+              <a href="billing.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-receipt"></i>
+                <div data-i18n="Billing">Billing & Payments</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="profile.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Profile">My Profile</div>
+              </a>
+            </li>
+
+          </ul>
+        </aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          
+          <!-- Navbar -->
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input
+                    type="text"
+                    class="form-control border-0 shadow-none"
+                    placeholder="Search..."
+                    aria-label="Search..."
+                  />
+                </div>
+              </div>
+
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatar">P</span>
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <span class="avatar-initial rounded-circle bg-label-primary" id="userAvatarDropdown">P</span>
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block" id="userFullName">Patient User</span>
+                            <small class="text-muted">Patient</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="profile.html">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);" id="logoutBtn">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <!-- / Navbar -->
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+            <div class="container-xxl flex-grow-1 container-p-y">
+              
+              <h4 class="fw-bold py-3 mb-4">
+                <span class="text-muted fw-light">Patient Portal /</span> Billing & Payments
+              </h4>
+
+              <!-- Summary Cards -->
+              <div class="row mb-4">
+                <div class="col-md-4 mb-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                          <p class="card-text text-muted mb-1">Total Balance</p>
+                          <h4 class="mb-0" id="totalBalance">₱0.00</h4>
+                        </div>
+                        <div class="badge bg-label-danger rounded p-2">
+                          <i class="bx bx-wallet bx-sm"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                          <p class="card-text text-muted mb-1">Total Paid</p>
+                          <h4 class="mb-0" id="totalPaid">₱0.00</h4>
+                        </div>
+                        <div class="badge bg-label-success rounded p-2">
+                          <i class="bx bx-check-circle bx-sm"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                          <p class="card-text text-muted mb-1">Unpaid Bills</p>
+                          <h4 class="mb-0" id="unpaidCount">0</h4>
+                        </div>
+                        <div class="badge bg-label-warning rounded p-2">
+                          <i class="bx bx-receipt bx-sm"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Billing List -->
+              <div class="row">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                      <h5 class="mb-0">My Bills</h5>
+                      <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-primary btn-sm active" onclick="filterBills('all')">
+                          All
+                        </button>
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="filterBills('unpaid')">
+                          Unpaid
+                        </button>
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="filterBills('paid')">
+                          Paid
+                        </button>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div id="billsList">
+                        <div class="text-center py-5">
+                          <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                          </div>
+                          <p class="mt-3 text-muted">Loading bills...</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!-- / Content -->
+
+            <!-- Footer -->
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  ©
+                  <script>
+                    document.write(new Date().getFullYear());
+                  </script>
+                  , My Clinic Patient Portal
+                </div>
+              </div>
+            </footer>
+            <!-- / Footer -->
+
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Make Payment</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="paymentForm">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Bill Amount</label>
+                <input type="text" class="form-control" id="billAmount" readonly />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Amount to Pay</label>
+                <input type="number" class="form-control" id="paymentAmount" step="0.01" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Payment Method</label>
+                <select class="form-select" id="paymentMethod" required>
+                  <option value="cash">Cash</option>
+                  <option value="credit_card">Credit Card</option>
+                  <option value="debit_card">Debit Card</option>
+                  <option value="gcash">GCash</option>
+                  <option value="paymaya">PayMaya</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Pay Now</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Core JS -->
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/js/session-handler.js"></script>
+    <script>
+      const API_BASE = '../../backend/';
+      let allBills = [];
+      let currentFilter = 'all';
+      let selectedBill = null;
+      
+      // Menu toggle for mobile
+      document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.layout-menu-toggle');
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function() {
+            document.querySelector('.layout-wrapper').classList.toggle('layout-menu-expanded');
+          });
+        }
+      });
+      
+      document.addEventListener('DOMContentLoaded', function() {
+        if (!SessionHandler.requireUserType(5)) { // 5 = Patient
+          return;
+        }
+
+        const userData = SessionHandler.getUser();
+        displayUserInfo(userData);
+        loadBilling();
+
+        document.getElementById('paymentForm').addEventListener('submit', handlePayment);
+
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+          SessionHandler.logout();
+          window.location.href = '../index.html';
+        });
+      });
+
+      function displayUserInfo(userData) {
+        const firstName = userData.profile?.first_name || userData.first_name || 'Patient';
+        const lastName = userData.profile?.last_name || userData.last_name || '';
+        const patientName = firstName + ' ' + lastName;
+        
+        document.getElementById('userFullName').textContent = patientName;
+        
+        const initials = firstName.charAt(0) + lastName.charAt(0);
+        document.getElementById('userAvatar').textContent = initials.toUpperCase();
+        document.getElementById('userAvatarDropdown').textContent = initials.toUpperCase();
+      }
+
+      async function loadBilling() {
+        try {
+          const userData = SessionHandler.getUser();
+          console.log('Loading billing for user:', userData.user_id);
+          
+          const params = new URLSearchParams();
+          params.append('operation', 'getByPatient');
+          params.append('json', JSON.stringify({ patient_id: userData.user_id }));
+
+          const response = await axios.post(API_BASE + 'billing.php', params);
+
+          console.log('Billing response:', response.data);
+
+          if (response.data.success) {
+            allBills = response.data.data || [];
+            console.log('Loaded bills:', allBills);
+            updateSummary();
+            displayBills();
+          } else {
+            console.error('Failed to load billing:', response.data);
+            showError('Unable to load billing information: ' + (response.data.message || 'Unknown error'));
+          }
+        } catch (error) {
+          console.error('Error loading billing:', error);
+          showError('Error loading billing information');
+        }
+      }
+
+      function updateSummary() {
+        const totalBalance = allBills.reduce((sum, bill) => {
+          if (bill.status === 'unpaid') {
+            return sum + parseFloat(bill.net_amount || bill.total_amount || 0);
+          }
+          return sum;
+        }, 0);
+
+        const totalPaid = allBills.reduce((sum, bill) => {
+          if (bill.status === 'paid') {
+            return sum + parseFloat(bill.net_amount || bill.total_amount || 0);
+          }
+          return sum;
+        }, 0);
+
+        const unpaidCount = allBills.filter(bill => bill.status === 'unpaid').length;
+
+        document.getElementById('totalBalance').textContent = '₱' + totalBalance.toFixed(2);
+        document.getElementById('totalPaid').textContent = '₱' + totalPaid.toFixed(2);
+        document.getElementById('unpaidCount').textContent = unpaidCount;
+      }
+
+      function filterBills(status) {
+        currentFilter = status;
+        
+        document.querySelectorAll('.btn-group .btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        event.target.classList.add('active');
+        
+        displayBills();
+      }
+
+      function displayBills() {
+        const billsList = document.getElementById('billsList');
+        
+        let filtered = allBills;
+        if (currentFilter === 'unpaid') {
+          filtered = allBills.filter(b => b.status === 'unpaid');
+        } else if (currentFilter === 'paid') {
+          filtered = allBills.filter(b => b.status === 'paid');
+        }
+
+        if (filtered.length === 0) {
+          billsList.innerHTML = `
+            <div class="text-center py-5">
+              <i class="bx bx-receipt" style="font-size: 64px; color: #ccc;"></i>
+              <p class="text-muted mt-3">No ${currentFilter === 'all' ? '' : currentFilter} bills found</p>
+            </div>
+          `;
+          return;
+        }
+
+        // Sort by date (newest first)
+        filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+        let html = '<div class="table-responsive">';
+        html += '<table class="table table-hover">';
+        html += '<thead><tr><th>Date</th><th>Description</th><th>Amount</th><th>Paid</th><th>Balance</th><th>Status</th><th>Actions</th></tr></thead>';
+        html += '<tbody>';
+
+        filtered.forEach(bill => {
+          const date = new Date(bill.created_at);
+          const formattedDate = date.toLocaleDateString('en-US', { 
+            month: 'short', 
+            day: 'numeric', 
+            year: 'numeric' 
+          });
+
+          const totalAmount = parseFloat(bill.total_amount || 0);
+          const discount = parseFloat(bill.discount || 0);
+          const netAmount = parseFloat(bill.net_amount || totalAmount - discount);
+          const balance = bill.status === 'paid' ? 0 : netAmount;
+
+          const statusClass = bill.status === 'paid' ? 'success' : 'danger';
+          const canPay = bill.status === 'unpaid';
+
+          // Get appointment date if available
+          const appointmentInfo = bill.appointment_date 
+            ? `Appointment: ${new Date(bill.appointment_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`
+            : 'Medical Service';
+
+          html += `
+            <tr>
+              <td>${formattedDate}</td>
+              <td>${appointmentInfo}</td>
+              <td>₱${totalAmount.toFixed(2)}</td>
+              <td>₱${(bill.status === 'paid' ? netAmount : 0).toFixed(2)}</td>
+              <td><strong>₱${balance.toFixed(2)}</strong></td>
+              <td><span class="badge bg-label-${statusClass}">${bill.status}</span></td>
+              <td>
+                ${canPay ? `<button class="btn btn-sm btn-primary" onclick="showPaymentModal(${bill.billing_id}, ${netAmount})">
+                  <i class="bx bx-money"></i> Pay
+                </button>` : '-'}
+              </td>
+            </tr>
+          `;
+        });
+
+        html += '</tbody></table></div>';
+        billsList.innerHTML = html;
+      }
+
+      function showPaymentModal(billingId, balance) {
+        selectedBill = billingId;
+        document.getElementById('billAmount').value = '₱' + balance.toFixed(2);
+        document.getElementById('paymentAmount').value = balance.toFixed(2);
+        document.getElementById('paymentAmount').max = balance;
+        new bootstrap.Modal(document.getElementById('paymentModal')).show();
+      }
+
+      async function handlePayment(e) {
+        e.preventDefault();
+
+        if (!selectedBill) return;
+
+        const paymentAmount = parseFloat(document.getElementById('paymentAmount').value);
+        const paymentMethod = document.getElementById('paymentMethod').value;
+
+        try {
+          const bill = allBills.find(b => b.billing_id == selectedBill);
+          const netAmount = parseFloat(bill.net_amount || bill.total_amount || 0);
+
+          // Check if payment amount matches the bill amount
+          if (paymentAmount < netAmount) {
+            alert('Payment amount must be equal to or greater than the bill amount.');
+            return;
+          }
+
+          const params = new URLSearchParams();
+          params.append('operation', 'updateStatus');
+          params.append('json', JSON.stringify({
+            billing_id: selectedBill,
+            status: 'paid'
+          }));
+
+          const response = await axios.post(API_BASE + 'billing.php', params);
+
+          if (response.data.success) {
+            alert('Payment successful!');
+            bootstrap.Modal.getInstance(document.getElementById('paymentModal')).hide();
+            document.getElementById('paymentForm').reset();
+            selectedBill = null;
+            loadBilling();
+          } else {
+            alert('Payment failed: ' + (response.data.message || 'Unknown error'));
+          }
+        } catch (error) {
+          console.error('Error processing payment:', error);
+          alert('Error processing payment. Please try again.');
+        }
+      }
+
+      function showError(message) {
+        document.getElementById('billsList').innerHTML = `
+          <div class="alert alert-danger">
+            <i class="bx bx-error-circle"></i> ${message}
+          </div>
+        `;
+      }
+    </script>
+  </body>
+</html>

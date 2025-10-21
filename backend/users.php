@@ -25,10 +25,13 @@ class Users
 
       $sql = "SELECT u.user_id, u.usertype_id, u.username, u.email, u.status, u.created_at,
                      up.first_name, up.last_name, up.phone, up.address,
-                     ut.name as usertype_name
+                     ut.name as usertype_name,
+                     d.specialization, d.department_id, dept.name as department_name
               FROM users u
               LEFT JOIN user_profiles up ON u.user_id = up.user_id
               LEFT JOIN usertypes ut ON u.usertype_id = ut.usertype_id
+              LEFT JOIN doctors d ON u.user_id = d.user_id
+              LEFT JOIN departments dept ON d.department_id = dept.department_id
               WHERE 1=1";
 
       $params = [];

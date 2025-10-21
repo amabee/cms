@@ -53,6 +53,30 @@ class AppointmentsAPI {
             $doctor_id = isset($data['doctor_id']) ? $data['doctor_id'] : '';
             $date_filter = isset($data['date_filter']) ? $data['date_filter'] : '';
 
+            // Convert user_id to patient_id if needed and patient_id is provided
+            if (!empty($patient_id)) {
+                $patientCheckSql = "SELECT patient_id FROM patients WHERE user_id = :user_id";
+                $patientCheckStmt = $this->conn->prepare($patientCheckSql);
+                $patientCheckStmt->execute([':user_id' => $patient_id]);
+                $patientRecord = $patientCheckStmt->fetch(PDO::FETCH_ASSOC);
+                
+                if ($patientRecord) {
+                    $patient_id = $patientRecord['patient_id'];
+                }
+            }
+
+            // Convert user_id to doctor_id if needed and doctor_id is provided
+            if (!empty($doctor_id)) {
+                $doctorCheckSql = "SELECT doctor_id FROM doctors WHERE user_id = :user_id";
+                $doctorCheckStmt = $this->conn->prepare($doctorCheckSql);
+                $doctorCheckStmt->execute([':user_id' => $doctor_id]);
+                $doctorRecord = $doctorCheckStmt->fetch(PDO::FETCH_ASSOC);
+                
+                if ($doctorRecord) {
+                    $doctor_id = $doctorRecord['doctor_id'];
+                }
+            }
+
             $sql = "SELECT a.*, 
                            CONCAT(p.first_name, ' ', p.last_name) as patient_name,
                            CONCAT(up.first_name, ' ', up.last_name) as doctor_name,
@@ -168,6 +192,17 @@ class AppointmentsAPI {
                 return $this->response(false, 'Patient ID is required', null);
             }
 
+            // Convert user_id to patient_id if needed
+            $patientCheckSql = "SELECT patient_id FROM patients WHERE user_id = :user_id";
+            $patientCheckStmt = $this->conn->prepare($patientCheckSql);
+            $patientCheckStmt->execute([':user_id' => $data['patient_id']]);
+            $patientRecord = $patientCheckStmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($patientRecord) {
+                // It's a user_id, convert to patient_id
+                $data['patient_id'] = $patientRecord['patient_id'];
+            }
+
             $sql = "SELECT a.*, 
                            CONCAT(up.first_name, ' ', up.last_name) as doctor_name,
                            doc.specialization
@@ -229,6 +264,34 @@ class AppointmentsAPI {
                 if (!isset($data[$field]) || empty($data[$field])) {
                     return $this->response(false, ucfirst(str_replace('_', ' ', $field)) . ' is required', null);
                 }
+            }
+
+            // Convert user_id to patient_id if needed
+            // Check if the patient_id is actually a user_id (for patient portal)
+            $patientCheckSql = "SELECT patient_id FROM patients WHERE user_id = :user_id";
+            $patientCheckStmt = $this->conn->prepare($patientCheckSql);
+            $patientCheckStmt->execute([':user_id' => $data['patient_id']]);
+            $patientRecord = $patientCheckStmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($patientRecord) {
+                // It's a user_id, convert to patient_id
+                $data['patient_id'] = $patientRecord['patient_id'];
+            } else {
+                return $this->response(false, 'Patient record not found. Please ensure you have a complete patient profile.', null);
+            }
+
+            // Convert user_id to doctor_id if needed
+            // Check if the doctor_id is actually a user_id (for patient portal)
+            $doctorCheckSql = "SELECT doctor_id FROM doctors WHERE user_id = :user_id";
+            $doctorCheckStmt = $this->conn->prepare($doctorCheckSql);
+            $doctorCheckStmt->execute([':user_id' => $data['doctor_id']]);
+            $doctorRecord = $doctorCheckStmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($doctorRecord) {
+                // It's a user_id, convert to doctor_id
+                $data['doctor_id'] = $doctorRecord['doctor_id'];
+            } else {
+                return $this->response(false, 'Doctor not found.', null);
             }
 
             // Check for conflicting appointments
