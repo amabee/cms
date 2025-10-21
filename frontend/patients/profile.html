@@ -479,16 +479,21 @@
       async function loadPatientProfile() {
         try {
           const userData = SessionHandler.getUser();
+          console.log('Loading patient profile for user:', userData.user_id);
+          
           const params = new URLSearchParams();
-          params.append('operation', 'getPatientProfile');
+          params.append('operation', 'getById');
           params.append('json', JSON.stringify({ patient_id: userData.user_id }));
 
           const response = await axios.post(API_BASE + 'patients.php', params);
+
+          console.log('Patient profile response:', response.data);
 
           if (response.data.success && response.data.data) {
             patientData = response.data.data;
             displayProfile(patientData);
           } else {
+            console.warn('Patient profile not found, using session data');
             // Use session data if patient profile not found
             displayProfile(userData);
           }
@@ -503,7 +508,7 @@
         const firstName = data.profile?.first_name || data.first_name || 'Patient';
         const lastName = data.profile?.last_name || data.last_name || '';
         const email = data.profile?.email || data.email || '';
-        const phone = data.profile?.phone || data.phone || '';
+        const phone = data.profile?.phone || data.phone || data.phone_number || '';
         const dob = data.profile?.date_of_birth || data.date_of_birth || '';
         const gender = data.profile?.gender || data.gender || '';
         const address = data.profile?.address || data.address || '';
@@ -540,7 +545,7 @@
 
         // Emergency contact
         document.getElementById('displayEmergencyName').textContent = data.emergency_contact_name || '-';
-        document.getElementById('displayEmergencyRelation').textContent = data.emergency_contact_relation || '-';
+        document.getElementById('displayEmergencyRelation').textContent = data.emergency_contact || '-';
         document.getElementById('displayEmergencyPhone').textContent = data.emergency_contact_phone || '-';
 
         // Populate edit forms
@@ -553,7 +558,7 @@
         document.getElementById('editAddress').value = address || '';
 
         document.getElementById('editEmergencyName').value = data.emergency_contact_name || '';
-        document.getElementById('editEmergencyRelation').value = data.emergency_contact_relation || '';
+        document.getElementById('editEmergencyRelation').value = data.emergency_contact || '';
         document.getElementById('editEmergencyPhone').value = data.emergency_contact_phone || '';
       }
 
@@ -570,7 +575,7 @@
           first_name: document.getElementById('editFirstName').value,
           last_name: document.getElementById('editLastName').value,
           email: document.getElementById('editEmail').value,
-          phone: document.getElementById('editPhone').value,
+          phone_number: document.getElementById('editPhone').value,
           date_of_birth: document.getElementById('editDOB').value,
           gender: document.getElementById('editGender').value,
           address: document.getElementById('editAddress').value
@@ -605,7 +610,7 @@
         params.append('json', JSON.stringify({
           patient_id: userData.user_id,
           emergency_contact_name: document.getElementById('editEmergencyName').value,
-          emergency_contact_relation: document.getElementById('editEmergencyRelation').value,
+          emergency_contact: document.getElementById('editEmergencyRelation').value,
           emergency_contact_phone: document.getElementById('editEmergencyPhone').value
         }));
 

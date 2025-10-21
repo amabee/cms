@@ -217,6 +217,17 @@ class Patients
         return json_encode(['error' => 'Patient ID is required']);
       }
 
+      // Convert user_id to patient_id if needed
+      $patientCheckSql = "SELECT patient_id FROM patients WHERE user_id = :user_id";
+      $patientCheckStmt = $this->conn->prepare($patientCheckSql);
+      $patientCheckStmt->execute([':user_id' => $patient_id]);
+      $patientRecord = $patientCheckStmt->fetch(PDO::FETCH_ASSOC);
+      
+      if ($patientRecord) {
+        // It's a user_id, convert to patient_id
+        $patient_id = $patientRecord['patient_id'];
+      }
+
       $sql = "SELECT p.*, 
                      i.company_name as insurance_company, i.policy_no as insurance_policy,
                      u.username, u.email as user_email, u.status as account_status,
@@ -262,108 +273,80 @@ class Patients
     $this->conn->beginTransaction();
 
     try {
-      // Get user_id
-      $stmt = $this->conn->prepare("SELECT user_id FROM patients WHERE patient_id = :patient_id");
+      // Get current patient data first
+      $stmt = $this->conn->prepare("SELECT * FROM patients WHERE patient_id = :patient_id");
       $stmt->execute([':patient_id' => $data['patient_id']]);
-      $result = $stmt->fetch(PDO::FETCH_ASSOC);
+      $currentPatient = $stmt->fetch(PDO::FETCH_ASSOC);
 
-      if (!$result) {
+      if (!$currentPatient) {
         return json_encode(['error' => 'Patient not found']);
       }
 
-      $user_id = $result['user_id'];
+      $user_id = $currentPatient['user_id'];
 
-      // Update user if exists
-      if ($user_id) {
-        $stmt = $this->conn->prepare("UPDATE users SET email = :email WHERE user_id = :user_id");
-        $stmt->execute([
-          ':user_id' => $user_id,
-          ':email' => $data['email'] ?? null
-        ]);
+      // Build dynamic update query for patients table
+      $updateFields = [];
+      $updateParams = [':patient_id' => $data['patient_id']];
 
-        // Update profile
-        $stmt = $this->conn->prepare("UPDATE user_profiles SET
-                                        first_name = :first_name,
-                                        last_name = :last_name,
-                                        gender = :gender,
-                                        birth_date = :birth_date,
-                                        phone = :phone,
-                                        address = :address
-                                        WHERE user_id = :user_id");
-        $stmt->execute([
-          ':user_id' => $user_id,
-          ':first_name' => $data['first_name'],
-          ':last_name' => $data['last_name'],
-          ':gender' => $data['gender'] ?? null,
-          ':birth_date' => $data['birth_date'] ?? null,
-          ':phone' => $data['phone'] ?? null,
-          ':address' => $data['address'] ?? null
-        ]);
+      // Only update fields that are provided
+      $patientFields = [
+        'first_name', 'last_name', 'middle_name', 'date_of_birth', 'gender',
+        'phone_number', 'email', 'address', 'emergency_contact_name',
+        'emergency_contact_phone', 'blood_type', 'allergies', 
+        'existing_conditions', 'notes', 'is_active'
+      ];
+
+      foreach ($patientFields as $field) {
+        if (isset($data[$field])) {
+          $updateFields[] = "$field = :$field";
+          $updateParams[":$field"] = $data[$field];
+        }
       }
 
-      // Update patient record with all new fields
-      $stmt = $this->conn->prepare("UPDATE patients SET
-                                      first_name = :first_name,
-                                      last_name = :last_name,
-                                      middle_name = :middle_name,
-                                      date_of_birth = :date_of_birth,
-                                      gender = :gender,
-                                      phone_number = :phone_number,
-                                      email = :email,
-                                      address = :address,
-                                      emergency_contact_name = :emergency_contact_name,
-                                      emergency_contact_phone = :emergency_contact_phone,
-                                      blood_type = :blood_type,
-                                      allergies = :allergies,
-                                      existing_conditions = :existing_conditions,
-                                      notes = :notes,
-                                      is_active = :is_active
-                                      WHERE patient_id = :patient_id");
-      $stmt->execute([
-        ':patient_id' => $data['patient_id'],
-        ':first_name' => $data['first_name'],
-        ':last_name' => $data['last_name'],
-        ':middle_name' => $data['middle_name'] ?? null,
-        ':date_of_birth' => $data['date_of_birth'],
-        ':gender' => $data['gender'] ?? 'Other',
-        ':phone_number' => $data['phone_number'] ?? null,
-        ':email' => $data['email'] ?? null,
-        ':address' => $data['address'] ?? null,
-        ':emergency_contact_name' => $data['emergency_contact_name'] ?? null,
-        ':emergency_contact_phone' => $data['emergency_contact_phone'] ?? null,
-        ':blood_type' => $data['blood_type'] ?? null,
-        ':allergies' => $data['allergies'] ?? null,
-        ':existing_conditions' => $data['existing_conditions'] ?? null,
-        ':notes' => $data['notes'] ?? null,
-        ':is_active' => $data['is_active'] ?? 1
-      ]);
+      // Update patient record if there are fields to update
+      if (!empty($updateFields)) {
+        $sql = "UPDATE patients SET " . implode(', ', $updateFields) . " WHERE patient_id = :patient_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute($updateParams);
+      }
 
-      // Update user account if exists
-      if ($user_id && isset($data['email'])) {
-        $stmt = $this->conn->prepare("UPDATE users SET email = :email WHERE user_id = :user_id");
-        $stmt->execute([
-          ':user_id' => $user_id,
-          ':email' => $data['email']
-        ]);
+      // Update user account and profile if user exists and relevant data is provided
+      if ($user_id) {
+        // Update email in users table
+        if (isset($data['email'])) {
+          $stmt = $this->conn->prepare("UPDATE users SET email = :email WHERE user_id = :user_id");
+          $stmt->execute([
+            ':user_id' => $user_id,
+            ':email' => $data['email']
+          ]);
+        }
 
-        // Update user profile
-        $stmt = $this->conn->prepare("UPDATE user_profiles SET
-                                        first_name = :first_name,
-                                        last_name = :last_name,
-                                        gender = :gender,
-                                        birth_date = :birth_date,
-                                        phone = :phone,
-                                        address = :address
-                                        WHERE user_id = :user_id");
-        $stmt->execute([
-          ':user_id' => $user_id,
-          ':first_name' => $data['first_name'],
-          ':last_name' => $data['last_name'],
-          ':gender' => $data['gender'] ?? 'Other',
-          ':birth_date' => $data['date_of_birth'],
-          ':phone' => $data['phone_number'] ?? null,
-          ':address' => $data['address'] ?? null
-        ]);
+        // Build dynamic update for user_profiles
+        $profileUpdateFields = [];
+        $profileParams = [':user_id' => $user_id];
+
+        $profileFieldMap = [
+          'first_name' => 'first_name',
+          'last_name' => 'last_name',
+          'gender' => 'gender',
+          'date_of_birth' => 'birth_date',
+          'phone_number' => 'phone',
+          'address' => 'address'
+        ];
+
+        foreach ($profileFieldMap as $dataKey => $dbKey) {
+          if (isset($data[$dataKey])) {
+            $profileUpdateFields[] = "$dbKey = :$dbKey";
+            $profileParams[":$dbKey"] = $data[$dataKey];
+          }
+        }
+
+        // Update user profile if there are fields to update
+        if (!empty($profileUpdateFields)) {
+          $sql = "UPDATE user_profiles SET " . implode(', ', $profileUpdateFields) . " WHERE user_id = :user_id";
+          $stmt = $this->conn->prepare($sql);
+          $stmt->execute($profileParams);
+        }
       }
 
       // Log the action
