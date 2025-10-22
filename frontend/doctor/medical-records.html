@@ -290,7 +290,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary" onclick="saveRecord()">
+            <button type="button" class="btn btn-primary" id="saveRecordBtn" onclick="saveRecord()">
               <i class="bx bx-save me-1"></i> Save Record
             </button>
           </div>
@@ -480,9 +480,17 @@
             return;
           }
 
-          tbody.innerHTML = records.map(rec => `
+          tbody.innerHTML = records.map(rec => {
+            // Format date to remove time
+            const recordDate = rec.record_date ? new Date(rec.record_date).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric'
+            }) : 'N/A';
+            
+            return `
             <tr>
-              <td>${rec.record_date}</td>
+              <td>${recordDate}</td>
               <td>${rec.patient_name}</td>
               <td>${rec.diagnosis || 'N/A'}</td>
               <td>
@@ -491,7 +499,8 @@
                 </button>
               </td>
             </tr>
-          `).join('');
+          `;
+          }).join('');
 
           document.querySelectorAll('.view-record').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -571,13 +580,26 @@
           return prescriptions;
         }
 
+        let isSavingRecord = false; // Throttle flag
+
         async function saveRecord() {
+          // Prevent duplicate submissions
+          if (isSavingRecord) {
+            return;
+          }
+
           const form = document.getElementById('createRecordForm');
           if (!form.checkValidity()) {
             form.reportValidity();
             return;
           }
           
+          // Disable button and set flag
+          const saveBtn = document.getElementById('saveRecordBtn');
+          saveBtn.disabled = true;
+          saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status"></span> Saving...';
+          isSavingRecord = true;
+
           try {
             const prescriptions = collectPrescriptions();
             
@@ -612,6 +634,11 @@
           } catch (error) {
             console.error('Error creating record:', error);
             alert('Error creating medical record');
+          } finally {
+            // Re-enable button and reset flag
+            saveBtn.disabled = false;
+            saveBtn.innerHTML = '<i class="bx bx-save me-1"></i> Save Record';
+            isSavingRecord = false;
           }
         }
 
@@ -622,17 +649,27 @@
         window.viewRecord = viewRecord;
 
         function viewRecord(rec) {
+          // Format date to remove time
+          const recordDate = rec.record_date ? new Date(rec.record_date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          }) : 'N/A';
+          
           document.getElementById('view_patient_name').textContent = rec.patient_name;
-          document.getElementById('view_record_date').textContent = rec.record_date;
-          document.getElementById('view_chief_complaint').textContent = rec.chief_complaint || 'N/A';
-          document.getElementById('view_history').textContent = rec.history || 'N/A';
-          document.getElementById('view_physical_exam').textContent = rec.physical_exam || 'N/A';
-          document.getElementById('view_vital_signs').textContent = rec.vital_signs || 'N/A';
+          document.getElementById('view_record_date').textContent = recordDate;
+          // Only display fields that exist in the database
           document.getElementById('view_diagnosis').textContent = rec.diagnosis || 'N/A';
           document.getElementById('view_treatment').textContent = rec.treatment || 'N/A';
           document.getElementById('view_prescriptions').textContent = rec.prescriptions || 'N/A';
-          document.getElementById('view_followup').textContent = rec.followup_instructions || 'N/A';
           document.getElementById('view_notes').textContent = rec.notes || 'N/A';
+          
+          // Hide fields that don't exist in the database
+          document.getElementById('view_chief_complaint').textContent = '-';
+          document.getElementById('view_history').textContent = '-';
+          document.getElementById('view_physical_exam').textContent = '-';
+          document.getElementById('view_vital_signs').textContent = '-';
+          document.getElementById('view_followup').textContent = '-';
           
           new bootstrap.Modal(document.getElementById('viewRecordModal')).show();
         }

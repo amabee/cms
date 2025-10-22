@@ -295,7 +295,6 @@
                             <option value="waiting">Waiting</option>
                             <option value="called">Called</option>
                             <option value="done">Done</option>
-                            <option value="skipped">Skipped</option>
                           </select>
                         </div>
                         <div class="col-md-4">
@@ -439,10 +438,11 @@
           try {
             const response = await axios.post(API_BASE + 'queue.php', { action: 'getStatistics' });
             if (response.data.success) {
-              document.getElementById('totalToday').textContent = response.data.total_today || 0;
-              document.getElementById('waiting').textContent = response.data.waiting || 0;
-              document.getElementById('called').textContent = response.data.called || 0;
-              document.getElementById('done').textContent = response.data.done || 0;
+              const stats = response.data.queue || response.data;
+              document.getElementById('totalToday').textContent = stats.total_today || 0;
+              document.getElementById('waiting').textContent = stats.waiting || 0;
+              document.getElementById('called').textContent = stats.called || 0;
+              document.getElementById('done').textContent = stats.done || 0;
             }
           } catch (error) {
             console.error('Error loading statistics:', error);
@@ -496,7 +496,6 @@
                   <div class="dropdown-menu">
                     ${q.status === 'waiting' ? `<a class="dropdown-item" href="javascript:void(0);" onclick="updateStatus(${q.queue_id}, 'called')"><i class="bx bx-bell me-1"></i> Call</a>` : ''}
                     ${q.status === 'called' ? `<a class="dropdown-item" href="javascript:void(0);" onclick="updateStatus(${q.queue_id}, 'done')"><i class="bx bx-check me-1"></i> Done</a>` : ''}
-                    ${q.status === 'waiting' ? `<a class="dropdown-item" href="javascript:void(0);" onclick="updateStatus(${q.queue_id}, 'skipped')"><i class="bx bx-x me-1"></i> Skip</a>` : ''}
                     <a class="dropdown-item text-danger" href="javascript:void(0);" onclick="deleteQueue(${q.queue_id})"><i class="bx bx-trash me-1"></i> Delete</a>
                   </div>
                 </div>
@@ -508,8 +507,17 @@
         }
 
         function updateCurrentQueue(queues) {
-          const called = queues.find(q => q.status === 'called');
-          document.getElementById('currentQueue').textContent = called ? called.queue_number : '--';
+          const called = queues.filter(q => q.status === 'called');
+          const currentQueueEl = document.getElementById('currentQueue');
+          
+          if (called.length === 0) {
+            currentQueueEl.textContent = '--';
+          } else if (called.length === 1) {
+            currentQueueEl.textContent = called[0].queue_number;
+          } else {
+            // Show multiple queue numbers if more than one is called
+            currentQueueEl.textContent = called.map(q => q.queue_number).join(', ');
+          }
         }
 
         function getStatusBadge(status) {
@@ -649,7 +657,8 @@
             });
             
             if (response.data.success) {
-              alert('Called queue #' + response.data.queue_number);
+              const queueNumber = response.data.data?.queue_number || 'Unknown';
+              alert('Called queue #' + queueNumber);
               loadQueue();
               loadStatistics();
             } else {
@@ -714,6 +723,7 @@
         window.updateStatus = updateStatus;
         window.deleteQueue = deleteQueue;
         window.searchQueue = searchQueue;
+        window.loadQueue = loadQueue;
 
         console.log("Receptionist queue page loaded");
       })();

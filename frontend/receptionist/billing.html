@@ -614,16 +614,17 @@
           const billingId = document.getElementById('billing_id').value;
           const appointmentId = document.getElementById('appointment_id').value;
           
+          const totalAmount = parseFloat(document.getElementById('total_amount').value) || 0;
+          const discount = parseFloat(document.getElementById('discount').value) || 0;
+          const netAmount = totalAmount - discount;
+          
           const data = {
             patient_id: document.getElementById('patient_id').value,
             appointment_id: appointmentId || null,
-            billing_date: document.getElementById('billing_date').value,
-            due_date: document.getElementById('due_date').value || null,
-            description: document.getElementById('description').value,
-            total_amount: document.getElementById('total_amount').value,
-            discount: document.getElementById('discount').value || 0,
-            payment_status: document.getElementById('payment_status').value,
-            notes: document.getElementById('notes').value || null
+            total_amount: totalAmount,
+            discount: discount,
+            net_amount: netAmount,
+            status: document.getElementById('payment_status').value || 'unpaid'
           };
 
           try {
