@@ -5,6 +5,7 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
 include('conn.php');
+include('email-service.php');
 
 class Patients
 {
@@ -133,11 +134,28 @@ class Patients
 
       $this->conn->commit();
 
+      // Send welcome email if account was created and email provided
+      $emailSent = false;
+      if ($create_account && !empty($data['email'])) {
+        try {
+          $emailData = array_merge($data, [
+            'username' => $username,
+            'patient_id' => $patient_id,
+            'patient_code' => $patient_code
+          ]);
+          $emailSent = EmailService::sendPatientRegistrationEmail($emailData);
+        } catch (Exception $e) {
+          // Log email error but don't fail the registration
+          error_log("Failed to send welcome email to {$data['email']}: " . $e->getMessage());
+        }
+      }
+
       return json_encode([
         'success' => true, 
         'patient_code' => $patient_code,
         'patient_id' => $patient_id,
-        'username' => $create_account ? $username : null
+        'username' => $create_account ? $username : null,
+        'email_sent' => $emailSent
       ]);
     } catch (PDOException $e) {
       $this->conn->rollBack();

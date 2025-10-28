@@ -646,10 +646,19 @@
             const response = await axios.post(API_BASE + 'patients.php', params);
             
             if (response.data.success) {
+              const emailStatus = response.data.email_sent ? 
+                '📧 Welcome email with login credentials sent successfully!' : 
+                '⚠️ Registration complete, but email with credentials could not be sent.';
+              
               Swal.fire({
                 icon: 'success',
                 title: 'Patient Added Successfully!',
-                text: `Patient ${patientData.first_name} ${patientData.last_name} has been registered with username: ${patientData.username}`,
+                html: `
+                  <p><strong>Patient:</strong> ${patientData.first_name} ${patientData.last_name}</p>
+                  <p><strong>Username:</strong> ${patientData.username}</p>
+                  <p><strong>Patient Code:</strong> ${response.data.patient_code}</p>
+                  <p class="mt-2">${emailStatus}</p>
+                `,
                 confirmButtonText: 'OK',
                 confirmButtonClass: 'btn btn-success'
               });
