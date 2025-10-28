@@ -224,14 +224,11 @@ class QueueAPI {
                 }
             }
 
-            // Generate queue number
+            // Generate sequential queue number (no date restriction)
             $queue_date = isset($data['queue_date']) ? $data['queue_date'] : date('Y-m-d');
             
-            $queueNumberSql = "SELECT COALESCE(MAX(queue_number), 0) + 1 as next_number 
-                              FROM queue 
-                              WHERE DATE(queue_date) = :queue_date";
+            $queueNumberSql = "SELECT COALESCE(MAX(queue_number), 0) + 1 as next_number FROM queue";
             $queueStmt = $this->conn->prepare($queueNumberSql);
-            $queueStmt->bindParam(':queue_date', $queue_date);
             $queueStmt->execute();
             $queue_number = $queueStmt->fetch(PDO::FETCH_ASSOC)['next_number'];
 

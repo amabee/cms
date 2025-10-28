@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Queue Status - My Clinic</title>
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+    <style>
+      body { 
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .queue-checker {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+      .queue-display {
+        font-size: 4rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      }
+      .status-badge {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+        border-radius: 50px;
+      }
+      .card {
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      }
+      .btn-check {
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-size: 1.1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="queue-checker">
+        <div class="card">
+          <div class="card-header text-center bg-primary text-white">
+            <h4 class="mb-0"><i class="bx bx-clinic me-2"></i>My Clinic - Queue Status</h4>
+          </div>
+          <div class="card-body text-center p-5">
+            <div class="mb-4">
+              <h5>Enter Your Queue Number</h5>
+              <div class="input-group input-group-lg mb-3">
+                <span class="input-group-text">#</span>
+                <input type="number" class="form-control" id="queueNumber" placeholder="Enter queue number" min="1">
+                <button class="btn btn-primary btn-check" onclick="checkQueue()">
+                  <i class="bx bx-search me-1"></i>Check Status
+                </button>
+              </div>
+            </div>
+            
+            <div id="queueResult" class="d-none">
+              <div class="mb-4">
+                <div class="queue-display text-primary" id="displayNumber">#--</div>
+                <h6 class="text-muted">Your Queue Number</h6>
+              </div>
+              
+              <div class="mb-4">
+                <span class="badge status-badge" id="statusBadge">Unknown</span>
+              </div>
+              
+              <div id="statusMessage" class="mb-3">
+                <p class="text-muted">Please wait for your number to be called.</p>
+              </div>
+              
+              <div class="row text-center">
+                <div class="col-4">
+                  <div class="p-3">
+                    <i class="bx bx-time bx-lg text-info mb-2"></i>
+                    <h6 class="mb-0" id="waitingCount">--</h6>
+                    <small class="text-muted">Waiting</small>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="p-3">
+                    <i class="bx bx-bell bx-lg text-warning mb-2"></i>
+                    <h6 class="mb-0" id="calledCount">--</h6>
+                    <small class="text-muted">Called</small>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="p-3">
+                    <i class="bx bx-check bx-lg text-success mb-2"></i>
+                    <h6 class="mb-0" id="doneCount">--</h6>
+                    <small class="text-muted">Done</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-center mt-4">
+          <button class="btn btn-outline-light" onclick="window.location.reload()">
+            <i class="bx bx-refresh me-1"></i>Refresh
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    
+    <script>
+      const API_BASE = '../backend/';
+      
+      async function checkQueue() {
+        const queueNumber = document.getElementById('queueNumber').value;
+        
+        if (!queueNumber) {
+          alert('Please enter your queue number');
+          return;
+        }
+        
+        try {
+          // Get queue status
+          const response = await axios.post(API_BASE + 'queue.php', {
+            action: 'getAll',
+            search: queueNumber,
+            limit: 1000
+          });
+          
+          if (response.data.success) {
+            const queues = response.data.queues || [];
+            const myQueue = queues.find(q => q.queue_number == queueNumber);
+            
+            if (myQueue) {
+              displayQueueStatus(myQueue, queues);
+            } else {
+              alert('Queue number not found. Please check your number.');
+            }
+          }
+        } catch (error) {
+          console.error('Error checking queue:', error);
+          alert('Error checking queue status. Please try again.');
+        }
+      }
+      
+      function displayQueueStatus(myQueue, allQueues) {
+        document.getElementById('displayNumber').textContent = '#' + myQueue.queue_number;
+        
+        const statusConfig = {
+          'waiting': { class: 'bg-warning', text: 'Waiting', message: 'Please wait. You will be called soon.' },
+          'called': { class: 'bg-info', text: 'Called', message: '🔔 You have been called! Please proceed to the counter.' },
+          'done': { class: 'bg-success', text: 'Done', message: '✅ Your consultation is complete.' }
+        };
+        
+        const status = statusConfig[myQueue.status] || statusConfig['waiting'];
+        const badge = document.getElementById('statusBadge');
+        badge.className = `badge status-badge ${status.class}`;
+        badge.textContent = status.text;
+        
+        document.getElementById('statusMessage').innerHTML = `<p class="mb-0">${status.message}</p>`;
+        
+        // Calculate position
+        const waitingQueues = allQueues.filter(q => q.status === 'waiting' && q.queue_number < myQueue.queue_number);
+        if (myQueue.status === 'waiting' && waitingQueues.length >= 0) {
+          document.getElementById('statusMessage').innerHTML += `<small class="text-muted">Approximately ${waitingQueues.length} people ahead of you</small>`;
+        }
+        
+        // Update statistics
+        loadStatistics();
+        
+        document.getElementById('queueResult').classList.remove('d-none');
+      }
+      
+      async function loadStatistics() {
+        try {
+          const response = await axios.post(API_BASE + 'queue.php', { action: 'getStatistics' });
+          if (response.data.success) {
+            const stats = response.data.queue || response.data;
+            document.getElementById('waitingCount').textContent = stats.waiting || 0;
+            document.getElementById('calledCount').textContent = stats.called || 0;
+            document.getElementById('doneCount').textContent = stats.done || 0;
+          }
+        } catch (error) {
+          console.error('Error loading statistics:', error);
+        }
+      }
+      
+      // Allow Enter key to check queue
+      document.getElementById('queueNumber').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          checkQueue();
+        }
+      });
+      
+      // Auto-refresh every 30 seconds if queue is displayed
+      setInterval(() => {
+        const queueNumber = document.getElementById('queueNumber').value;
+        if (queueNumber && !document.getElementById('queueResult').classList.contains('d-none')) {
+          checkQueue();
+        }
+      }, 30000);
+    </script>
+  </body>
+</html>

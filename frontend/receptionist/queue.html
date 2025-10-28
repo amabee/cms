@@ -49,6 +49,15 @@
       .current-queue-card {
         border: 3px solid #28a745;
       }
+      /* Queue Number Modal Styling */
+      #queueNumberModal .display-1 {
+        font-size: 5rem !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      }
+      #queueNumberModal .modal-content {
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      }
     </style>
   </head>
 
@@ -637,7 +646,53 @@
             });
             
             if (response.data.success) {
-              alert('Added to queue successfully');
+              const queueNumber = response.data.queue?.queue_number || 'Unknown';
+              
+              // Show a professional queue number display
+              const queueModal = `
+                <div class="modal fade" id="queueNumberModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content text-center">
+                      <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title w-100">✅ Patient Added to Queue</h5>
+                      </div>
+                      <div class="modal-body p-4">
+                        <div class="queue-number-display mb-3">
+                          <h1 class="display-1 text-primary fw-bold">#${queueNumber}</h1>
+                        </div>
+                        <h5 class="text-dark mb-3">Queue Number</h5>
+                        <p class="text-muted">Please give this number to the patient</p>
+                        <div class="alert alert-info">
+                          <i class="bx bx-info-circle me-2"></i>
+                          Patient should keep this number until called
+                        </div>
+                      </div>
+                      <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-success btn-lg" data-bs-dismiss="modal">
+                          <i class="bx bx-check me-2"></i>Got it!
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              `;
+              
+              // Remove existing modal if any
+              const existingModal = document.getElementById('queueNumberModal');
+              if (existingModal) existingModal.remove();
+              
+              // Add new modal to page
+              document.body.insertAdjacentHTML('beforeend', queueModal);
+              
+              // Show the modal
+              const modal = new bootstrap.Modal(document.getElementById('queueNumberModal'));
+              modal.show();
+              
+              // Clean up when modal is hidden
+              document.getElementById('queueNumberModal').addEventListener('hidden.bs.modal', function() {
+                this.remove();
+              });
+              
               bootstrap.Modal.getInstance(document.getElementById('addQueueModal')).hide();
               loadQueue();
               loadStatistics();
