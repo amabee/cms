@@ -262,12 +262,64 @@
                 </div>
               </div>
               <div class="mb-3">
-                <label class="form-label">Diagnosis <span class="text-danger">*</span></label>
-                <textarea class="form-control" id="create_diagnosis" rows="3" placeholder="Enter diagnosis..." required></textarea>
+                <label class="form-label">Chief Complaints <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="create_chief_complaints" rows="3" placeholder="Enter chief complaints..." required></textarea>
+              </div>
+              <!-- Vital Signs -->
+              <div class="card mb-4">
+                <div class="card-header">
+                  <h6 class="card-title mb-0">
+                    <i class="bx bx-pulse me-2"></i>Vital Signs <span class="text-danger">*</span>
+                  </h6>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-3 mb-3">
+                      <label class="form-label">Blood Pressure</label>
+                      <input type="text" id="vital_bp" class="form-control" placeholder="120/80">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <label class="form-label">Heart Rate (bpm)</label>
+                      <input type="number" id="vital_hr" class="form-control" placeholder="72">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <label class="form-label">Temperature (Celsius)</label>
+                      <input type="number" id="vital_temp" class="form-control" step="0.1" placeholder="36.5">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <label class="form-label">Weight (kg)</label>
+                      <input type="number" id="vital_weight" class="form-control" step="0.1" placeholder="70">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 mb-3">
+                      <label class="form-label">Height (cm)</label>
+                      <input type="number" id="vital_height" class="form-control" placeholder="170">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <label class="form-label">Respiratory Rate</label>
+                      <input type="number" id="vital_rr" class="form-control" placeholder="16">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <label class="form-label">Oxygen Saturation (%)</label>
+                      <input type="number" id="vital_spo2" class="form-control" placeholder="98">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <label class="form-label">Pain Level (0-10)</label>
+                      <input type="number" id="vital_pain_level" class="form-control" min="0" max="10" placeholder="0">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 mb-3">
+                      <label class="form-label">BMI (auto-calculated)</label>
+                      <input type="text" id="vital_bmi" class="form-control" readonly placeholder="Auto calculated (optional)">
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="mb-3">
-                <label class="form-label">Treatment <span class="text-danger">*</span></label>
-                <textarea class="form-control" id="create_treatment" rows="3" placeholder="Enter treatment plan..." required></textarea>
+                <label class="form-label">Diagnosis <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="create_diagnosis" rows="3" placeholder="Enter diagnosis..." required></textarea>
               </div>
               <div class="mb-3">
                 <label class="form-label">Notes</label>
@@ -329,17 +381,16 @@
                 <h6>Physical Examination</h6>
                 <p id="view_physical_exam"></p>
               </div>
-              <div class="col-md-6">
-                <h6>Vital Signs</h6>
-                <p id="view_vital_signs"></p>
+              <div class="col-md-12">
+                <h6><i class="bx bx-pulse me-2"></i>Vital Signs</h6>
+                <div id="view_vital_signs" class="row">
+                  <!-- Vital signs will be displayed here in a structured format -->
+                </div>
               </div>
             </div>
             <hr>
             <h6>Diagnosis</h6>
             <p id="view_diagnosis"></p>
-            <hr>
-            <h6>Treatment Plan</h6>
-            <p id="view_treatment"></p>
             <hr>
             <h6>Prescriptions</h6>
             <p id="view_prescriptions" style="white-space: pre-line;"></p>
@@ -580,6 +631,70 @@
           return prescriptions;
         }
 
+        // BMI Calculation
+        function calculateBMI() {
+          const height = parseFloat(document.getElementById('vital_height').value);
+          const weight = parseFloat(document.getElementById('vital_weight').value);
+          
+          if (height && weight && height > 0) {
+            const heightInMeters = height / 100;
+            const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(1);
+            document.getElementById('vital_bmi').value = bmi;
+          } else {
+            document.getElementById('vital_bmi').value = '';
+          }
+        }
+
+        // Add event listeners for BMI calculation
+        document.addEventListener('DOMContentLoaded', function() {
+          document.getElementById('vital_height').addEventListener('input', calculateBMI);
+          document.getElementById('vital_weight').addEventListener('input', calculateBMI);
+        });
+
+        // Validate vital signs
+        function validateVitalSigns() {
+          const vitalInputs = [
+            'vital_bp', 'vital_hr', 'vital_temp', 'vital_weight',
+            'vital_height', 'vital_rr', 'vital_spo2', 'vital_pain_level'
+          ];
+          
+          return vitalInputs.some(id => {
+            const value = document.getElementById(id).value.trim();
+            return value !== '';
+          });
+        }
+
+        // Reset vital signs form
+        function resetVitalSigns() {
+          document.getElementById('vital_bp').value = '';
+          document.getElementById('vital_hr').value = '';
+          document.getElementById('vital_temp').value = '';
+          document.getElementById('vital_weight').value = '';
+          document.getElementById('vital_height').value = '';
+          document.getElementById('vital_rr').value = '';
+          document.getElementById('vital_spo2').value = '';
+          document.getElementById('vital_pain_level').value = '';
+          document.getElementById('vital_bmi').value = '';
+        }
+
+        // Collect vital signs data
+        function collectVitalSigns() {
+          const vitalSigns = {
+            blood_pressure: document.getElementById('vital_bp').value,
+            heart_rate: document.getElementById('vital_hr').value,
+            temperature: document.getElementById('vital_temp').value,
+            weight: document.getElementById('vital_weight').value,
+            height: document.getElementById('vital_height').value,
+            respiratory_rate: document.getElementById('vital_rr').value,
+            oxygen_saturation: document.getElementById('vital_spo2').value,
+            pain_level: document.getElementById('vital_pain_level').value,
+            bmi: document.getElementById('vital_bmi').value
+          };
+
+          // Convert to JSON string for storage
+          return JSON.stringify(vitalSigns);
+        }
+
         let isSavingRecord = false; // Throttle flag
 
         async function saveRecord() {
@@ -591,6 +706,17 @@
           const form = document.getElementById('createRecordForm');
           if (!form.checkValidity()) {
             form.reportValidity();
+            return;
+          }
+
+          // Validate that at least one vital sign is entered
+          if (!validateVitalSigns()) {
+            Swal.fire({
+              icon: 'warning',
+              title: 'Vital Signs Required',
+              text: 'Please enter at least one vital sign measurement.',
+              confirmButtonText: 'OK'
+            });
             return;
           }
           
@@ -609,8 +735,9 @@
               doctor_id: document.getElementById('create_doctor_id').value,
               appointment_id: document.getElementById('create_appointment_id').value || null,
               record_date: document.getElementById('create_record_date').value,
+              chief_complaints: document.getElementById('create_chief_complaints').value,
+              vital_signs: collectVitalSigns(),
               diagnosis: document.getElementById('create_diagnosis').value,
-              treatment: document.getElementById('create_treatment').value,
               notes: document.getElementById('create_notes').value,
               prescriptions: prescriptions,
               admin_user_id: user.user_id
@@ -626,6 +753,8 @@
               document.getElementById('create_doctor_id').value = user.extra.doctor_id;
               loadDoctorName(); // Reload doctor name
               document.getElementById('prescriptionsContainer').innerHTML = '';
+              // Reset vital signs form
+              resetVitalSigns();
               prescriptionCounter = 0;
               loadRecords();
             } else {
@@ -648,6 +777,68 @@
         window.saveRecord = saveRecord;
         window.viewRecord = viewRecord;
 
+        // Display vital signs in structured format
+        function displayVitalSigns(vitalSignsData) {
+          const container = document.getElementById('view_vital_signs');
+          
+          if (!vitalSignsData || vitalSignsData === 'N/A') {
+            container.innerHTML = '<div class="col-12"><p class="text-muted">No vital signs recorded</p></div>';
+            return;
+          }
+
+          let vitalSigns;
+          try {
+            // Try to parse as JSON (new format)
+            vitalSigns = JSON.parse(vitalSignsData);
+          } catch (e) {
+            // Fallback for old text format
+            container.innerHTML = `<div class="col-12"><p>${vitalSignsData}</p></div>`;
+            return;
+          }
+
+          const html = `
+            <div class="col-md-3 mb-2">
+              <strong>Blood Pressure:</strong><br>
+              <span class="text-muted">${vitalSigns.blood_pressure || 'N/A'}</span>
+            </div>
+            <div class="col-md-3 mb-2">
+              <strong>Heart Rate:</strong><br>
+              <span class="text-muted">${vitalSigns.heart_rate ? vitalSigns.heart_rate + ' bpm' : 'N/A'}</span>
+            </div>
+            <div class="col-md-3 mb-2">
+              <strong>Temperature (Celsius):</strong><br>
+              <span class="text-muted">${vitalSigns.temperature ? vitalSigns.temperature + ' °C' : 'N/A'}</span>
+            </div>
+            <div class="col-md-3 mb-2">
+              <strong>Weight:</strong><br>
+              <span class="text-muted">${vitalSigns.weight ? vitalSigns.weight + ' kg' : 'N/A'}</span>
+            </div>
+            <div class="col-md-3 mb-2">
+              <strong>Height:</strong><br>
+              <span class="text-muted">${vitalSigns.height ? vitalSigns.height + ' cm' : 'N/A'}</span>
+            </div>
+            <div class="col-md-3 mb-2">
+              <strong>Respiratory Rate:</strong><br>
+              <span class="text-muted">${vitalSigns.respiratory_rate || 'N/A'}</span>
+            </div>
+            <div class="col-md-3 mb-2">
+              <strong>Oxygen Saturation:</strong><br>
+              <span class="text-muted">${vitalSigns.oxygen_saturation ? vitalSigns.oxygen_saturation + '%' : 'N/A'}</span>
+            </div>
+            <div class="col-md-3 mb-2">
+              <strong>Pain Level:</strong><br>
+              <span class="text-muted">${vitalSigns.pain_level ? vitalSigns.pain_level + '/10' : 'N/A'}</span>
+            </div>
+            ${vitalSigns.bmi ? `
+            <div class="col-md-12 mt-2">
+              <strong>BMI:</strong>
+              <span class="badge bg-label-info ms-2">${vitalSigns.bmi}</span>
+            </div>` : ''}
+          `;
+          
+          container.innerHTML = html;
+        }
+
         function viewRecord(rec) {
           // Format date to remove time
           const recordDate = rec.record_date ? new Date(rec.record_date).toLocaleDateString('en-US', {
@@ -658,17 +849,16 @@
           
           document.getElementById('view_patient_name').textContent = rec.patient_name;
           document.getElementById('view_record_date').textContent = recordDate;
-          // Only display fields that exist in the database
+          // Display fields that exist in the database
+          document.getElementById('view_chief_complaint').textContent = rec.chief_complaints || 'N/A';
+          displayVitalSigns(rec.vital_signs);
           document.getElementById('view_diagnosis').textContent = rec.diagnosis || 'N/A';
-          document.getElementById('view_treatment').textContent = rec.treatment || 'N/A';
           document.getElementById('view_prescriptions').textContent = rec.prescriptions || 'N/A';
           document.getElementById('view_notes').textContent = rec.notes || 'N/A';
           
           // Hide fields that don't exist in the database
-          document.getElementById('view_chief_complaint').textContent = '-';
           document.getElementById('view_history').textContent = '-';
           document.getElementById('view_physical_exam').textContent = '-';
-          document.getElementById('view_vital_signs').textContent = '-';
           document.getElementById('view_followup').textContent = '-';
           
           new bootstrap.Modal(document.getElementById('viewRecordModal')).show();

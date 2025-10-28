@@ -207,11 +207,11 @@ class MedicalRecordsAPI {
             $hasAppointment = !empty($data['appointment_id']);
 
             if ($hasAppointment) {
-                $sql = "INSERT INTO medical_records (appointment_id, patient_id, doctor_id, diagnosis, treatment, notes, record_date) 
-                        VALUES (:appointment_id, :patient_id, :doctor_id, :diagnosis, :treatment, :notes, :record_date)";
+                $sql = "INSERT INTO medical_records (appointment_id, patient_id, doctor_id, chief_complaints, vital_signs, diagnosis, notes, record_date) 
+                        VALUES (:appointment_id, :patient_id, :doctor_id, :chief_complaints, :vital_signs, :diagnosis, :notes, :record_date)";
             } else {
-                $sql = "INSERT INTO medical_records (patient_id, doctor_id, diagnosis, treatment, notes, record_date) 
-                        VALUES (:patient_id, :doctor_id, :diagnosis, :treatment, :notes, :record_date)";
+                $sql = "INSERT INTO medical_records (patient_id, doctor_id, chief_complaints, vital_signs, diagnosis, notes, record_date) 
+                        VALUES (:patient_id, :doctor_id, :chief_complaints, :vital_signs, :diagnosis, :notes, :record_date)";
             }
 
             $stmt = $this->conn->prepare($sql);
@@ -222,8 +222,9 @@ class MedicalRecordsAPI {
             
             $stmt->bindParam(':patient_id', $data['patient_id'], PDO::PARAM_INT);
             $stmt->bindParam(':doctor_id', $data['doctor_id'], PDO::PARAM_INT);
+            $stmt->bindParam(':chief_complaints', $data['chief_complaints'], PDO::PARAM_STR);
+            $stmt->bindParam(':vital_signs', $data['vital_signs'], PDO::PARAM_STR);
             $stmt->bindParam(':diagnosis', $data['diagnosis'], PDO::PARAM_STR);
-            $stmt->bindParam(':treatment', $data['treatment'], PDO::PARAM_STR);
             $stmt->bindParam(':notes', $data['notes'], PDO::PARAM_STR);
             
             // Use provided record_date or default to today
